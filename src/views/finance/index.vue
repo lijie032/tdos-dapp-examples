@@ -6,11 +6,11 @@
          TDOS金融
       </div>
       <div class="page-main content-middle">
-          
+
           <div class="btnBox margint30">
               <a class="pointer h-btn" @click="linkOnChain">供应商</a>
               <a class="pointer h-btn h-btn-2" @click="linkConfirm">核心企业</a>
-              <a class="pointer h-btn">银行</a>
+              <a class="pointer h-btn" @click="linkOnBank">银行</a>
           </div>
       </div>
   </div>
@@ -34,10 +34,13 @@ export default{
     },
     linkConfirm(){
       let that = this;
-      console.log('跳转')
       that.$router.push({path:'/finance/confirmInfo'})
+    },
+    linkOnBank(){
+      let that = this;
+      that.$router.push({path:'/finance/search'})
     }
-    
+
   }
 }
 </script>
