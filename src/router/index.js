@@ -16,6 +16,11 @@ export default new Router({
   //mode:'history',
   routes: [
     {
+      path: '/',//金融
+      name: 'index',
+      component: resolve=>(require(["@/views/index"],resolve))
+    },
+    {
       path: '/finance',//金融
       name: 'finance',
       component: resolve=>(require(["@/views/finance/index"],resolve))
@@ -65,6 +70,11 @@ export default new Router({
       path: '/publicWelfare/result',//公益查询
       name: 'publicWelfareResult',
       component: resolve=>(require(["@/views/publicWelfare/searchResult"],resolve))
+    },
+    {
+      path: '/logistics',//物流
+      name: 'logistics',
+      component: resolve=>(require(["@/views/logistics/index"],resolve))
     }
   ]
 })
