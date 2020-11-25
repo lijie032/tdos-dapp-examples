@@ -1,16 +1,13 @@
 <template>
-  <div class="pageWrap f-wrap-table pw-pageWrap">
+  <div class="pageWrap f-wrap-table logistics-pageWrap">
     <explorer></explorer>
       <div class="logo-intro">
          <div class="logo"></div>
-         TDOS公益
+         TDOS物流
       </div>
       <div class="page-main content-middle">
           
-          <div class="btnBox pw_btnbox">
-              <a class="pointer h-btn h-btn-1" @click="linChain"><span>红十字会</span></a>
-              <a class="pointer h-btn h-btn-2 " @click="linSearch"><span>受益人</span></a>
-          </div>
+          <div class="index-nav"></div>
       </div>
   </div>
 </template>
@@ -18,7 +15,7 @@
 
 
 <style scoped lang="less">
-@import url(../../assets/less/publicWelfare.less);
+
 @import url(../../assets/less/logistics.less);
 </style>>
 

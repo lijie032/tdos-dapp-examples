@@ -47,6 +47,11 @@ export default new Router({
       component: resolve=>(require(["@/views/finance/search"],resolve))
     },
     {
+      path: '/finance/search_bank',//金融哈希核心企业搜索
+      name: 'financeSearchBank',
+      component: resolve=>(require(["@/views/finance/search_bank"],resolve))
+    },
+    {
       path: '/finance/searchRusult',//金融哈希搜索结果
       name: 'financeSearchRusult',
       component: resolve=>(require(["@/views/finance/searchRusult"],resolve))

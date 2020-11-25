@@ -9,7 +9,7 @@
            
            <div class="search-box ">
                <div class="search-bg">
-                   <h3>核心企业查询</h3>
+                   <h3>银行查询</h3>
                </div>
                <div class="dis-table search-box-in">
                     <div class="din-box">
