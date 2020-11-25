@@ -156,5 +156,45 @@ export default new Router({
       name: 'Insurance_searchResult',
       component: resolve=>(require(["@/views/Insurance/searchResult"],resolve))
     },
+    {
+      path: '/musicCopyright',//音乐版权
+      name: 'musicCopyright',
+      component: resolve=>(require(["@/views/musicCopyright/index"],resolve))
+    },
+    {
+      path: '/musicCopyright/onChain',//音乐版权上链
+      name: 'musicCopyright_onChain',
+      component: resolve=>(require(["@/views/musicCopyright/onChain"],resolve))
+    },
+    {
+      path: '/musicCopyright/search',//音乐版权搜索
+      name: 'musicCopyright_search',
+      component: resolve=>(require(["@/views/musicCopyright/search"],resolve))
+    },
+    {
+      path: '/musicCopyright/searchRusult',//音乐版权搜索结果
+      name: 'musicCopyright_searchRusult',
+      component: resolve=>(require(["@/views/musicCopyright/searchRusult"],resolve))
+    },
+    {
+      path: '/bookCopyright',//书版权
+      name: 'bookCopyright',
+      component: resolve=>(require(["@/views/bookCopyright/index"],resolve))
+    },
+    {
+      path: '/bookCopyright/onChain',//书版权上链
+      name: 'bookCopyright_onChain',
+      component: resolve=>(require(["@/views/bookCopyright/onChain"],resolve))
+    },
+    {
+      path: '/bookCopyright/search',//书版权查询
+      name: 'bookCopyright_search',
+      component: resolve=>(require(["@/views/bookCopyright/search"],resolve))
+    },
+    {
+      path: '/bookCopyright/searchResult',//书查询结果
+      name: 'bookCopyright_searchResult',
+      component: resolve=>(require(["@/views/bookCopyright/searchResult"],resolve))
+    },
   ]
 })

@@ -6,7 +6,8 @@
        <router-link target="_blank" to='/assets'>资产</router-link>
        <router-link target="_blank" to='/medicalTreatment'>医疗</router-link>
        <router-link target="_blank" to='/Insurance'>保险</router-link>
-       
+       <router-link target="_blank" to='/musicCopyright'>音乐版权</router-link>
+       <router-link target="_blank" to='/bookCopyright'>版权</router-link>
     </div>
 </template>
 <script>
