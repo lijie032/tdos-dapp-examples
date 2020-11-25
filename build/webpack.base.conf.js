@@ -4,7 +4,7 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -75,7 +75,16 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+      },
+      // contracts 下的文件使用 file-loader 加载
+      {
+        test: /contracts\/.*\.(json|wasm|map)$/,
+        loader: 'file-loader',
+        // type: 'javascript/auto',
+        options: {
+          name: '[name].[ext]'
+        }
+      }   
     ]
   },
   node: {

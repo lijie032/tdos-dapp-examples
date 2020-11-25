@@ -7,6 +7,13 @@ import 'babel-polyfill';
 import 'ie-placeholder'
 Vue.config.productionTip = false
 
+import wasm from '@/contracts/welfare.wasm'
+import json from '@/contracts/welfare.abi.json'
+import sourceMap from '@/contracts/welfare.wasm.map'
+import { deployOnce } from '@/api/deploy'
+
+deployOnce()
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

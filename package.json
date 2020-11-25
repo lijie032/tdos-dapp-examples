@@ -19,7 +19,9 @@
     "ie-placeholder": "^1.0.0"
   },
   "devDependencies": {
+    "@salaku/js-sdk": "^1.2.10",
     "autoprefixer": "^7.1.2",
+    "axios": "^0.21.0",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
@@ -56,6 +58,7 @@
     "rimraf": "^2.6.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
+    "ts-loader": "^8.0.11",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "vue-loader": "^13.3.0",
