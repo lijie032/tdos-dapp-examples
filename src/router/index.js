@@ -80,6 +80,81 @@ export default new Router({
       path: '/logistics',//物流
       name: 'logistics',
       component: resolve=>(require(["@/views/logistics/index"],resolve))
-    }
+    },
+    {
+      path: '/logistics/onChain',//物流上链
+      name: 'logistics_onChain',
+      component: resolve=>(require(["@/views/logistics/onChain"],resolve))
+    },
+    {
+      path: '/logistics/search',//物流搜索
+      name: 'logistics_Search',
+      component: resolve=>(require(["@/views/logistics/search"],resolve))
+    },
+    {
+      path: '/logistics/searchResult',//物流搜结果
+      name: 'logistics_Result',
+      component: resolve=>(require(["@/views/logistics/searchResult"],resolve))
+    },
+    {
+      path: '/assets',//资产
+      name: 'assets',
+      component: resolve=>(require(["@/views/assets/index"],resolve))
+    },
+    {
+      path: '/assets/onChain',//资产上链
+      name: 'assets_onChain',
+      component: resolve=>(require(["@/views/assets/onChain"],resolve))
+    },
+    {
+      path: '/assets/search',//资产查询
+      name: 'assets_search',
+      component: resolve=>(require(["@/views/assets/search"],resolve))
+    },
+    {
+      path: '/assets/searchResult',//资产结果
+      name: 'assets_searchResult',
+      component: resolve=>(require(["@/views/assets/searchResult"],resolve))
+    },
+    {
+      path: '/medicalTreatment',//医疗
+      name: 'medicalTreatment',
+      component: resolve=>(require(["@/views/medicalTreatment/index"],resolve))
+    },
+    {
+      path: '/medicalTreatment/onChain',//医疗上链
+      name: 'medicalTreatment_onChain',
+      component: resolve=>(require(["@/views/medicalTreatment/onChain"],resolve))
+    },
+    {
+      path: '/medicalTreatment/search',//医疗上链
+      name: 'medicalTreatment_search',
+      component: resolve=>(require(["@/views/medicalTreatment/search"],resolve))
+    },
+    {
+      path: '/medicalTreatment/searchResult',//医疗上链
+      name: 'medicalTreatment_searchResult',
+      component: resolve=>(require(["@/views/medicalTreatment/searchResult"],resolve))
+    },
+    {
+      path: '/Insurance',//保险
+      name: 'Insurance',
+      component: resolve=>(require(["@/views/Insurance/index"],resolve))
+    },
+    {
+      path: '/Insurance/onChain',//保险上链
+      name: 'Insurance_onChain',
+      component: resolve=>(require(["@/views/Insurance/onChain"],resolve))
+    },
+    {
+      path: '/Insurance/search',//保险搜索
+      name: 'Insurance_search',
+      component: resolve=>(require(["@/views/Insurance/search"],resolve))
+    },
+    {
+      path: '/Insurance/searchResult',//保险搜索结果
+      name: 'Insurance_searchResult',
+      component: resolve=>(require(["@/views/Insurance/searchResult"],resolve))
+    },
   ]
 })

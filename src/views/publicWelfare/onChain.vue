@@ -1,7 +1,7 @@
 <template>
   <div class="pageWrap  f-wrap-table">
      
-      <div class="page-main content-middle">
+      <div class="page-main onchain-page-main">
           
          <div class="chain-form">
              <h3 class="formTitle">请认真填写以下数据，确保能准确上链</h3>

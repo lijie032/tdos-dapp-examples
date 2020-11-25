@@ -11,12 +11,12 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "ie-placeholder": "^1.0.0",
     "less": "^3.12.2",
     "less-loader": "^4.1.0",
     "sass-resources-loader": "^2.1.1",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1",
-    "ie-placeholder": "^1.0.0"
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@salaku/js-sdk": "^1.2.10",
