@@ -1,8 +1,8 @@
 import { ABI, VirtualMachine, RPC, publicKey2Address, privateKey2PublicKey, Contract, hex2bin, bin2hex} from '@salaku/js-sdk'
-import abi from '@/contracts/welfare.abi.json'
+import abi from '@/contracts/dapps.abi.json'
 import axios from 'axios'
 
-import wasm from '@/contracts/welfare.wasm'
+import wasm from '@/contracts/dapps.wasm'
 
 let abiCache
 
@@ -25,9 +25,9 @@ export const vm = (function(){
   const data = localStorage.getItem('vm')
   if(!data)
     return new VirtualMachine()
-  // @ts-ignore  
+  // @ts-ignore
 
-  return VirtualMachine.fromDump(hex2bin(data).buffer)  
+  return VirtualMachine.fromDump(hex2bin(data).buffer)
 })()
 
 export function persistVM(){
