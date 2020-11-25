@@ -10,6 +10,21 @@ import toastRegistry from './components/toast/index'
 
 Vue.config.productionTip = false
 
+
+//定义全局临时变量
+var momentObj = {};
+Vue.prototype.getMainData = function () {
+	return momentObj
+}
+Vue.prototype.changeMainData = function (key,val) {
+	momentObj[key] = val
+}
+//Use
+// that.changeMainData("name","gangYong")
+// that.changeMainData("old","88")
+// alert(JSON.stringify(that.getMainData()));
+
+
 Vue.use(toastRegistry)
 /* eslint-disable no-new */
 new Vue({
