@@ -30,10 +30,21 @@ export default new Router({
       name: 'financeSuccess',
       component: resolve=>(require(["@/views/finance/success"],resolve))
     },
+
     {
       path: '/finance/confirmInfo',//金融上链信息确认
       name: 'financeConfirmInfo',
       component: resolve=>(require(["@/views/finance/confirm"],resolve))
+    },
+    {
+      path: '/finance/search',//金融哈希搜索
+      name: 'financeSearch',
+      component: resolve=>(require(["@/views/finance/search"],resolve))
+    },
+    {
+      path: '/finance/searchRusult',//金融哈希搜索结果
+      name: 'financeSearchRusult',
+      component: resolve=>(require(["@/views/finance/searchRusult"],resolve))
     },
     {
       path: '/publicWelfare',//公益

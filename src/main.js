@@ -5,8 +5,9 @@ import App from './App'
 import router from './router'
 import 'babel-polyfill';
 import 'ie-placeholder'
+import toastRegistry from './components/toast/index'
 Vue.config.productionTip = false
-
+Vue.use(toastRegistry)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
