@@ -10,16 +10,10 @@ function decodeDonor (buf) {
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.name = rd.string()
   u.content = rd.string()
-  u.quantity = rd.number()
-  u.info = rd.string()
-  u.address = bin2hex(rd.bytes())
-  u.get = bin2hex(rd.bytes())
-  u.donor = rd.string()
-  u.height = rd.number()
-  u.hash = bin2hex(rd.bytes())
-  u.timestamp = rd.number()
-  u.confirmed = rd.bool()
-  u.confirmHash = bin2hex(rd.bytes())
+  u.beneficiaryAddress = rd.string()
+  u.beneficiary = rd.string()
+  u.donation = rd.string()
+  u.state = rd.state()
   return u
 }
 
