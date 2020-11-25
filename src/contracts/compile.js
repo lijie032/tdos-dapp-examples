@@ -13,7 +13,7 @@ let abort = '../../node_modules/@salaku/js-sdk/lib/prelude/abort'
 abort = path.relative(process.cwd(), path.join(__dirname, abort))
 const abiDist = src.replace(/^(.*)\.ts$/, '$1.abi.json')
 
-const cmd = `asc ${src} -b ${dst} --runtime none --use abort=${abort} --sourceMap --debug`
+const cmd = `asc ${src} -b ${dst} --runtime none --use abort=${abort.replace(/\\/g), '/'} --sourceMap --debug`
 const abi = compileABI(fs.readFileSync(src))
 fs.writeFileSync(abiDist, JSON.stringify(abi, null, 2))
 console.log(cmd)
