@@ -35,7 +35,7 @@ export function persistVM(){
 }
 
 export const rpc = new RPC('192.168.1.89', '6011')
-export const CONTRACT_ADDRESS = '7d99dabe9f45e0c14118e4f1c93f92703ec92e74'
+export const CONTRACT_ADDRESS = 'dc1911f2be2228e2eab96ab72d5b8cd997d1812e'
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, await getABI())

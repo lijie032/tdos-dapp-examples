@@ -159,6 +159,10 @@ export function saveDonor(name: string, content: string, beneficiaryAddress: str
 
 // 公益获取
 export function getDonor(hash: ArrayBuffer): ArrayBuffer {
+    if(!DonorDB.DONOR_DB.has(hash))
+    {
+        return new ArrayBuffer(0)
+    }
     return DonorDB.DONOR_DB.get(hash)
 }
 
@@ -172,6 +176,10 @@ export function saveLogistics(sender: string,address: string,senderPhone: string
 
 // 物流获取
 export function getLogistics(hash: ArrayBuffer): ArrayBuffer {
+    if(!LogisticsDB.Logistics_DB.has(hash))
+    {
+        return new ArrayBuffer(0)
+    }
     return LogisticsDB.Logistics_DB.get(hash)
 }
 
@@ -192,6 +200,10 @@ export function confirmFund(hash: ArrayBuffer): void {
 
 // 资产获取
 export function getFund(hash: ArrayBuffer): ArrayBuffer {
+    if(!FundDB.Fund_DB.has(hash))
+    {
+        return new ArrayBuffer(0)
+    }
     return FundDB.Fund_DB.get(hash)
 }
 
@@ -205,6 +217,10 @@ export function saveMusic(name: string, long: string, singer: string, copyright:
 
 // 音乐获取
 export function getMusic(hash: ArrayBuffer): ArrayBuffer {
+    if(!MusicDB.Music_DB.has(hash))
+    {
+        return new ArrayBuffer(0)
+    }
     return MusicDB.Music_DB.get(hash)
 }
 
@@ -218,6 +234,10 @@ export function saveMedical(name: string, time: string, hospital: string, info: 
 
 // 医疗获取
 export function getMedical(hash: ArrayBuffer): ArrayBuffer {
+    if(!MedicalDB.Medical_DB.has(hash))
+    {
+        return new ArrayBuffer(0)
+    }
     return MedicalDB.Medical_DB.get(hash)
 }
 
@@ -231,6 +251,10 @@ export function saveInsure(name: string, info: string, time: string, delay: bool
 
 // 保险获取
 export function getInsure(hash: ArrayBuffer): ArrayBuffer {
+    if(!InsureDB.Insure_DB.has(hash))
+    {
+        return new ArrayBuffer(0)
+    }
     return InsureDB.Insure_DB.get(hash)
 }
 
@@ -244,6 +268,10 @@ export function saveBook(name: string, title: string, cid: string, info: string)
 
 // 著作版权获取
 export function getBook(hash: ArrayBuffer): ArrayBuffer {
+    if(!BookDB.Book_DB.has(hash))
+    {
+        return new ArrayBuffer(0)
+    }
     return BookDB.Book_DB.get(hash)
 }
 
@@ -257,6 +285,10 @@ export function saveProduct(place: string, brand: string, kind: string, price: s
 
 // 产品溯源获取
 export function getProduct(hash: ArrayBuffer): ArrayBuffer {
+    if(!ProductDB.Product_DB.has(hash))
+    {
+        return new ArrayBuffer(0)
+    }
     return ProductDB.Product_DB.get(hash)
 }
 
@@ -270,6 +302,10 @@ export function saveWeld(wpqr: ArrayBuffer, wpqrfix: string, report: ArrayBuffer
 
 // 焊接获取
 export function getWeld(hash: ArrayBuffer): ArrayBuffer {
+    if(!WeldDB.Weld_DB.has(hash))
+    {
+        return new ArrayBuffer(0)
+    }
     return WeldDB.Weld_DB.get(hash)
 }
 
@@ -290,5 +326,9 @@ export function confirmFinance(hash: ArrayBuffer): void {
 
 // 金融获取
 export function getFinance(hash: ArrayBuffer): ArrayBuffer {
+    if(!FinanceDB.Finance_DB.has(hash))
+    {
+        return new ArrayBuffer(0)
+    }
     return FinanceDB.Finance_DB.get(hash)
 }
