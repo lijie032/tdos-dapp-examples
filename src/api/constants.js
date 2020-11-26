@@ -2,7 +2,7 @@ import { ABI, VirtualMachine, RPC, publicKey2Address, privateKey2PublicKey, Cont
 import abi from '@/contracts/dapps.abi.json'
 import axios from 'axios'
 
-import wasm from '@/contracts/dapps.wasm'
+// import wasm from '@/contracts/dapps.wasm'
 
 let abiCache
 
@@ -16,10 +16,10 @@ export async function getABI() {
 // dev 环境下使用假节点
 export const ENV = localStorage.getItem('env') === 'dev' ? 'dev' : 'prod'
 
-export async function getContractBin() {
-  const r = await fetch(wasm)
-  return new Uint8Array(await r.arrayBuffer())
-}
+// export async function getContractBin() {
+//   const r = await fetch(wasm)
+//   return new Uint8Array(await r.arrayBuffer())
+// }
 
 export const vm = (function(){
   const data = localStorage.getItem('vm')

@@ -14,7 +14,7 @@ Vue.config.productionTip = false
 Vue.use(ElementUI);
 
 
-//定义全局临时变量
+
 var momentObj = {};
 Vue.prototype.getMainData = function () {
   return momentObj
@@ -38,16 +38,8 @@ Vue.prototype.getPK = function () {
   return pubKey
 }
 
-//Use
-//定义全局临时变量
-var momentObj = {};
-Vue.prototype.getMainData = function () {
-	return momentObj
-}
-Vue.prototype.changeMainData = function (key,val) {
-	momentObj[key] = val
-}
-//调用方法
+
+
 // that.changeMainData("name","gangYong")
 // that.changeMainData("old","88")
 // alert(JSON.stringify(that.getMainData()));

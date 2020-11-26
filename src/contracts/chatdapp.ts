@@ -22,7 +22,7 @@ class ChatContext{
         this.nickname = nickname;
         this.context = context;
         this.time = time;
-        this.height = u64;
+        this.height = height;
     }
 
     static fromEncoded(buf: ArrayBuffer): ChatContext {

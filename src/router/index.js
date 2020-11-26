@@ -121,18 +121,19 @@ export default new Router({
       name: 'medicalTreatment',
       component: resolve=>(require(["@/views/medicalTreatment/index"],resolve))
     },
+    
     {
       path: '/medicalTreatment/onChain',//医疗上链
       name: 'medicalTreatment_onChain',
       component: resolve=>(require(["@/views/medicalTreatment/onChain"],resolve))
     },
     {
-      path: '/medicalTreatment/search',//医疗上链
+      path: '/medicalTreatment/search',//医疗上链查询
       name: 'medicalTreatment_search',
       component: resolve=>(require(["@/views/medicalTreatment/search"],resolve))
     },
     {
-      path: '/medicalTreatment/searchResult',//医疗上链
+      path: '/medicalTreatment/searchResult',//医疗上链结果页
       name: 'medicalTreatment_searchResult',
       component: resolve=>(require(["@/views/medicalTreatment/searchResult"],resolve))
     },
@@ -195,6 +196,56 @@ export default new Router({
       path: '/bookCopyright/searchResult',//书查询结果
       name: 'bookCopyright_searchResult',
       component: resolve=>(require(["@/views/bookCopyright/searchResult"],resolve))
+    },
+    {
+      path: '/shopping',//购物
+      name: 'shopping',
+      component: resolve=>(require(["@/views/shopping/index"],resolve))
+    },
+    {
+      path: '/shopping/onChain',//购物上链
+      name: 'shopping_onChain',
+      component: resolve=>(require(["@/views/shopping/onChain"],resolve))
+    },
+    {
+      path: '/shopping/search',//购物搜索
+      name: 'shopping_search',
+      component: resolve=>(require(["@/views/shopping/search"],resolve))
+    },
+    {
+      path: '/shopping/searchResult',//购物搜索
+      name: 'shopping_searchResult',
+      component: resolve=>(require(["@/views/shopping/searchResult"],resolve))
+    },
+    {
+      path: '/welding',//焊接
+      name: 'shopping_welding',
+      component: resolve=>(require(["@/views/welding/index"],resolve))
+    },
+    {
+      path: '/welding/onChain',//焊接上链
+      name: 'shopping_onChain',
+      component: resolve=>(require(["@/views/welding/onChain"],resolve))
+    },
+    {
+      path: '/welding/search',//焊接查询
+      name: 'shopping_search',
+      component: resolve=>(require(["@/views/welding/search"],resolve))
+    },
+    {
+      path: '/welding/searchResult',//焊接查询结果
+      name: 'shopping_searchResult',
+      component: resolve=>(require(["@/views/welding/searchResult"],resolve))
+    },
+    {
+      path: '/cryptoBear',//加密熊首页
+      name: 'cryptoBear',
+      component: resolve=>(require(["@/views/cryptoBear/index"],resolve))
+    },
+    {
+      path: '/cryptoBear/bearInfo',//加密熊首页
+      name: 'cryptoBear_bearInfo',
+      component: resolve=>(require(["@/views/cryptoBear/bearInfo"],resolve))
     },
   ]
 })
