@@ -18,6 +18,7 @@
 
 <script>
 import explorer from '@/components/browser.vue'
+
 export default{
   data(){
     return{
@@ -34,11 +35,11 @@ export default{
     },
     linkConfirm(){
       let that = this;
-      that.$router.push({path:'/finance/confirmInfo'})
+      that.$router.push({path:'/finance/search'})
     },
     linkOnBank(){
       let that = this;
-      that.$router.push({path:'/finance/search'})
+      that.$router.push({path:'/finance/search_bank'})
     }
 
   }

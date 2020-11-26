@@ -4,24 +4,22 @@ import {
   bin2hex,
   constants,
   Contract,
-  hex2bin, privateKey2PublicKey,
+  hex2bin,
   publicKey2Address,
   rlp,
   TransactionBuilder,
   TX_STATUS
 } from '@salaku/js-sdk'
 
-const privatekey = '00000000000000000000000000000000'
-
+const privatekey = ''
 // 获取nonce
 async function syncNonce (
-  bd
+  publickey
 ) {
-  const addr = publicKey2Address(bd.sk)
+  const addr = publicKey2Address(publickey)
   const n = await rpc.getNonce(addr)
   let nn = n + 1
-  bd.nonce = nn
-  return bd
+  return nn
 }
 
 // 解析公益
@@ -43,10 +41,11 @@ export async function saveDonor (payload, publickey) {
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
-      publickey
+      privatekey
     )
-    builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'saveDonor', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -86,8 +85,9 @@ export async function saveLogistics (payload, publickey) {
       constants.POA_VERSION,
       privatekey
     )
-    builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'saveLogistics', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -122,10 +122,11 @@ export async function saveFund (payload, publickey) {
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
-      publickey
+      privatekey
     )
-    builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'saveFund', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -139,6 +140,8 @@ export async function confirmFund (hash) {
       privatekey
     )
     const tx = builder.buildContractCall(c, 'confirmFund', hash, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -174,10 +177,11 @@ export async function saveMusic (payload, publickey) {
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
-      publickey
+      privatekey
     )
-    builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'saveMusic', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -213,10 +217,11 @@ export async function saveMedical (payload, publickey) {
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
-      publickey
+      privatekey
     )
-    builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'saveMedical', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -253,10 +258,11 @@ export async function saveInsure (payload, publickey) {
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
-      publickey
+      privatekey
     )
-    builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'saveInsure', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -291,10 +297,11 @@ export async function saveBook (payload, publickey) {
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
-      publickey
+      privatekey
     )
-    builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'saveBook', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -329,10 +336,11 @@ export async function saveProduct (payload, publickey) {
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
-      publickey
+      privatekey
     )
-    builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'saveProduct', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -375,10 +383,11 @@ export async function saveWeld (payload, publickey) {
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
-      publickey
+      privatekey
     )
-    builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'saveWeld', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -414,10 +423,11 @@ export async function saveFinance (payload, publickey) {
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
-      publickey
+      privatekey
     )
-    builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'saveFinance', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
@@ -428,10 +438,11 @@ export async function confirmFinance (hash, publickey) {
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
-      publickey
+      privatekey
     )
-    builder = await syncNonce(builder)
-    const tx = builder.buildContractCall(c, 'confirmFinance', hash, 0)
+    const tx = builder.buildContractCall(c, 'confirmFinance', hex2bin(hash), 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
     return tx
   }
 }
