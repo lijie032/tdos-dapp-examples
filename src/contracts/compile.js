@@ -9,7 +9,7 @@ function resolve(src){
     return path.relative(process.cwd(), path.join(__dirname, src))
 }
 
-let src = process.env['ENTRY'] || resolve('dapps.ts')
+let src = process.env['ENTRY'] || resolve('chatdapp.ts')
 
 const { compileABI } = require('@salaku/js-sdk')
 
