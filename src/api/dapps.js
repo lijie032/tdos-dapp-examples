@@ -4,7 +4,7 @@ import {bin2hex, constants, Contract, hex2bin, rlp, TransactionBuilder, TX_STATU
 
 const privatekey = "00000000000000000000000000000000"
 
-
+//解析公益
 function decodeDonor (buf) {
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
@@ -13,7 +13,7 @@ function decodeDonor (buf) {
   u.beneficiaryAddress = rd.string()
   u.beneficiary = rd.string()
   u.donation = rd.string()
-  u.state = rd.state()
+  u.state = rd.string()
   return u
 }
 
@@ -45,6 +45,20 @@ export async function getDonor (hash) {
   }
 }
 
+//解析物流
+function decodeLogistics (buf) {
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.sender = rd.string()
+  u.address = rd.string()
+  u.senderPhone = rd.string()
+  u.goods = rd.string()
+  u.receiver = rd.string()
+  u.cid = rd.string()
+  u.receiverPhone = rd.string()
+  return u
+}
+
 // 物流保存
 export async function saveLogistics (payload) {
   const c = await getContract()
@@ -69,8 +83,19 @@ export async function getLogistics (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'getLogistics', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return decodeLogistics(hex2bin(tx))
   }
+}
+
+// 解析资产
+function decodeFund (buf) {
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.name = rd.string()
+  u.content = rd.string()
+  u.granter = rd.string()
+  u.condition = rd.string()
+  return u
 }
 
 // 资产保存
@@ -97,7 +122,7 @@ export async function confirmFund (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'confirmFund', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return tx
   }
 }
 
@@ -111,8 +136,20 @@ export async function getFund (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'getFund', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return decodeFund(hex2bin(tx))
   }
+}
+
+// 解析音乐
+function decodeMusic (buf) {
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.name = rd.string()
+  u.long = rd.string()
+  u.singer = rd.string()
+  u.copyright = rd.string()
+  u.info = rd.string()
+  return u
 }
 
 // 音乐保存
@@ -139,8 +176,20 @@ export async function getMusic (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'getMusic', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return decodeMusic(hex2bin(tx))
   }
+}
+
+// 解析医疗
+function decodeMedical (buf) {
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.name = rd.string()
+  u.time = rd.string()
+  u.hospital = rd.string()
+  u.info = rd.string()
+  u.doctor = rd.string()
+  return u
 }
 
 // 医疗保存
@@ -167,9 +216,23 @@ export async function getMedical (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'getMedical', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return decodeMedical(hex2bin(tx))
   }
 }
+
+// 解析保险
+function decodeInsure (buf) {
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.name = rd.string()
+  u.info = rd.string()
+  u.time = rd.string()
+  u.delay = rd.string()
+  u.num = rd.string()
+  u.claim = rd.string()
+  return u
+}
+
 
 // 保险保存
 export async function saveInsure (payload) {
@@ -195,8 +258,19 @@ export async function getInsure (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'getInsure', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return decodeInsure(hex2bin(tx))
   }
+}
+
+// 解析著作版权
+function decodeBook (buf) {
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.name = rd.string()
+  u.title = rd.string()
+  u.cid = rd.string()
+  u.info = rd.string()
+  return u
 }
 
 // 著作版权保存
@@ -223,8 +297,19 @@ export async function getBook (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'getBook', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return decodeBook(hex2bin(tx))
   }
+}
+
+// 解析产品溯源
+function decodeProduct (buf) {
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.place = rd.string()
+  u.brand = rd.string()
+  u.kind = rd.string()
+  u.price = rd.string()
+  return u
 }
 
 // 产品溯源保存
@@ -251,8 +336,27 @@ export async function getProduct (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'getProduct', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return decodeProduct(hex2bin(tx))
   }
+}
+
+// 解析焊接
+function decodeWeld (buf) {
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.wpqr = rd.string()
+  u.wpqrfix = rd.string()
+  u.report = rd.string()
+  u.reportfix = rd.string()
+  u.reported = rd.string()
+  u.reportedfix = rd.string()
+  u.wps = rd.string()
+  u.wpsfix = rd.string()
+  u.test = rd.string()
+  u.testfix = rd.string()
+  u.labreport = rd.string()
+  u.labreportfix = rd.string()
+  return u
 }
 
 // 焊接保存
@@ -279,8 +383,20 @@ export async function getWeld (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'getWeld', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return decodeWeld(hex2bin(tx))
   }
+}
+
+// 解析金融
+function decodeFinance (buf) {
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.title = rd.string()
+  u.name = rd.string()
+  u.cid = rd.string()
+  u.sum = rd.string()
+  u.contract = rd.string()
+  return u
 }
 
 // 金融保存
@@ -307,7 +423,7 @@ export async function confirmFinance (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'confirmFinance', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return tx
   }
 }
 
@@ -321,6 +437,6 @@ export async function getFinance (hash) {
     )
     builder = await syncNonce(builder)
     const tx = builder.buildContractCall(c, 'getFinance', hash, 0)
-    return decodeDonor(hex2bin(tx))
+    return decodeFinance(hex2bin(tx))
   }
 }
