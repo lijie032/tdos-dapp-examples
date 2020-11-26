@@ -121,18 +121,19 @@ export default new Router({
       name: 'medicalTreatment',
       component: resolve=>(require(["@/views/medicalTreatment/index"],resolve))
     },
+    
     {
       path: '/medicalTreatment/onChain',//医疗上链
       name: 'medicalTreatment_onChain',
       component: resolve=>(require(["@/views/medicalTreatment/onChain"],resolve))
     },
     {
-      path: '/medicalTreatment/search',//医疗上链
+      path: '/medicalTreatment/search',//医疗上链查询
       name: 'medicalTreatment_search',
       component: resolve=>(require(["@/views/medicalTreatment/search"],resolve))
     },
     {
-      path: '/medicalTreatment/searchResult',//医疗上链
+      path: '/medicalTreatment/searchResult',//医疗上链结果页
       name: 'medicalTreatment_searchResult',
       component: resolve=>(require(["@/views/medicalTreatment/searchResult"],resolve))
     },
