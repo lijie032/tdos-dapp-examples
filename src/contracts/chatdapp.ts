@@ -9,26 +9,30 @@ class ChatContext{
     nickname: string
     context: string
     time: string
+    height: u64
 
     constructor(
         user: Address,
         nickname: string,
         context: string,
-        time: string
+        time: string,
+        height: u64
     ) {
         this.user = user;
         this.nickname = nickname;
         this.context = context;
         this.time = time;
+        this.height = u64;
     }
 
     static fromEncoded(buf: ArrayBuffer): ChatContext {
         const li = RLPList.fromEncoded(buf);
-        const chatContext = new ChatContext(ZERO_ADDRESS, '', '', '');
+        const chatContext = new ChatContext(ZERO_ADDRESS, '', '', '', 0);
         chatContext.user = new Address(li.getItem(0).bytes());
         chatContext.nickname = li.getItem(1).string();
         chatContext.context = li.getItem(2).string();
         chatContext.time = li.getItem(3).string();
+        chatContext.height = li.getItem(4).u64();
         return chatContext;
     }
 
@@ -38,6 +42,7 @@ class ChatContext{
         els.push(RLP.encodeString(this.nickname));
         els.push(RLP.encodeString(this.context));
         els.push(RLP.encodeString(this.time));
+        els.push(RLP.encodeU64(this.height));
         return RLP.encodeElements(els);
     }
 }
@@ -88,7 +93,8 @@ export function saveChat(addr: Address, context: string, time: string): void {
     assert(userIds.get(addr) != '', "user has not registration");
     let nickname = userIds.get(addr);
     let chatContextsArray = decodeChatContexts(Globals.get<ArrayBuffer>('contexts'));
-    let chatContext = new ChatContext(addr, nickname, context, time);
+    const h = Context.header()
+    let chatContext = new ChatContext(addr, nickname, context, time, h.height);
     chatContextsArray.push(chatContext)
     Globals.set<ArrayBuffer>('contexts', encodeChatContexts(chatContextsArray));
 }
