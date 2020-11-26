@@ -71,7 +71,7 @@
                             </div>
                        </div>
 
-                    
+       
                        <!--等级上链信息-->
                        <div class="chinInfo" v-show="isOnchain">
                            <div>区块高度：7856954</div>
@@ -110,9 +110,7 @@ export default {
      }
     },
     mounted(){
-           let text='1233'
-     
-      this.$refs.aa.href='javascript:sendMessageToContentScriptByPostMessage(\''+text+'\')';
+      
     }
 }
 </script>
