@@ -74,23 +74,23 @@ export function init(): void {
 }
 
 export function hasUser(addr: Address): boolean {
-    return userIds.get(addr) != '';
+    return userIds.has(addr);
 }
 
 export function registration(addr: Address, nickname: string): void {
-    assert(userIds.get(addr) == '', "user has registration");
+    assert(!userIds.has(addr), "user has registration");
     let lastUserId = Globals.get<u64>('lastUserId');
     userIds.set(addr, nickname);
     Globals.set<u64>('lastUserId', lastUserId + 1);
 }
 
 export function getNickname(addr: Address): string {
-    assert(userIds.get(addr) != '', "user has not registration");
+    assert(userIds.has(addr), "user has not registration");
     return userIds.get(addr);
 }
 
 export function saveChat(addr: Address, context: string, time: string): void {
-    assert(userIds.get(addr) != '', "user has not registration");
+    assert(userIds.has(addr), "user has not registration");
     let nickname = userIds.get(addr);
     let chatContextsArray = decodeChatContexts(Globals.get<ArrayBuffer>('contexts'));
     const h = Context.header()
