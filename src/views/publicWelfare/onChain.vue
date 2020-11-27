@@ -116,7 +116,7 @@ export default {
         return that.$toast("获取账户失败，请打开TDOS插件", 3000);
       }
 
-      let tx = saveDonor(payload, pk);
+      let tx = await saveDonor(payload, pk);
       let sendTx = JSON.stringify(tx);
 
       that.$refs.sendTx.href =
