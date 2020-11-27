@@ -1,5 +1,5 @@
 <template>
-  <div class="logo-explorer logo-browser">
+  <div class="logo-explorer logo-browser " :class="{'logo-browser-white':type==1}">
       <a class=" pointer"></a>
   </div>
 </template>
@@ -10,6 +10,11 @@ export default {
   data () {
     return {
       msg: ''
+    }
+  },props:{
+    type:{
+      type:null,
+      default:0
     }
   }
 }

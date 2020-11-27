@@ -224,17 +224,17 @@ export default new Router({
     },
     {
       path: '/welding/onChain',//焊接上链
-      name: 'shopping_onChain',
+      name: 'welding_onChain',
       component: resolve=>(require(["@/views/welding/onChain"],resolve))
     },
     {
       path: '/welding/search',//焊接查询
-      name: 'shopping_search',
+      name: 'welding_search',
       component: resolve=>(require(["@/views/welding/search"],resolve))
     },
     {
       path: '/welding/searchResult',//焊接查询结果
-      name: 'shopping_searchResult',
+      name: 'welding_searchResult',
       component: resolve=>(require(["@/views/welding/searchResult"],resolve))
     },
     {
@@ -243,9 +243,19 @@ export default new Router({
       component: resolve=>(require(["@/views/cryptoBear/index"],resolve))
     },
     {
-      path: '/cryptoBear/bearInfo',//加密熊首页
+      path: '/cryptoBear/bearInfo',//加密熊信息
       name: 'cryptoBear_bearInfo',
       component: resolve=>(require(["@/views/cryptoBear/bearInfo"],resolve))
+    },
+    {
+      path: '/chat',//聊天首页
+      name: 'chat',
+      component: resolve=>(require(["@/views/chat"],resolve))
+    },
+    {
+      path: '/chat/group',//聊天交流群啊
+      name: 'chat_group',
+      component: resolve=>(require(["@/views/chat/chatGroup"],resolve))
     },
   ]
 })
