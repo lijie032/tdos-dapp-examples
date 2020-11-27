@@ -72,9 +72,8 @@
           </div>
 
           <div class="btnbox">
-            <a ref="sendTx" @click="doConfirm($event)" class="chain-btn pointer"
-              >存证上链</a
-            >
+            <a @click="doConfirm($event)" class="chain-btn pointer">存证上链</a>
+            <a ref="sendTx"></a>
           </div>
         </div>
       </div>
@@ -94,7 +93,6 @@ export default {
       beneficiary: "",
       mechanism: "",
       explain: "",
-      firstSend: 0,
     };
   },
   methods: {
@@ -111,21 +109,18 @@ export default {
         donation: that.mechanism,
         state: that.explain,
       };
-      let pk = await that.getPK();
+      let pk = that.getPK();
       if (pk == "") {
         return that.$toast("获取账户失败，请打开TDOS插件", 3000);
       }
 
       let tx = await saveDonor(payload, pk);
       let sendTx = JSON.stringify(tx);
-
       that.$refs.sendTx.href =
         "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
-      if (that.firstSend == 0) {
-        that.$refs.sendTx.click();
-        that.firstSend = 1;
-      }
+      that.$refs.sendTx.click();
       return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
+      // this.$router.push({path:'/publicWelfare'})
     },
   },
 };

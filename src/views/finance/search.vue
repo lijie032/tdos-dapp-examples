@@ -35,18 +35,22 @@
       return {}
     }, methods: {
       async search () {
-        //this.$toast('请输入搜索内容',2000)
-        let hash = this.$refs.hash.value
-        //todo 获取公钥
-        let publickey = '02f9d915954e04107d11fb9689a6330c22199e1e830857bff076e033bbca2888d4'
-        let result = await getFinance(hash, publickey)
+        let that = this;
+        let hash = this.$refs.hash.value;
+        let pk = await that.getPK()
+        if (pk == '') {
+          return that.$toast('获取账户失败，请打开TDOS插件', 3000)
+        }
+        let result = await getFinance(hash, pk)
         if (result == '') {
-          this.$router.push({path: '/finance/confirminfo', query: {result: "test"}})
+          that.$router.push({path: '/finance/confirminfo'})
           this.$toast('暂无内容', 2000)
         } else {
-          let transaction = await getTransaction(hash);
-          let that = this
-          that.$router.push({path: '/finance/confirminfo', query: {result: transaction,hash:hash}})
+            let transaction = await getTransaction(hash);
+            getTransaction(hash).then(t => {
+              let that = this
+              that.$router.push({path: '/finance/confirminfo', query: {transaction: t, result: result}})
+            })
         }
       }
     }

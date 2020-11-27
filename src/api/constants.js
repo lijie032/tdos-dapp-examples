@@ -6,7 +6,8 @@ import axios from 'axios'
 
 let abiCache
 
-export const httpRPC = new RPC(location.host, location.port || '80')
+export const httpRPC = new RPC(location.hostname, location.port || '80')
+
 
 export async function getABI() {
   if (abiCache)

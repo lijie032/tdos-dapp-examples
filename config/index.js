@@ -11,8 +11,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/rpc': 'http://192.168.1.13'
-    },  
+      '/rpc': {
+        target: 'http://192.168.1.89:6011',//代理到的地址
+        changeOrigin: true
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

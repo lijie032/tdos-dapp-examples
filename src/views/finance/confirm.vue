@@ -50,7 +50,7 @@
 
 <script>
 import explorer from '@/components/browser.vue'
-import {confirmFinance, getTransaction} from '@/api/dapps'
+import {confirmFinance} from '@/api/dapps'
 
 export default{
   data(){
@@ -73,7 +73,7 @@ export default{
   },
    mounted: function() {
     //todo 调用异步
-    // let hash = this.$route.query.hash;
+    let hash = this.$route.query.hash;
     //  getTransaction(hash);
      document.getElementById("height").innerHTML = "123123";
      document.getElementById("block_hash").innerHTML = "123123";

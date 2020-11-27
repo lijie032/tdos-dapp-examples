@@ -22,9 +22,8 @@ if (env === 'development') {
 
   storage.get = function (key) {
     if (typeof key === 'string') {
-      var value = localStorage.getItem(key);
       try {
-        value = JSON.parse(value)
+        var value = localStorage.getItem(key);
       } catch (e) {
         console.log(e)
       }
@@ -36,7 +35,7 @@ if (env === 'development') {
 
 if (env === 'production') {
   storage.set = function (items) {
-    
+
     chrome.storage.local.set(items);
   };
 

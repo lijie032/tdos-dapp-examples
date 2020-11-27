@@ -26,33 +26,29 @@ Vue.prototype.changeMainData = function (key, val) {
 }
 
 
-var pubKey = "";
 var timer;
-timer = setInterval(function () {
+timer = setInterval (function () {
 
-  var pk = document.getElementById('receiveP')
+  var pk = document.getElementById('receivePTdos')
+
   if (pk != null) {
-    pubKey = pk.innerHTML;
-    pubKey = pubKey.replace(/\s*/g, "");
-    storage.set({
-      pubKeyStorage: pubKey,
-    });
+    let newPk = pk.innerHTML;
+    newPk = newPk.replace(/\s*/g, "");
+    localStorage.setItem('myPubKeyStorage', newPk);
   }
 
 }, 1000);
 
-Vue.prototype.getPK = async function () {
+Vue.prototype.getPK = function () {
 
-  let rs = await storage.get("pubKeyStorage")
-  if (rs != null) {
-    return rs
-  }else
-  {
+  var pubK = localStorage.getItem('myPubKeyStorage');
+  if (pubK != null) {
+    return pubK
+  } else {
     return ""
   }
 
 }
-
 
 
 // that.changeMainData("name","gangYong")
