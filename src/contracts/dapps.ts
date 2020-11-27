@@ -293,10 +293,10 @@ export function getProduct(hash: ArrayBuffer): ArrayBuffer {
 }
 
 // 焊接保存
-export function saveWeld(wpqr: ArrayBuffer, wpqrfix: string, report: ArrayBuffer, reportfix: string, reported: ArrayBuffer, reportedfix: string, wps: ArrayBuffer, wpsfix: string, test: ArrayBuffer, testfix: string, labreport: ArrayBuffer, labreportfix: string): void {
+export function saveWeld(wpqr: string, welder: string, device: string): void {
     const tx = Context.transaction()
     const h = Context.header()
-    const u = new Weld(wpqr, wpqrfix, report, reportfix, reported, reportedfix, wps, wpsfix, test, testfix, labreport, labreportfix, h.height)
+    const u = new Weld(wpqr, welder, device, h.height)
     weldDB.setWeld(tx.hash, u)
 }
 

@@ -538,73 +538,32 @@ export class Product{
 
 export class Weld{
   // WPQR号
-  wpqr: ArrayBuffer
-  wpqrfix: string
-  // 理化报告（破坏性）
-  report: ArrayBuffer
-  reportfix: string
-  // 理化报告（非破坏性）
-  reported: ArrayBuffer
-  reportedfix: string
-  // WPS
-  wps: ArrayBuffer
-  wpsfix: string
-  // 现场考试
-  test: ArrayBuffer
-  testfix: string
-  // 实验报告
-  labreport: ArrayBuffer
-  labreportfix: string
+  wpqr: string
+  welder: string
+  device: string
   // 区块高度
   height: u64
 
   constructor(
-      wpqr: ArrayBuffer,
-      wpqrfix: string,
-      report: ArrayBuffer,
-      reportfix: string,
-      reported: ArrayBuffer,
-      reportedfix: string,
-      wps: ArrayBuffer,
-      wpsfix: string,
-      test: ArrayBuffer,
-      testfix: string,
-      labreport: ArrayBuffer,
-      labreportfix: string,
-      height: u64
+    wpqr: string, 
+    welder: string, 
+    device: string,
+    height: u64
   ) {
     this.wpqr = wpqr
-    this.wpqrfix = wpqrfix
-    this.report = report
-    this.reportfix = reportfix
-    this.reported = reported
-    this.reportedfix = reportedfix
-    this.wps = wps
-    this.wpsfix = wpsfix
-    this.test = test
-    this.testfix = testfix
-    this.labreport = labreport
-    this.labreportfix = labreportfix
+    this.welder = welder
+    this.device = device
     this.height = height
   }
 
   // 从 rlp 解码
   static fromEncoded(buf: ArrayBuffer): Weld {
-    const u = new Weld(ZERO_ARRAYBUFFER, '', ZERO_ARRAYBUFFER, '', ZERO_ARRAYBUFFER, '', ZERO_ARRAYBUFFER, '', ZERO_ARRAYBUFFER, '', ZERO_ARRAYBUFFER, '', 0)
+    const u = new Weld('', '', '', 0)
     let i = 0
     const li = RLPList.fromEncoded(buf)
-    u.wpqr = li.getItem(i++).bytes()
-    u.wpqrfix = li.getItem(i++).string()
-    u.report = li.getItem(i++).bytes()
-    u.reportfix = li.getItem(i++).string()
-    u.reported = li.getItem(i++).bytes()
-    u.reportedfix = li.getItem(i++).string()
-    u.wps = li.getItem(i++).bytes()
-    u.wpsfix = li.getItem(i++).string()
-    u.test = li.getItem(i++).bytes()
-    u.testfix = li.getItem(i++).string()
-    u.labreport = li.getItem(i++).bytes()
-    u.labreportfix = li.getItem(i++).string()
+    u.wpqr = li.getItem(i++).string()
+    u.welder = li.getItem(i++).string()
+    u.device = li.getItem(i++).string()
     u.height = li.getItem(i++).u64()
     return u
   }
@@ -612,18 +571,9 @@ export class Weld{
   // rlp 编码
   getEncoded(): ArrayBuffer {
     const els = new Array<ArrayBuffer>()
-    els.push(RLP.encodeBytes(this.wpqr))
-    els.push(RLP.encodeString(this.wpqrfix))
-    els.push(RLP.encodeBytes(this.report))
-    els.push(RLP.encodeString(this.reportfix))
-    els.push(RLP.encodeBytes(this.reported))
-    els.push(RLP.encodeString(this.reportedfix))
-    els.push(RLP.encodeBytes(this.wps))
-    els.push(RLP.encodeString(this.wpsfix))
-    els.push(RLP.encodeBytes(this.test))
-    els.push(RLP.encodeString(this.testfix))
-    els.push(RLP.encodeBytes(this.labreport))
-    els.push(RLP.encodeString(this.labreportfix))
+    els.push(RLP.encodeString(this.wpqr))
+    els.push(RLP.encodeString(this.welder))
+    els.push(RLP.encodeString(this.device))
     els.push(RLP.encodeU64(this.height))
     return RLP.encodeElements(els)
   }
