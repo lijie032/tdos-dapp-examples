@@ -257,5 +257,10 @@ export default new Router({
       name: 'chat_group',
       component: resolve=>(require(["@/views/chat/chatGroup"],resolve))
     },
+    {
+      path: '/addressBook',//通讯录
+      name: 'addressBook',
+      component: resolve=>(require(["@/views/addressBook/index"],resolve))
+    },
   ]
 })
