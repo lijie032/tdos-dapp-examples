@@ -32,7 +32,7 @@ import { saveFinance } from '@/api/dapps'
 export default{
   data(){
     return{
-
+      firstSend: 0
     }
   },
   components:{
@@ -40,7 +40,7 @@ export default{
   },
   methods:{
     async save(){
-      //await dapps.saveFinance();
+      let that = this;
       let title = this.$refs.title.value;
       let name = this.$refs.name.value;
       let cid = this.$refs.cid.value;
@@ -50,14 +50,14 @@ export default{
       let payload = {
         title:title,name:name,cid:cid,sum:sum,contract:contract
       };
-
-
-      //todo 获取公钥
-      let publickey = "02f9d915954e04107d11fb9689a6330c22199e1e830857bff076e033bbca2888d4";
-      let finance = await saveFinance(payload, publickey);
+      let pk = await that.getPK();
+      if (pk == "") {
+        return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+      }
+      let finance = await saveFinance(payload, pk);
       console.log(finance);
-      //todo 传给客户端
-      this.$router.push({path:'/finance'})
+      return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
+      // this.$router.push({path:'/finance'})
     }
   }
 }

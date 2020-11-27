@@ -24,12 +24,13 @@ async function syncNonce (
 }
 
 // 获取事务
-export async function getTransaction (hash) {
-  return await httpRPC.getTransaction(hash)
+export function getTransaction (hash) {
+  return httpRPC.getTransaction(hash)
 }
 
 // 解析公益
 function decodeDonor (buf) {
+  buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.name = rd.string()
@@ -59,8 +60,8 @@ export async function saveDonor (payload, publickey) {
 // 公益获取
 export async function getDonor (hash) {
   try {
-    let result = await rpc.viewContract(await getContract(), 'getDonor', hex2bin(hash))
-    return decodeFinance(result)
+    let result = await rpc.viewContract(await getContract(), 'getDonor', hash)
+    return decodeDonor(result)
   }catch (e) {
     return "";
   }

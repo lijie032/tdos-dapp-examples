@@ -45,7 +45,7 @@
 export default {
     data(){
         return{
-
+          firstSend: 0
         }
     },
     components:{
@@ -53,21 +53,30 @@ export default {
     },
     methods:{
       async submit(){
-
+        let that = this;
         let name = this.$refs.name.value;
         let title = this.$refs.title.value;
         let code = this.$refs.code.value;
         let info = this.$refs.info.value;
-
-        //todo 合约参数需要增加
         let payload = {
           name:name, title:title, cid:code, info:info
         };
-        //todo 获取公钥
-        let publickey = "02f9d915954e04107d11fb9689a6330c22199e1e830857bff076e033bbca2888d4";
-        let Book = await saveBook(payload, publickey);
-        console.log(Book);
-        //todo 传给客户端
+        let pk = await that.getPK();
+        if (pk == "") {
+          return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+        }
+
+        let Book = await saveBook(payload, pk);
+        let sendTx = JSON.stringify(Book);
+        console.log(Book)
+
+        that.$refs.sendTx.href =
+          "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+        if (that.firstSend == 0) {
+          that.$refs.sendTx.click();
+          that.firstSend = 1;
+        }
+        return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
         this.$router.push({path:'/bookCopyright'})
       }
     }
