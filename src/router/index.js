@@ -173,9 +173,9 @@ export default new Router({
       component: resolve=>(require(["@/views/musicCopyright/search"],resolve))
     },
     {
-      path: '/musicCopyright/searchRusult',//音乐版权搜索结果
-      name: 'musicCopyright_searchRusult',
-      component: resolve=>(require(["@/views/musicCopyright/searchRusult"],resolve))
+      path: '/musicCopyright/searchResult',//音乐版权搜索结果
+      name: 'musicCopyright_searchResult',
+      component: resolve=>(require(["@/views/musicCopyright/searchResult"],resolve))
     },
     {
       path: '/bookCopyright',//书版权
