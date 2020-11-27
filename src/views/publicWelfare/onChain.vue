@@ -111,12 +111,12 @@ export default {
         donation: that.mechanism,
         state: that.explain,
       };
-      let pk = that.getPK();
+      let pk = await that.getPK();
       if (pk == "") {
         return that.$toast("获取账户失败，请打开TDOS插件", 3000);
       }
 
-      let tx = await saveDonor(payload, pk);
+      let tx = saveDonor(payload, pk);
       let sendTx = JSON.stringify(tx);
 
       that.$refs.sendTx.href =

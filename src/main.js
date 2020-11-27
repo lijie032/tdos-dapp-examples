@@ -9,6 +9,8 @@ import toastRegistry from './components/toast/index'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';//样式文件一定要引入
+import storage from "@/storage";
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
@@ -31,12 +33,24 @@ timer = setInterval(function () {
   var pk = document.getElementById('receiveP')
   if (pk != null) {
     pubKey = pk.innerHTML;
-    pubKey = pubKey.replace(/\s*/g,"");
+    pubKey = pubKey.replace(/\s*/g, "");
+    storage.set({
+      pubKeyStorage: pubKey,
+    });
   }
 
 }, 1000);
-Vue.prototype.getPK = function () {
-  return pubKey
+
+Vue.prototype.getPK = async function () {
+
+  let rs = await storage.get("pubKeyStorage")
+  if (rs != null) {
+    return rs
+  }else
+  {
+    return ""
+  }
+
 }
 
 
