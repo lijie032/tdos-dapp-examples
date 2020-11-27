@@ -31,6 +31,7 @@ timer = setInterval(function () {
   var pk = document.getElementById('receiveP')
   if (pk != null) {
     pubKey = pk.innerHTML;
+    pubKey = pubKey.replace(/\s*/g,"");
   }
 
 }, 1000);

@@ -72,7 +72,9 @@
           </div>
 
           <div class="btnbox">
-            <a @click="doConfirm($event)" class="chain-btn pointer">存证上链</a>
+            <a ref="sendTx" @click="doConfirm($event)" class="chain-btn pointer"
+              >存证上链</a
+            >
           </div>
         </div>
       </div>
@@ -81,8 +83,7 @@
 </template>
 
 <script>
-
-import {saveDonor} from '@/api/dapps'
+import { saveDonor } from "@/api/dapps";
 
 export default {
   data() {
@@ -93,29 +94,38 @@ export default {
       beneficiary: "",
       mechanism: "",
       explain: "",
+      firstSend: 0,
     };
   },
   methods: {
-      async doConfirm(e) {
+    async doConfirm(e) {
       let that = this;
+      // that.$refs.sendTx.href =
+      //   "javascript:sendMessageToContentScriptByPostMessage('link')";
 
-      // alert(that.getPK());
-
-      let payload = [that.donationName,that.donationContent,that.donationAddress,that.beneficiary,that.mechanism,that.explain]
+      let payload = {
+        name: that.donationName,
+        content: that.donationContent,
+        beneficiaryAddress: that.donationAddress,
+        beneficiary: that.beneficiary,
+        donation: that.mechanism,
+        state: that.explain,
+      };
       let pk = that.getPK();
-      if(pk == "")
-      {
-        that.$toast('获取账户失败，请打开TDOS插件',2000)
-      }else
-      {
-        var text = "212121212";
-        e.currentTarget.href='javascript:sendMessageToContentScriptByPostMessage(\''+text+'\')';
-
-        // const tx = await saveDonor(payload,pk)
-        // alert(JSON.stringify(tx));
+      if (pk == "") {
+        return that.$toast("获取账户失败，请打开TDOS插件", 3000);
       }
 
+      let tx = await saveDonor(payload, pk);
+      let sendTx = JSON.stringify(tx);
 
+      that.$refs.sendTx.href =
+        "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+      if (that.firstSend == 0) {
+        that.$refs.sendTx.click();
+        that.firstSend = 1;
+      }
+      return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
     },
   },
 };
