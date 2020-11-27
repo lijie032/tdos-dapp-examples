@@ -1,5 +1,5 @@
 // 部署公益合约
-import {ENV, rpc, getABI, getContract} from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC} from './constants'
 import {
   bin2hex,
   constants,
@@ -12,6 +12,7 @@ import {
 } from '@salaku/js-sdk'
 
 const privatekey = ''
+
 // 获取nonce
 async function syncNonce (
   publickey
@@ -20,6 +21,11 @@ async function syncNonce (
   const n = await rpc.getNonce(addr)
   let nn = n + 1
   return nn
+}
+
+// 获取事务
+export async function getTransaction (hash) {
+  return await httpRPC.getTransaction(hash)
 }
 
 // 解析公益
@@ -52,19 +58,19 @@ export async function saveDonor (payload, publickey) {
 
 // 公益获取
 export async function getDonor (hash) {
-  const c = await getContract()
-  if (ENV === 'prod') {
-    let builder = new TransactionBuilder(
-      constants.POA_VERSION,
-      privatekey
-    )
-    const tx = builder.buildContractCall(c, 'getDonor', hash, 0)
-    return decodeDonor(hex2bin(tx))
+  try {
+    let result = await rpc.viewContract(await getContract(), 'getDonor', hex2bin(hash))
+    return decodeFinance(result)
+  }catch (e) {
+    return "";
   }
 }
 
 // 解析物流
 function decodeLogistics (buf) {
+  if (buf == ""){
+    return "";
+  }
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.sender = rd.string()
@@ -94,14 +100,11 @@ export async function saveLogistics (payload, publickey) {
 
 // 物流获取
 export async function getLogistics (hash) {
-  const c = await getContract()
-  if (ENV === 'prod') {
-    let builder = new TransactionBuilder(
-      constants.POA_VERSION,
-      privatekey
-    )
-    const tx = builder.buildContractCall(c, 'getLogistics', hash, 0)
-    return decodeLogistics(hex2bin(tx))
+  try {
+    let result = await rpc.viewContract(await getContract(), 'getLogistics', hex2bin(hash))
+    return decodeFinance(result)
+  }catch (e) {
+    return "";
   }
 }
 
@@ -148,14 +151,11 @@ export async function confirmFund (hash) {
 
 // 资产获取
 export async function getFund (hash) {
-  const c = await getContract()
-  if (ENV === 'prod') {
-    let builder = new TransactionBuilder(
-      constants.POA_VERSION,
-      privatekey
-    )
-    const tx = builder.buildContractCall(c, 'getFund', hash, 0)
-    return decodeFund(hex2bin(tx))
+  try {
+    let result = await rpc.viewContract(await getContract(), 'getFund', hex2bin(hash))
+    return decodeFinance(result)
+  }catch (e) {
+    return "";
   }
 }
 
@@ -188,14 +188,11 @@ export async function saveMusic (payload, publickey) {
 
 // 音乐获取
 export async function getMusic (hash) {
-  const c = await getContract()
-  if (ENV === 'prod') {
-    let builder = new TransactionBuilder(
-      constants.POA_VERSION,
-      privatekey
-    )
-    const tx = builder.buildContractCall(c, 'getMusic', hash, 0)
-    return decodeMusic(hex2bin(tx))
+  try {
+    let result = await rpc.viewContract(await getContract(), 'getMusic', hex2bin(hash))
+    return decodeFinance(result)
+  }catch (e) {
+    return "";
   }
 }
 
@@ -228,14 +225,11 @@ export async function saveMedical (payload, publickey) {
 
 // 医疗获取
 export async function getMedical (hash) {
-  const c = await getContract()
-  if (ENV === 'prod') {
-    let builder = new TransactionBuilder(
-      constants.POA_VERSION,
-      privatekey
-    )
-    const tx = builder.buildContractCall(c, 'getMedical', hash, 0)
-    return decodeMedical(hex2bin(tx))
+  try {
+    let result = await rpc.viewContract(await getContract(), 'getMedical', hex2bin(hash))
+    return decodeFinance(result)
+  }catch (e) {
+    return "";
   }
 }
 
@@ -269,14 +263,11 @@ export async function saveInsure (payload, publickey) {
 
 // 保险获取
 export async function getInsure (hash) {
-  const c = await getContract()
-  if (ENV === 'prod') {
-    let builder = new TransactionBuilder(
-      constants.POA_VERSION,
-      privatekey
-    )
-    const tx = builder.buildContractCall(c, 'getInsure', hash, 0)
-    return decodeInsure(hex2bin(tx))
+  try {
+    let result = await rpc.viewContract(await getContract(), 'getInsure', hex2bin(hash))
+    return decodeFinance(result)
+  }catch (e) {
+    return "";
   }
 }
 
@@ -308,14 +299,11 @@ export async function saveBook (payload, publickey) {
 
 // 著作版权获取
 export async function getBook (hash) {
-  const c = await getContract()
-  if (ENV === 'prod') {
-    let builder = new TransactionBuilder(
-      constants.POA_VERSION,
-      privatekey
-    )
-    const tx = builder.buildContractCall(c, 'getBook', hash, 0)
-    return decodeBook(hex2bin(tx))
+  try {
+    let result = await rpc.viewContract(await getContract(), 'getBook', hex2bin(hash))
+    return decodeFinance(result)
+  }catch (e) {
+    return "";
   }
 }
 
@@ -347,14 +335,11 @@ export async function saveProduct (payload, publickey) {
 
 // 产品溯源获取
 export async function getProduct (hash) {
-  const c = await getContract()
-  if (ENV === 'prod') {
-    let builder = new TransactionBuilder(
-      constants.POA_VERSION,
-      privatekey
-    )
-    const tx = builder.buildContractCall(c, 'getProduct', hash, 0)
-    return decodeProduct(hex2bin(tx))
+  try {
+    let result = await rpc.viewContract(await getContract(), 'getProduct', hex2bin(hash))
+    return decodeFinance(result)
+  }catch (e) {
+    return "";
   }
 }
 
@@ -394,27 +379,27 @@ export async function saveWeld (payload, publickey) {
 
 // 焊接获取
 export async function getWeld (hash) {
-  const c = await getContract()
-  if (ENV === 'prod') {
-    let builder = new TransactionBuilder(
-      constants.POA_VERSION,
-      privatekey
-    )
-    const tx = builder.buildContractCall(c, 'getWeld', hash, 0)
-    return decodeWeld(hex2bin(tx))
+  try {
+    let result = await rpc.viewContract(await getContract(), 'getWeld', hex2bin(hash))
+    return decodeFinance(result)
+  }catch (e) {
+    return "";
   }
 }
 
 // 解析金融
 function decodeFinance (buf) {
-  const u = {}
-  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
-  u.title = rd.string()
-  u.name = rd.string()
-  u.cid = rd.string()
-  u.sum = rd.string()
-  u.contract = rd.string()
-  return u
+  if (buf != '') {
+    const u = {}
+    const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+    u.title = rd.string()
+    u.name = rd.string()
+    u.cid = rd.string()
+    u.sum = rd.string()
+    u.contract = rd.string()
+    return u
+  }
+  return ''
 }
 
 // 金融保存
@@ -449,13 +434,11 @@ export async function confirmFinance (hash, publickey) {
 
 // 金融获取
 export async function getFinance (hash) {
-  const c = await getContract()
-  if (ENV === 'prod') {
-    let builder = new TransactionBuilder(
-      constants.POA_VERSION,
-      privatekey
-    )
-    const tx = builder.buildContractCall(c, 'getFinance', hash, 0)
-    return decodeFinance(hex2bin(tx))
+  try {
+    let result = await rpc.viewContract(await getContract(), 'getFinance', hex2bin(hash))
+    return decodeFinance(result)
+  }catch (e) {
+    return "";
   }
+
 }

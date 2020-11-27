@@ -6,10 +6,10 @@
          TDOS保险
       </div>
       <div class="page-main content-middle">
-          
+
           <div class="btnBox pw_btnbox">
-              <a class="pointer h-btn h-btn-1" @click="linChain"><span>保险公司</span></a>
-              <a class="pointer h-btn h-btn-2 " @click="linSearch"><span>个人用户</span></a>
+              <a class="pointer h-btn h-btn-1" @click="onChain"><span>保险公司</span></a>
+              <a class="pointer h-btn h-btn-2 " @click="search"><span>个人用户</span></a>
           </div>
       </div>
   </div>
@@ -27,20 +27,20 @@ import explorer from '@/components/browser.vue'
 export default {
     data(){
         return{
-            
+
         }
     },
     components:{
      explorer
     },
     methods:{
-        linChain(){
+      onChain(){
             let that = this;
-            that.$router.push({path:'/publicWelfare/onChain'})
+            that.$router.push({path:'/Insurance/onChain'})
         },
-        linSearch(){
+      search(){
             let that = this;
-            that.$router.push({path:'/publicWelfare/search'})
+            that.$router.push({path:'/Insurance/search'})
         }
     }
 }

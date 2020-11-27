@@ -52,9 +52,9 @@ export default new Router({
       component: resolve=>(require(["@/views/finance/search_bank"],resolve))
     },
     {
-      path: '/finance/searchRusult',//金融哈希搜索结果
-      name: 'financeSearchRusult',
-      component: resolve=>(require(["@/views/finance/searchRusult"],resolve))
+      path: '/finance/searchResult',//金融哈希搜索结果
+      name: 'financeSearchResult',
+      component: resolve=>(require(["@/views/finance/searchResult"],resolve))
     },
     {
       path: '/publicWelfare',//公益
@@ -121,7 +121,7 @@ export default new Router({
       name: 'medicalTreatment',
       component: resolve=>(require(["@/views/medicalTreatment/index"],resolve))
     },
-    
+
     {
       path: '/medicalTreatment/onChain',//医疗上链
       name: 'medicalTreatment_onChain',

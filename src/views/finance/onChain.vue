@@ -57,6 +57,7 @@ export default{
       let finance = await saveFinance(payload, publickey);
       console.log(finance);
       //todo 传给客户端
+      this.$router.push({path:'/finance'})
     }
   }
 }

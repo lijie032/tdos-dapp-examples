@@ -6,7 +6,7 @@
          TDOS公益
       </div>
       <div class="page-main content-middle">
-          
+
           <div class="btnBox pw_btnbox">
               <a class="pointer h-btn h-btn-1" @click="linChain"><span>红十字会</span></a>
               <a class="pointer h-btn h-btn-2 " @click="linSearch"><span>受益人</span></a>
@@ -26,7 +26,7 @@ import explorer from '@/components/browser.vue'
 export default {
     data(){
         return{
-            
+
         }
     },
     components:{

@@ -99,7 +99,7 @@ export default {
       async doConfirm(e) {
       let that = this;
 
-      // alert(that.getPK()); 
+      // alert(that.getPK());
 
       let payload = [that.donationName,that.donationContent,that.donationAddress,that.beneficiary,that.mechanism,that.explain]
       let pk = that.getPK();

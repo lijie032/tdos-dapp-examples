@@ -9,37 +9,46 @@
                        <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">寄件人姓名：</div>
-                           <div class="lab-info">刘倩</div>
-                       </div>
-
-                      <div class="d-text">
-                           <span class="s-icon"></span>
-                           <div class="lab">寄件人地址：</div>
-                           <div class="lab-info">江苏省常州市新北区绿都万和城七区</div>
+                           <div class="lab-info"><a id="send_name"></a></div>
                        </div>
                        <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">寄件人电话：</div>
-                           <div class="lab-info">18018209078</div>
+                           <div class="lab-info"><a id="send_phone"></a></div>
                        </div>
                        <div class="d-text">
                            <span class="s-icon"></span>
-                           <div class="lab">区块高度：</div>
-                           <div class="lab-info">6598526</div>
+                           <div class="lab">物品类型：</div>
+                           <div class="lab-info"><a id="send_type"></a></div>
+                       </div>
+                       <div class="d-text">
+                          <span class="s-icon"></span>
+                          <div class="lab">收件人姓名：</div>
+                          <div class="lab-info"><a id="collect_name"></a></div>
+                       </div>
+                       <div class="d-text">
+                           <span class="s-icon"></span>
+                           <div class="lab">收件人地址：</div>
+                           <div class="lab-info"><a id="collect_address"></a></div>
+                       </div>
+                       <div class="d-text">
+                           <span class="s-icon"></span>
+                           <div class="lab">收件人电话：</div>
+                           <div class="lab-info"><a id="collect_phone"></a></div>
                        </div>
                        <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">区块哈希：</div>
-                           <div class="lab-info">weq3595cdas12d6q5we610f2a1ds563665c9as8d8asdasdczxc</div>
+                           <div class="lab-info"><a id="block_hash"></a></div>
                        </div>
                        <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">事务哈希：</div>
-                           <div class="lab-info">weq3595cdas12d6q5we610f2a1ds563665c9as8d8asdasdczxc</div>
+                           <div class="lab-info"><a id="transaction_hash"></a></div>
                        </div>
 
                        <div class="r-btn-box">
-                           <a class="pointer btnsure">确认收货</a>
+                           <a class="pointer btnsure" @click="back">返回</a>
                        </div>
                   </div>
 
@@ -50,6 +59,32 @@
 </template>
 
 <script>
+  import explorer from '@/components/browser.vue'
+
+  export default {
+    data () {
+      return {}
+    },
+    components: {
+      explorer
+    },
+    methods: {
+      back () {
+        this.$router.push({path: '/logistics'})
+      }
+    }, mounted: function () {
+      // let transaction = this.$route.query.transaction;
+      // let result = this.$route.query.result;
+      document.getElementById("send_name").innerHTML = "123123";
+      document.getElementById("send_phone").innerHTML = "123123";
+      document.getElementById("send_type").innerHTML = "123123";
+      document.getElementById("collect_name").innerHTML = "123123";
+      document.getElementById("collect_address").innerHTML = "123123";
+      document.getElementById("collect_phone").innerHTML = "123123";
+      document.getElementById("block_hash").innerHTML = "123123";
+      document.getElementById("transaction_hash").innerHTML = "123123";
+    }
+  }
 </script>
 
 <style scoped lang="less">

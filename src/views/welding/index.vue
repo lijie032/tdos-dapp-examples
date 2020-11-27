@@ -6,10 +6,10 @@
          TDOS焊接
       </div>
       <div class="page-main content-middle">
-          
+
           <div class="index-nav">
-              <a class="pointer a-nav a-nav1"><i></i><span>焊接公司</span></a>
-              <a class="pointer a-nav a-nav2"><i></i><span>查询处</span></a>
+              <a class="pointer a-nav a-nav1" @click="onChain"><i></i><span>焊接公司</span></a>
+              <a class="pointer a-nav a-nav2" @click="search"><i></i><span>查询处</span></a>
               <div class="line"></div>
           </div>
       </div>
@@ -29,14 +29,21 @@ import explorer from '@/components/browser.vue'
 export default {
     data(){
         return{
-            
+
         }
     },
     components:{
      explorer
     },
     methods:{
-       
+      onChain(){
+        let that = this;
+        that.$router.push({path:'/welding/onChain'})
+      },
+      search(){
+        let that = this;
+        that.$router.push({path:'/welding/search'})
+      }
     }
 }
 </script>

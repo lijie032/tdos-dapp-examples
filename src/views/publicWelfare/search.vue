@@ -1,16 +1,16 @@
 <template>
   <div class="pageWrap  f-wrap-table search-wrap">
-     
+
       <div class="page-main content-middle">
            <div class="logo-intro">
               <div class="logo"></div>
               TDOS公益
            </div>
-           
+
            <div class="search-box ">
                <div class="din-box">
                   <div class="in-box">
-                      <input placeholder="请输入上链哈希查询"/> 
+                      <input placeholder="请输入上链哈希查询"/>
                       <a class="close pointer"></a>
                   </div>
                   <a class="searchbtn pointer" @click="linkResult">搜索</a>
