@@ -10,6 +10,8 @@
        <router-link target="_blank" to='/bookCopyright'>版权</router-link>
        <router-link target="_blank" to='/welding'>焊接</router-link>
        <router-link target="_blank" to='/cryptoBear'>加密熊</router-link>
+       <router-link target="_blank" to='/chat'>聊天</router-link>
+       
     </div>
 </template>
 <script>

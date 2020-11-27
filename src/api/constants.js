@@ -39,6 +39,8 @@ export function persistVM(){
 export const rpc = new RPC('192.168.1.89', '6011')
 export const CONTRACT_ADDRESS = '30f1acbde6a9111a3cde642bfbc30310e293cd67' // 十个存证合约地址
 export const CONTRACT_SECRET_BEAR_ADDRESS = '048a35f2c8c5ef6c527d99f5d135019d268be5bd' // 加密熊合约地址
+export const CONTRACT_CHAT_ADDRESS = 'b6dc4bb054a7b63669f99ecf7a5e73399ee132ea' // 聊天室合约地址
+export const CONTRACT_BOOKS_ADDRESS = '6c0a450644a9616571412b975b3042814df094cd' // 通讯录合约地址
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, await getABI())
