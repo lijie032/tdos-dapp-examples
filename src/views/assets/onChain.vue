@@ -28,6 +28,7 @@
                   </div>
                   <div class="btnbox">
                        <a class="btn pointer" @click="submit">存证上链</a>
+                       <a ref="sendTx"></a>
                   </div>
               </div>
           </div>
@@ -49,7 +50,6 @@
   export default{
     data(){
       return{
-
       }
     },
     components:{
@@ -57,24 +57,39 @@
     },
     methods:{
       async submit(){
-
+        let that = this;
         let name = this.$refs.name.value;
         let info = this.$refs.info.value;
         let to = this.$refs.to.value;
         let height = this.$refs.height.value;
-
-        //todo 合约参数需要增加
         let payload = {
           name:name, content:info, granter:to, condition:height
         };
+        let pk = that.getPK();
+        if (pk == "") {
+          return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+        }
+        let Fund = await saveFund(payload, pk);
+        let sendTx = JSON.stringify(Fund);
+        that.$refs.sendTx.href =
+          "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+        that.$refs.sendTx.click();
+        return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
 
-        //todo 获取公钥
-        let publickey = "02f9d915954e04107d11fb9689a6330c22199e1e830857bff076e033bbca2888d4";
-        let Fund = await saveFund(payload, publickey);
-        console.log(Fund);
-        //todo 传给客户端
-        this.$router.push({path:'/assets'})
+      },
+      get(){
+        let that = this;
+        let t = that.getRes();
+        if (t != ""){
+          return that.$toast("事务广播成功，事务哈希为："+t, 3000);
+        }
       }
+    },
+    mounted() {
+      this.timer = setInterval(this.get, 1000);
+    },
+    beforeDestroy() {
+      clearInterval(this.timer);
     }
   }
 </script>

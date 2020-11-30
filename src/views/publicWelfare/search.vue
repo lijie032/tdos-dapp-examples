@@ -42,7 +42,7 @@
         } else {
           getTransaction(hash).then(t => {
             let that = this
-            that.$router.push({path: '/publicWelfare/result', query: {transaction: t, result: result}})
+            that.$router.push({path: '/publicWelfare/result', query: {transaction: t, result: result, tx_hash: hash}})
           })
         }
         // let that = this;

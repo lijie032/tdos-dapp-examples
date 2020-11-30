@@ -40,7 +40,7 @@
                        <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">区块高度：</div>
-                           <div class="lab-info"><a id="height"></a></div>
+                           <div class="lab-info"><a id="block_height"></a></div>
                        </div>
                        <div class="d-text">
                            <span class="s-icon"></span>
@@ -79,17 +79,26 @@
         this.$router.push({path: '/Insurance'})
       }
     }, mounted: function () {
-      // let transaction = this.$route.query.transaction;
-      // let result = this.$route.query.result;
-      document.getElementById("name").innerHTML = "123123";
-      document.getElementById("info").innerHTML = "123123";
-      document.getElementById("time").innerHTML = "123123";
-      document.getElementById("bool").innerHTML = "123123";
-      document.getElementById("bool2").innerHTML = "123123";
-      document.getElementById("numb").innerHTML = "123123";
-      document.getElementById("height").innerHTML = "123123";
-      document.getElementById("block_hash").innerHTML = "123123";
-      document.getElementById("transaction_hash").innerHTML = "123123";
+      let t = this.$route.query.transaction;
+      let result = this.$route.query.result;
+      let tx_hash = this.$route.query.tx_hash;
+      document.getElementById("block_hash").innerHTML = t.blockHash;
+      document.getElementById("transaction_hash").innerHTML = tx_hash;
+      document.getElementById("block_height").innerHTML = t.blockHeight;
+      document.getElementById("name").innerHTML = result.name;
+      document.getElementById("info").innerHTML = result.info;
+      document.getElementById("time").innerHTML = result.time;
+      if (result.delay){
+        document.getElementById("bool").innerHTML = "是";
+      }else {
+        document.getElementById("bool").innerHTML = "否";
+      }
+      if (result.claim){
+        document.getElementById("bool2").innerHTML = "是";
+      }else {
+        document.getElementById("bool2").innerHTML = "否";
+      }
+      document.getElementById("numb").innerHTML = result.num;
     }
   }
 </script>

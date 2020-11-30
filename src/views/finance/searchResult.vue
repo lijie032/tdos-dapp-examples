@@ -11,7 +11,11 @@
                   </div>
                   <div class="d-info">
                       <span class="icon"></span>
-                      <p class="p-text">公司名称：<a id="name"></a></p>
+                      <p class="p-text">公司名称：<a id="title"></a></p>
+                  </div>
+                  <div class="d-info">
+                    <span class="icon"></span>
+                    <p class="p-text">法人名称：<a id="name"></a></p>
                   </div>
                    <div class="d-info">
                       <span class="icon"></span>
@@ -23,20 +27,21 @@
                   </div>
                   <div class="d-info">
                       <span class="icon"></span>
-                      <p class="p-text">区块高度：<a id="height"></a></p>
-                  </div>
-                  <div class="d-info">
-                      <span class="icon"></span>
-                      <p class="p-text">事务哈希：<a id="hash"></a></p>
-                  </div>
-                  <div class="d-info">
-                      <span class="icon"></span>
                       <p class="p-text">是否认证：<a id="attestation"></a></p>
                   </div>
-                   <div class="d-info">
-                      <span class="icon"></span>
-                      <p class="p-text">(从哪里获取？？？)认证哈希：1C366dzxqemp56ASwe59FG32sdxc59332VFG</p>
+                  <div class="d-info">
+                    <span class="icon"></span>
+                    <p class="p-text">区块高度：<a id="height"></a></p>
                   </div>
+                  <div class="d-info">
+                    <span class="icon"></span>
+                    <p class="p-text">区块哈希：<a id="block_hash"></a></p>
+                  </div>
+                  <div class="d-info">
+                    <span class="icon"></span>
+                    <p class="p-text">事务哈希：<a id="tx_hash"></a></p>
+                  </div>
+
                   <div class="btnbox">
                       <a class="pointer chain-btn" @click="back">返回</a>
                   </div>
@@ -68,17 +73,24 @@ export default{
       that.$router.push({path: '/finance'})
     }
   },mounted: function() {
-    //todo 调用异步
-    //let transaction =  await getTransaction(hash);
-    //todo 获取公钥
-    // let publickey = '02f9d915954e04107d11fb9689a6330c22199e1e830857bff076e033bbca2888d4'
-    // let result = await getFinance(hash, publickey)
+
+    let t = this.$route.query.transaction;
+    let result = this.$route.query.result;
+    let tx_hash = this.$route.query.tx_hash;
+    document.getElementById("height").innerHTML = t.blockHeight;
+    document.getElementById("block_hash").innerHTML = t.blockHash;
+    document.getElementById("title").innerHTML = result.title;
     document.getElementById("name").innerHTML = result.name;
-    document.getElementById("amount").innerHTML = result.amount;
+    document.getElementById("amount").innerHTML = result.sum;
     document.getElementById("contract").innerHTML = result.contract;
-    document.getElementById("height").innerHTML = "123123";
-    document.getElementById("hash").innerHTML = "123123";
-    document.getElementById("attestation").innerHTML = "123123";
+    document.getElementById("tx_hash").innerHTML = tx_hash;
+    let confirm = result.confirm;
+    if (confirm) {
+      document.getElementById("attestation").innerHTML = "是";
+    }else {
+      document.getElementById("attestation").innerHTML = "否";
+    }
+
 
   }
 }

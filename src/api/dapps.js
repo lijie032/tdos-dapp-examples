@@ -30,6 +30,9 @@ export function getTransaction (hash) {
 
 // 解析公益
 function decodeDonor (buf) {
+  if (buf == ""){
+    return "";
+  }
   buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
@@ -72,6 +75,7 @@ function decodeLogistics (buf) {
   if (buf == ""){
     return "";
   }
+  buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.sender = rd.string()
@@ -103,7 +107,7 @@ export async function saveLogistics (payload, publickey) {
 export async function getLogistics (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getLogistics', hex2bin(hash))
-    return decodeFinance(result)
+    return decodeLogistics(result)
   }catch (e) {
     return "";
   }
@@ -111,6 +115,10 @@ export async function getLogistics (hash) {
 
 // 解析资产
 function decodeFund (buf) {
+  if (buf == ""){
+    return "";
+  }
+  buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.name = rd.string()
@@ -154,7 +162,7 @@ export async function confirmFund (hash) {
 export async function getFund (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getFund', hex2bin(hash))
-    return decodeFinance(result)
+    return decodeFund(result)
   }catch (e) {
     return "";
   }
@@ -162,6 +170,10 @@ export async function getFund (hash) {
 
 // 解析音乐
 function decodeMusic (buf) {
+  if (buf == ""){
+    return "";
+  }
+  buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.name = rd.string()
@@ -191,7 +203,7 @@ export async function saveMusic (payload, publickey) {
 export async function getMusic (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getMusic', hex2bin(hash))
-    return decodeFinance(result)
+    return decodeMusic(result)
   }catch (e) {
     return "";
   }
@@ -199,6 +211,10 @@ export async function getMusic (hash) {
 
 // 解析医疗
 function decodeMedical (buf) {
+  if (buf == ""){
+    return "";
+  }
+  buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.name = rd.string()
@@ -228,7 +244,7 @@ export async function saveMedical (payload, publickey) {
 export async function getMedical (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getMedical', hex2bin(hash))
-    return decodeFinance(result)
+    return decodeMedical(result)
   }catch (e) {
     return "";
   }
@@ -236,14 +252,18 @@ export async function getMedical (hash) {
 
 // 解析保险
 function decodeInsure (buf) {
+  if (buf == ""){
+    return "";
+  }
+  buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.name = rd.string()
   u.info = rd.string()
   u.time = rd.string()
-  u.delay = rd.string()
+  u.delay = rd.bool()
   u.num = rd.string()
-  u.claim = rd.string()
+  u.claim = rd.bool()
   return u
 }
 
@@ -266,7 +286,7 @@ export async function saveInsure (payload, publickey) {
 export async function getInsure (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getInsure', hex2bin(hash))
-    return decodeFinance(result)
+    return decodeInsure(result)
   }catch (e) {
     return "";
   }
@@ -274,6 +294,10 @@ export async function getInsure (hash) {
 
 // 解析著作版权
 function decodeBook (buf) {
+  if (buf == ""){
+    return "";
+  }
+  buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.name = rd.string()
@@ -302,7 +326,7 @@ export async function saveBook (payload, publickey) {
 export async function getBook (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getBook', hex2bin(hash))
-    return decodeFinance(result)
+    return decodeBook(result)
   }catch (e) {
     return "";
   }
@@ -310,6 +334,10 @@ export async function getBook (hash) {
 
 // 解析产品溯源
 function decodeProduct (buf) {
+  if (buf == ""){
+    return "";
+  }
+  buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.place = rd.string()
@@ -346,6 +374,10 @@ export async function getProduct (hash) {
 
 // 解析焊接
 function decodeWeld (buf) {
+  if (buf == ""){
+    return "";
+  }
+  buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.wpqr = rd.string()
@@ -391,6 +423,7 @@ export async function getWeld (hash) {
 // 解析金融
 function decodeFinance (buf) {
   if (buf != '') {
+    buf = hex2bin(buf)
     const u = {}
     const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
     u.title = rd.string()
@@ -398,6 +431,7 @@ function decodeFinance (buf) {
     u.cid = rd.string()
     u.sum = rd.string()
     u.contract = rd.string()
+    u.confirm = rd.bool()
     return u
   }
   return ''
@@ -426,7 +460,7 @@ export async function confirmFinance (hash, publickey) {
       constants.POA_VERSION,
       privatekey
     )
-    const tx = builder.buildContractCall(c, 'confirmFinance', hex2bin(hash), 0)
+    const tx = builder.buildContractCall(c, 'confirmFinance', hash, 0)
     tx.nonce = await syncNonce(publickey)
     tx.from = publickey
     return tx

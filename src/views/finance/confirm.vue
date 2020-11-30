@@ -41,6 +41,7 @@
 
                   <div class="btnbox">
                       <a class="pointer chain-btn" @click="examine">审核通过</a>
+                      <a ref="sendTx"></a>
                   </div>
               </div>
          </div>
@@ -63,26 +64,32 @@ export default{
   },
   methods:{
     async examine(){
-      //todo 获取公钥
-      let publickey = "02f9d915954e04107d11fb9689a6330c22199e1e830857bff076e033bbca2888d4";
-      // let hash = this.$route.query.hash;
-      let result = await confirmFinance("1a2b",publickey);
-      //todo 传给插件
-      this.$router.push({path:'/finance'})
+      let that = this;
+      let tx_hash = this.$route.query.tx_hash;
+      let pk = that.getPK();
+      if (pk == "") {
+        return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+      }
+      let result = await confirmFinance(tx_hash,pk);
+      let sendTx = JSON.stringify(result);
+      that.$refs.sendTx.href =
+        "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+      that.$refs.sendTx.click();
+      return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
     }
   },
    mounted: function() {
-    //todo 调用异步
-    let hash = this.$route.query.hash;
-    //  getTransaction(hash);
-     document.getElementById("height").innerHTML = "123123";
-     document.getElementById("block_hash").innerHTML = "123123";
-     document.getElementById("transaction_hash").innerHTML = "123123";
-     document.getElementById("title").innerHTML = "123123";
-     document.getElementById("name").innerHTML = "123123";
-     document.getElementById("cid").innerHTML = "123123";
-     document.getElementById("amount").innerHTML = "123123";
-     document.getElementById("contract").innerHTML = "123123";
+     let t = this.$route.query.transaction;
+     let result = this.$route.query.result;
+     let tx_hash = this.$route.query.tx_hash;
+     document.getElementById("height").innerHTML = t.blockHeight;
+     document.getElementById("block_hash").innerHTML = t.blockHash;
+     document.getElementById("transaction_hash").innerHTML = tx_hash;
+     document.getElementById("title").innerHTML = result.title;
+     document.getElementById("name").innerHTML = result.name;
+     document.getElementById("cid").innerHTML = result.cid;
+     document.getElementById("amount").innerHTML = result.sum;
+     document.getElementById("contract").innerHTML = result.contract;
    }
 
 

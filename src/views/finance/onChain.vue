@@ -19,6 +19,7 @@
                   </div>
                   <div class="btnbox">
                       <a class="pointer chain-btn" @click="save">存证上链</a>
+                      <a ref="sendTx"></a>
                   </div>
               </div>
          </div>
@@ -55,9 +56,11 @@ export default{
         return that.$toast("获取账户失败，请打开TDOS插件", 3000);
       }
       let finance = await saveFinance(payload, pk);
-      console.log(finance);
+      let sendTx = JSON.stringify(finance);
+      that.$refs.sendTx.href =
+        "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+      that.$refs.sendTx.click();
       return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
-      // this.$router.push({path:'/finance'})
     }
   }
 }

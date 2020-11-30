@@ -25,9 +25,8 @@ Vue.prototype.changeMainData = function (key, val) {
   momentObj[key] = val
 }
 
-
 var timer;
-timer = setInterval (function () {
+timer = setInterval(function () {
 
   var pk = document.getElementById('receivePTdos')
 
@@ -35,6 +34,12 @@ timer = setInterval (function () {
     let newPk = pk.innerHTML;
     newPk = newPk.replace(/\s*/g, "");
     localStorage.setItem('myPubKeyStorage', newPk);
+
+    var box = document.getElementById("receivePTdos")
+    if (box) {
+      box.parentNode.removeChild(box);
+    }
+
   }
 
 }, 1000);
@@ -48,6 +53,23 @@ Vue.prototype.getPK = function () {
     return ""
   }
 
+}
+
+Vue.prototype.getRes = function () {
+
+  var res = document.getElementById('receivePTos-reulst')
+  if (res != null) {
+    let str = res.innerHTML
+
+    var box = document.getElementById("receivePTos-reulst")
+    if (box) {
+      box.parentNode.removeChild(box);
+    }
+
+    return str
+  } else {
+    return ""
+  }
 }
 
 

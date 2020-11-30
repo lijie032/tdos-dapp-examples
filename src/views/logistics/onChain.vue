@@ -51,6 +51,7 @@
 
                  <div class="btnbox">
                      <a class="chain-btn pointer" @click="submit">寄件上链</a>
+                     <a ref="sendTx"></a>
                  </div>
              </div>
          </div>
@@ -73,29 +74,29 @@
     },
     methods:{
       async submit(){
-        //await dapps.saveFinance();
-        // sender, address, senderPhone, goods, receiver, cid, receiverPhone
-
-
+        let that = this;
         let collect_name = this.$refs.collect_name.value;
         let collect_address = this.$refs.collect_address.value;
         let collect_phone = this.$refs.collect_phone.value;
-        let sned_type = this.$refs.send_type.value;
+        let send_type = this.$refs.send_type.value;
         let send_name = this.$refs.send_name.value;
         let send_numb = this.$refs.send_numb.value;
         let send_phone = this.$refs.send_phone.value;
+        let payload = {
+          sender:send_name,address:collect_address,senderPhone:send_phone,goods:send_type,receiver:collect_name,cid:send_numb,receiverPhone:collect_phone
+        };
 
-        //todo 合约参数需要增加
-        // let payload = {
-        //   title:"title",name:"name",cid:"cid",sum:"sum",contract:"contract"
-        // };
-
-
-        //todo 获取公钥
-        // let publickey = "02f9d915954e04107d11fb9689a6330c22199e1e830857bff076e033bbca2888d4";
-        // let finance = await saveLogistics(payload, publickey);
-        //todo 传给客户端
-        this.$router.push({path:'/logistics'})
+        let pk = that.getPK();
+        if (pk == "") {
+          return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+        }
+        let Logistics = await saveLogistics(payload, pk);
+        let sendTx = JSON.stringify(Logistics);
+        that.$refs.sendTx.href =
+          "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+        that.$refs.sendTx.click();
+        return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
+        // this.$router.push({path:'/logistics'})
       }
     }
   }

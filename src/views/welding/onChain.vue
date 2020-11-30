@@ -8,19 +8,19 @@
                   <h3 class="from_title">上链信息</h3>
                   <div class="d-in">
                       <div class="lab">WPQR号:</div>
-                     <input class="border-box" placeholder="" ref="wpqqr"/>
+                     <input class="border-box" placeholder="" v-model="wpqqr"/>
                   </div>
                   <div class="d-in">
                       <div class="lab">焊接人员名称:</div>
-                     <input class="border-box" placeholder="" ref="person"/>
+                     <input class="border-box" placeholder="" v-model="person"/>
                   </div>
                   <div class="d-in">
                       <div class="lab">设备名称:</div>
-                     <input class="border-box" placeholder="" ref="equipment"/>
+                     <input class="border-box" placeholder="" v-model="equipment"/>
                   </div>
 
                   <div class="btnbox">
-                       <a class="btn pointer" @click="">存证上链</a>
+                       <a class="btn pointer" @click="submit">存证上链</a>
                   </div>
               </div>
           </div>
@@ -48,7 +48,29 @@ export default {
 
     },
     methods:{
+      async doConfirm(e) {
+        let that = this;
+        let payload = {
+          name: that.donationName,
+          content: that.donationContent,
+          beneficiaryAddress: that.donationAddress,
+          beneficiary: that.beneficiary,
+          donation: that.mechanism,
+          state: that.explain,
+        };
+        let pk = that.getPK();
+        if (pk == "") {
+          return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+        }
 
+        let tx = await saveDonor(payload, pk);
+        let sendTx = JSON.stringify(tx);
+        that.$refs.sendTx.href =
+          "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+        that.$refs.sendTx.click();
+        return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
+        // this.$router.push({path:'/publicWelfare'})
+      },
     }
 }
 </script>

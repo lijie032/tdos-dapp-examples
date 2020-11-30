@@ -25,6 +25,7 @@
 
                   <div class="btnbox">
                        <a class="btn pointer" @click="submit">存证上链</a>
+                       <a ref="sendTx"></a>
                   </div>
               </div>
           </div>
@@ -68,7 +69,6 @@ export default {
 
         let Book = await saveBook(payload, pk);
         let sendTx = JSON.stringify(Book);
-        console.log(Book)
 
         that.$refs.sendTx.href =
           "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";

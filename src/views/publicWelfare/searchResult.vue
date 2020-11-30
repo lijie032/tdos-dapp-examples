@@ -6,8 +6,9 @@
           <div class="pw-content1520 result-main">
               <h3 class="r-title">xxxx红十字会机构</h3>
               <p class="p-text">区块高度：<a id="height"></a></p>
-              <p class="p-text">事务哈希：<a id="hash"></a></p>
-              <div class="form-info">
+              <p class="p-text">区块哈希：<a id="hash"></a></p>
+              <p class="p-text">事务哈希：<a id="tx_hash"></a></p >
+            <div class="form-info">
                   <h3>捐赠信息：</h3>
                   <div class="info-col p-text">
                       <span class="r-lab">捐赠姓名：</span>
@@ -63,6 +64,7 @@
     mounted: function () {
       let transaction = this.$route.query.transaction;
       let result = this.$route.query.result;
+      let tx_hash = this.$route.query.tx_hash;
       console.log(transaction);
       console.log(result);
       document.getElementById("from").innerHTML = result.name;
@@ -73,7 +75,7 @@
       document.getElementById("beneficiary").innerHTML = result.beneficiary;
       document.getElementById("height").innerHTML = transaction.blockHeight;
       document.getElementById("hash").innerHTML = transaction.blockHash;
-
+      document.getElementById("tx_hash").innerHTML = tx_hash;
     }
   }
 </script>

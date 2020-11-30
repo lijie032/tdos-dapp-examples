@@ -98,9 +98,6 @@ export default {
   methods: {
     async doConfirm(e) {
       let that = this;
-      // that.$refs.sendTx.href =
-      //   "javascript:sendMessageToContentScriptByPostMessage('link')";
-
       let payload = {
         name: that.donationName,
         content: that.donationContent,

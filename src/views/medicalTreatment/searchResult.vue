@@ -31,16 +31,22 @@
                            <div class="lab">就诊描述：</div>
                            <div class="lab-info"><a id="info"></a></div>
                        </div>
-                        <div class="d-text">
+                       <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">区块高度：</div>
-                           <div class="lab-info"><a id="height"></a></div>
+                           <div class="lab-info"><a id="block_height"></a></div>
                        </div>
-                        <div class="d-text">
+                       <div class="d-text">
+                         <span class="s-icon"></span>
+                         <div class="lab">区块哈希：</div>
+                         <div class="lab-info"><a id="block_hash"></a></div>
+                       </div>
+                       <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">事务哈希：</div>
-                           <div class="lab-info"><a id="hash"></a></div>
+                           <div class="lab-info"><a id="transaction_hash"></a></div>
                        </div>
+
 
 
                        <div class="r-btn-box">
@@ -69,15 +75,17 @@
         this.$router.push({path: '/medicalTreatment'})
       }
     }, mounted: function () {
-      // let transaction = this.$route.query.transaction;
-      // let result = this.$route.query.result;
-      document.getElementById("name").innerHTML = "123123";
-      document.getElementById("time").innerHTML = "123123";
-      document.getElementById("medical").innerHTML = "123123";
-      document.getElementById("doctor").innerHTML = "123123";
-      document.getElementById("info").innerHTML = "123123";
-      document.getElementById("height").innerHTML = "123123";
-      document.getElementById("hash").innerHTML = "123123";
+      let t = this.$route.query.transaction;
+      let result = this.$route.query.result;
+      let tx_hash = this.$route.query.tx_hash;
+      document.getElementById("block_hash").innerHTML = t.blockHash;
+      document.getElementById("transaction_hash").innerHTML = tx_hash;
+      document.getElementById("block_height").innerHTML = t.blockHeight;
+      document.getElementById("name").innerHTML = result.name;
+      document.getElementById("time").innerHTML = result.time;
+      document.getElementById("medical").innerHTML = result.hospital;
+      document.getElementById("doctor").innerHTML = result.doctor;
+      document.getElementById("info").innerHTML = result.info;
     }
   }
 </script>
