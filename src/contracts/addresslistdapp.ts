@@ -7,27 +7,27 @@ class Book{
     username: string
     phone: string
     memo: string
-    height: u64
+    hash: ArrayBuffer
 
     constructor(
         username: string,
         phone: string,
         memo: string,
-        height: u64
+        hash: ArrayBuffer
     ) {
         this.username = username;
         this.phone = phone;
         this.memo = memo;
-        this.height = height;
+        this.hash = hash;
     }
 
     static fromEncoded(buf: ArrayBuffer): Book {
         const li = RLPList.fromEncoded(buf);
-        const book = new Book('', '', '', 0);
+        const book = new Book('', '', '', new ArrayBuffer(0));
         book.username = li.getItem(0).string();
         book.phone = li.getItem(1).string();
         book.memo = li.getItem(2).string();
-        book.height = li.getItem(3).u64();
+        book.hash = li.getItem(3).bytes();
         return book;
     }
 
@@ -36,7 +36,7 @@ class Book{
         els.push(RLP.encodeString(this.username));
         els.push(RLP.encodeString(this.phone));
         els.push(RLP.encodeString(this.memo));
-        els.push(RLP.encodeU64(this.height));
+        els.push(RLP.encodeBytes(this.hash));
         return RLP.encodeElements(els);
     }
 }
@@ -74,8 +74,8 @@ export function addBook(username: string, phone: string, memo: string): void {
     {
         BookArray = new Array<Book>();
     }
-    const h = Context.header();
-    let book = new Book(username, phone, memo, h.height);
+    const tx = Context.transaction();
+    let book = new Book(username, phone, memo, tx.hash);
     BookArray.push(book);
     let saveBookArrayBuffer = encodeBooks(BookArray);
     addressList.set(msg.sender, saveBookArrayBuffer);
