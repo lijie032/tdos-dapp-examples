@@ -19,7 +19,7 @@
                             <div class="data-content">
                                 <div class="searchbox">
                                     <div class="search-in"><input placeholder="请输入姓名查找"/></div>
-                                    <a class="btnSearch pointer" >搜索</a>
+                                    <a class="btnSearch pointer" @click="search">搜索</a>
                                 </div>
                                 <el-scrollbar class="record-scroll" ref="myScrollbar">
                                     
@@ -103,7 +103,8 @@
                  </div>
 
                  <div class="btnbox">
-                     <button class="btn-add" type="button" v-on:click="addAddressBook()">确认添加</button>
+                     <button class="btn-add" type="button" v-on:click="addBook()">确认添加</button>
+                     <a ref="sendTx"></a>
                  </div>
             </div>
         </div>
@@ -111,7 +112,8 @@
 </template>
 <script>
 import explorer from '@/components/browser1.vue'
-import { addBook } from "@/api/dapps";
+import {publicKey2Address, privateKey2PublicKey} from '@salaku/js-sdk'
+import { addAddressBook,getAddressBooks } from "@/api/dapps";
 export default {
     data(){
         return{
@@ -122,12 +124,12 @@ export default {
           number:'',
 
           addressList:[
-              {username:'陈慧',phone:'123488699',height:'7859654',hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',
-              affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'},
-              {username:'陈慧',phone:'123488699',height:'7859654',hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',
-              affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'},
-              {username:'陈慧',phone:'123488699',height:'7859654',hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',
-              affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'}
+            //   {username:'陈慧',phone:'123488699',height:'7859654',hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',
+            //   affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'},
+            //   {username:'陈慧',phone:'123488699',height:'7859654',hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',
+            //   affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'},
+            //   {username:'陈慧',phone:'123488699',height:'7859654',hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',
+            //   affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'}
           ]
           
         }
@@ -136,20 +138,31 @@ export default {
         explorer
     },
     methods:{
-       //添加通讯录显示
-        async addAddressBook(){
+
+        addAddressBook(){
             let that = this;
             that.isAdd=true;
-            let payload = {
-                username: that.userName,
-                memo: that.remark,
-                phone: that.number,
-            };
+            userName = '';
+            remark = '';
+            number = '';
+        },
+
+       //添加通讯录显示
+        async addBook(){
+            let that = this;
+            that.isAdd=false;
             let pk = that.getPK();
             if (pk == "") {
                 return that.$toast("获取账户失败，请打开TDOS插件", 3000);
             }
-            let tx = await addBook(payload);
+            let payload = {
+                username: that.userName,
+                phone: that.number,
+                memo: that.remark,
+                addr: publicKey2Address(pk),
+            };
+            let tx = await addAddressBook(payload,pk);
+            let sendTx = JSON.stringify(tx);
             that.$refs.sendTx.href =
                 "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
             that.$refs.sendTx.click();
@@ -159,6 +172,10 @@ export default {
        hideAdd(){
          let that = this;
          that.isAdd=false;
+       },
+        async search(){
+            let that = this;
+            let tx = await getAddressBooks();
        }
     },
     mounted(){

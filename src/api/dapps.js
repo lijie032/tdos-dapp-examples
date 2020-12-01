@@ -479,7 +479,7 @@ export async function getFinance (hash) {
 }
 
 // 保存通讯录
-export async function addBook (payload, publickey) {
+export async function addAddressBook (payload, publickey) {
   const c = await getBookContract()
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
@@ -489,25 +489,35 @@ export async function addBook (payload, publickey) {
     const tx = builder.buildContractCall(c, 'addBook', payload, 0)
     tx.nonce = await syncNonce(publickey)
     tx.from = publickey
-    const a = tx.getHash()
-    localStorage.setItem('address', tx.address)
     return tx
   }
 }
 
-// // 保存通讯录
-// export async function getBooks (payload, publickey) {
-//   const c = await getBookContract()
-//   if (ENV === 'prod') {
-//     let builder = new TransactionBuilder(
-//       constants.POA_VERSION,
-//       privatekey
-//     )
-//     const tx = builder.buildContractCall(c, 'getBooks', payload, 0)
-//     tx.nonce = await syncNonce(publickey)
-//     tx.from = publickey
-//     const a = tx.getHash()
-//     localStorage.setItem('address', tx.address)
-//     return tx
+// 获取通讯录
+export async function getAddressBooks() {
+  try {
+    console.log("====================2======")
+    let result = await rpc.viewContract(await getBookContract(), 'getBooks',[])
+    console.log("===================1=======")
+    // return decodeFinance(result)
+  }catch (e) {
+    return "";
+  }
+}
+
+// // 解析金融
+// function decodeFinance (buf) {
+//   if (buf != '') {
+//     buf = hex2bin(buf)
+//     const u = {}
+//     const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+//     u.title = rd.string()
+//     u.name = rd.string()
+//     u.cid = rd.string()
+//     u.sum = rd.string()
+//     u.contract = rd.string()
+//     u.confirm = rd.bool()
+//     return u
 //   }
+//   return ''
 // }

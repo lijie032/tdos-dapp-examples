@@ -20,7 +20,7 @@ export async function getABI() {
 export async function getBookABI() {
   if (abiCache)
     return abiCache
-  abiCache = await axios.get(bookAbi).then(r =>r.data)
+  abiCache = await axios.get(bookAbi).then(r =>r.data) 
   return abiCache
 }
 
@@ -56,11 +56,11 @@ export const CONTRACT_TOKEN_ADDRESS = '0cf65e367967f6cd88bbd9561283ae71eb260ef9'
 export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f' // 交易合约地址
 
 export async function getContract() {
-  return new Contract(CONTRACT_ADDRESS, await getABI())
+  return new Contract(CONTRACT_ADDRESS, abi)
 }
 
 export async function getBookContract() {
-  return new Contract(CONTRACT_BOOKS_ADDRESS, await getBookABI())
+  return new Contract(CONTRACT_BOOKS_ADDRESS, bookAbi)
 }
 
 // 捐赠人的私钥
