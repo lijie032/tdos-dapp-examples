@@ -44,7 +44,7 @@
                <div class="confirm-body">
                    <p class="pt">相片已上传并上链存证成功！以下是您的事务哈希：</p>
                    <p  class="pt pt-hash">
-                       <span>da65sd69qw9qwe612dasf14d5g48g4df8h4gf5h48re9ter9</span>
+                       <span>da65sd69qw9qwe612dasf14d5g48g4df8h4gf5h48re9ter9kjd5d5q4w8eq212fs1df5sd4g8dfhfgh4gfnj541gh5j4gh8hgj78ghj78gh</span>
                        <a class="btn-copy pointer"></a>
                    </p>
                    <p class="mess">您可复制事务哈希并点击右上角按钮至“TDS浏览器”查询。）</p>
