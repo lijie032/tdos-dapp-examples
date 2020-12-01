@@ -479,7 +479,7 @@ export async function getFinance (hash) {
 }
 
 // 保存通讯录
-export async function addAddressBook (payload, publickey) {
+export async function addAddressBook(payload, publickey) {
   const c = await getBookContract()
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
@@ -494,30 +494,54 @@ export async function addAddressBook (payload, publickey) {
 }
 
 // 获取通讯录
-export async function getAddressBooks() {
+export async function getAddressBooks(address) {
   try {
-    console.log("====================2======")
-    let result = await rpc.viewContract(await getBookContract(), 'getBooks',[])
-    console.log("===================1=======")
-    // return decodeFinance(result)
+    let result = await rpc.viewContract(await getBookContract(), 'getBooks', [address])
+    return decodeAddressBooks(result)
   }catch (e) {
     return "";
   }
 }
 
-// // 解析金融
-// function decodeFinance (buf) {
-//   if (buf != '') {
-//     buf = hex2bin(buf)
-//     const u = {}
-//     const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
-//     u.title = rd.string()
-//     u.name = rd.string()
-//     u.cid = rd.string()
-//     u.sum = rd.string()
-//     u.contract = rd.string()
-//     u.confirm = rd.bool()
-//     return u
-//   }
-//   return ''
-// }
+class Book{
+    username = ''
+    phone = ''
+    memo = ''
+    height = 0
+    constructor(username, phone,memo,height) {
+      this.username = username;
+      this.phone = phone;
+      this.memo = memo;
+      this.height = height;
+    }
+    toString() {
+      return '(' + this.username + ', ' + this.phone + ')';
+    }
+}
+
+// 解析金融
+function decodeAddressBooks(buf) {
+  if (buf != '') {
+    buf = hex2bin(buf)
+    let  li = rlp.RLPList.fromEncoded(buf);
+    console.log(li)
+    const ret = [];
+    for (let i = 0; i < li.length(); i++) {
+      let ii = li.list(i);
+      ret.push(fromEncoded(ii));
+  }
+    return ret
+  }
+  return ''
+}
+
+function fromEncoded(buf) {
+  const li = new rlp.RLPListReader(buf);
+  const book = new Book('', '', '', 0);
+  book.username = li.string();
+  book.phone = li.string();
+  book.memo = li.string();
+  book.height = li.number();
+  return book;
+}
+

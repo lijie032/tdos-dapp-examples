@@ -24,7 +24,7 @@
                                 <el-scrollbar class="record-scroll" ref="myScrollbar">
                                     
                                     <ul class="ab-list">
-                                      <li v-for="(item,index) in addressList" :key="index">
+                                      <li v-for="(item,index) in addressList" :key="index" @click="showRight(item)" >
                                           <span class="li-userName">用户名：{{item.username}}</span>
                                           <span class="li-phone">电话号码：{{item.phone}}</span>
                                       </li>
@@ -34,35 +34,35 @@
                             </div>
                         </div>
                         <div class="data-right">
-                            <div class="data-content">
-                            <el-scrollbar class="record-scroll" ref="myScrollbar-right">
-                               <div class="name p-line1">陈慧</div>
+                            <div class="data-content" v-if="isShow">
+                            <el-scrollbar class="record-scroll" ref="myScrollbar-right"  >
+                               <div class="name p-line1">{{selectUser.username}}</div>
                                 <div class="detai-info-col">
                                     <div class="din-col din-col1">
-                                        <p class="ppic">手机号码：158149052</p>
+                                        <p class="ppic">手机号码：+{{selectUser.phone}}</p>
                                     </div>
                                 </div>
                                 <div class="detai-info-col">
                                     <div class="din-col din-col2">
-                                        <p class="ppic">区块高度：7859654</p>
+                                        <p class="ppic">区块高度：+ {{selectUser.height}}</p>
                                     </div>
                                 </div>
                                 <div class="detai-info-col">
                                     <div class="din-col din-col3">
                                         <p class="ppic">区块哈希：</p>
-                                        <p>da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw<span class="icon_copy pointer"></span></p>
+                                        <p>{{selectUser.affair_hash}}<span class="icon_copy pointer"></span></p>
                                     </div>
                                 </div>
                                 <div class="detai-info-col">
                                     <div class="din-col din-col4">
                                         <p class="ppic">事务哈希：</p>
-                                        <p>da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw<span class="icon_copy pointer"></span></p>
+                                        <p>{{selectUser.hash}}<span class="icon_copy pointer"></span></p>
                                     </div>
                                 </div>
                                 <div class="detai-info-col">
                                     <div class="din-col din-col5">
                                         <p class="ppic">备注信息：</p>
-                                        <p>此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警</p>
+                                        <p>{{selectUser.remark}}</p>
                                     </div>
 
                                 </div>
@@ -112,17 +112,18 @@
 </template>
 <script>
 import explorer from '@/components/browser1.vue'
-import {publicKey2Address, privateKey2PublicKey} from '@salaku/js-sdk'
-import { addAddressBook,getAddressBooks } from "@/api/dapps";
+import {publicKey2Address} from '@salaku/js-sdk'
+import { addAddressBook, getAddressBooks } from "@/api/dapps";
 export default {
     data(){
         return{
            isAdd:false,//是否显示添加
            isData:true,//是否有数据显示判断
            userName:'',
-          remark:'',
-          number:'',
-
+            remark:'',
+            number:'',
+            isShow:false,
+            selectUser: {},   
           addressList:[
             //   {username:'陈慧',phone:'123488699',height:'7859654',hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',
             //   affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'},
@@ -142,9 +143,9 @@ export default {
         addAddressBook(){
             let that = this;
             that.isAdd=true;
-            userName = '';
-            remark = '';
-            number = '';
+            that.userName = '';
+            that.remark = '';
+            that.number = '';
         },
 
        //添加通讯录显示
@@ -159,7 +160,6 @@ export default {
                 username: that.userName,
                 phone: that.number,
                 memo: that.remark,
-                addr: publicKey2Address(pk),
             };
             let tx = await addAddressBook(payload,pk);
             let sendTx = JSON.stringify(tx);
@@ -175,11 +175,27 @@ export default {
        },
         async search(){
             let that = this;
-            let tx = await getAddressBooks();
-       }
+            let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+            let addr = publicKey2Address(pk);
+            let books = await getAddressBooks(addr);
+            that.addressList = [];
+            books.forEach((item)=>{
+                that.addressList.push({username:item.username, phone:item.phone, height:item.height, remark:item.memo, affair_hash:'', hash:''})
+            });
+       },
+       showRight(item){
+        let that = this;
+        that.isShow = true;
+        that.selectUser = item;
+        },
     },
+    
     mounted(){
-      
+      let that = this;
+      that.search();
     }
 }
 </script>
