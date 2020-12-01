@@ -73,9 +73,8 @@ export function init(): void {
     log('聊天合约已部署');
 }
 
-export function hasUser(): boolean {
-    const msg = Context.msg();
-    return userIds.has(msg.sender);
+export function hasUser(addr: Address): boolean {
+    return userIds.has(addr);
 }
 
 export function registration(nickname: string): void {
@@ -86,10 +85,9 @@ export function registration(nickname: string): void {
     Globals.set<u64>('lastUserId', lastUserId + 1);
 }
 
-export function getNickname(): string {
-    const msg = Context.msg();
-    assert(userIds.has(msg.sender), "user has not registration");
-    return userIds.get(msg.sender);
+export function getNickname(addr: Address): string {
+    assert(userIds.has(addr), "user has not registration");
+    return userIds.get(addr);
 }
 
 export function saveChat(context: string, time: string): void {
