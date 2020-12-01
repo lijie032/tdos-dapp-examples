@@ -198,7 +198,6 @@ export default {
                     });      
                 });        
             }
-            
        },
        showRight(item){
         let that = this;
@@ -208,12 +207,23 @@ export default {
         back(){
             let that = this;
             that.isShow = false; 
+        },
+        timer_tx () {
+        let that = this
+        let value = that.getRes()
+        if (value != '') {
+          return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
         }
+      }
     },
     
     mounted(){
       let that = this;
       that.search();
+      this.timer = setInterval(this.timer_tx, 1000)
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
     }
 }
 </script>
