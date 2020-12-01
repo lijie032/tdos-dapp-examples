@@ -273,9 +273,19 @@ export default new Router({
       component: resolve=>(require(["@/views/issueCoins/index"],resolve))
     },
     {
-      path: '/crowdFunding',//发币
+      path: '/crowdFunding',//众筹
       name: 'crowdFunding',
       component: resolve=>(require(["@/views/crowdFunding/index"],resolve))
+    },
+    {
+      path: '/vote',//投票
+      name: 'vote',
+      component: resolve=>(require(["@/views/vote/index"],resolve))
+    },
+    {
+      path: '/vote/result',//投票上链结果
+      name: 'vote_result',
+      component: resolve=>(require(["@/views/vote/voteResult"],resolve))
     },
     
   ]
