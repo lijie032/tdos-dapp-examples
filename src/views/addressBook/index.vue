@@ -19,7 +19,7 @@
                             <div class="data-content">
                                 <div class="searchbox">
                                     <div class="search-in"><input placeholder="请输入姓名查找"/></div>
-                                    <a class="btnSearch pointer">搜索</a>
+                                    <a class="btnSearch pointer" >搜索</a>
                                 </div>
                                 <el-scrollbar class="record-scroll" ref="myScrollbar">
                                     
@@ -103,7 +103,7 @@
                  </div>
 
                  <div class="btnbox">
-                     <button class="btn-add" type="button">确认添加</button>
+                     <button class="btn-add" type="button" v-on:click="addAddressBook()">确认添加</button>
                  </div>
             </div>
         </div>
@@ -111,6 +111,7 @@
 </template>
 <script>
 import explorer from '@/components/browser1.vue'
+import { addBook } from "@/api/dapps";
 export default {
     data(){
         return{
@@ -136,9 +137,23 @@ export default {
     },
     methods:{
        //添加通讯录显示
-       addAddressBook(){
-         let that = this;
-         that.isAdd=true;
+        async addAddressBook(){
+            let that = this;
+            that.isAdd=true;
+            let payload = {
+                username: that.userName,
+                memo: that.remark,
+                phone: that.number,
+            };
+            let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+            let tx = await addBook(payload);
+            that.$refs.sendTx.href =
+                "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+            that.$refs.sendTx.click();
+            return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
        },
        //隐藏显示
        hideAdd(){

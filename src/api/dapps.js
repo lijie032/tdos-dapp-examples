@@ -1,5 +1,5 @@
 // 部署公益合约
-import {ENV, rpc, getABI, getContract, httpRPC} from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract} from './constants'
 import {
   bin2hex,
   constants,
@@ -477,3 +477,37 @@ export async function getFinance (hash) {
   }
 
 }
+
+// 保存通讯录
+export async function addBook (payload, publickey) {
+  const c = await getBookContract()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'addBook', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    const a = tx.getHash()
+    localStorage.setItem('address', tx.address)
+    return tx
+  }
+}
+
+// // 保存通讯录
+// export async function getBooks (payload, publickey) {
+//   const c = await getBookContract()
+//   if (ENV === 'prod') {
+//     let builder = new TransactionBuilder(
+//       constants.POA_VERSION,
+//       privatekey
+//     )
+//     const tx = builder.buildContractCall(c, 'getBooks', payload, 0)
+//     tx.nonce = await syncNonce(publickey)
+//     tx.from = publickey
+//     const a = tx.getHash()
+//     localStorage.setItem('address', tx.address)
+//     return tx
+//   }
+// }

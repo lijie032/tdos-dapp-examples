@@ -1,5 +1,6 @@
 import { ABI, VirtualMachine, RPC, publicKey2Address, privateKey2PublicKey, Contract, hex2bin, bin2hex} from '@salaku/js-sdk'
 import abi from '@/contracts/dapps.abi.json'
+import bookAbi from '@/contracts/addresslistdapp.abi.json'
 import axios from 'axios'
 
 // import wasm from '@/contracts/dapps.wasm'
@@ -15,6 +16,14 @@ export async function getABI() {
   abiCache = await axios.get(abi).then(r =>r.data)
   return abiCache
 }
+
+export async function getBookABI() {
+  if (abiCache)
+    return abiCache
+  abiCache = await axios.get(bookAbi).then(r =>r.data)
+  return abiCache
+}
+
 
 // dev 环境下使用假节点
 export const ENV = localStorage.getItem('env') === 'dev' ? 'dev' : 'prod'
@@ -45,6 +54,10 @@ export const CONTRACT_BOOKS_ADDRESS = '32e0181e28dc36e9f1e3eda2b87e3d8ad68bb8fd'
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, await getABI())
+}
+
+export async function getBookContract() {
+  return new Contract(CONTRACT_BOOKS_ADDRESS, await getBookABI())
 }
 
 // 捐赠人的私钥
