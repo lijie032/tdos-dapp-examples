@@ -1,5 +1,5 @@
 // 部署公益合约
-import {ENV, rpc, getABI, getContract, httpRPC, getContract_secretbeardapp} from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp} from './constants'
 import {
   bin2hex,
   constants,
@@ -30,8 +30,8 @@ export function getTransaction (hash) {
 
 // 解析公益
 function decodeDonor (buf) {
-  if (buf == '') {
-    return ''
+  if (buf == ""){
+    return "";
   }
   buf = hex2bin(buf)
   const u = {}
@@ -48,8 +48,6 @@ function decodeDonor (buf) {
 // 公益保存
 export async function saveDonor (payload, publickey) {
   const c = await getContract()
-  console.log("1111111")
-  console.log(c)
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
@@ -67,15 +65,15 @@ export async function getDonor (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getDonor', hash)
     return decodeDonor(result)
-  } catch (e) {
-    return ''
+  }catch (e) {
+    return "";
   }
 }
 
 // 解析物流
 function decodeLogistics (buf) {
-  if (buf == '') {
-    return ''
+  if (buf == ""){
+    return "";
   }
   buf = hex2bin(buf)
   const u = {}
@@ -110,15 +108,15 @@ export async function getLogistics (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getLogistics', hex2bin(hash))
     return decodeLogistics(result)
-  } catch (e) {
-    return ''
+  }catch (e) {
+    return "";
   }
 }
 
 // 解析资产
 function decodeFund (buf) {
-  if (buf == '') {
-    return ''
+  if (buf == ""){
+    return "";
   }
   buf = hex2bin(buf)
   const u = {}
@@ -165,15 +163,15 @@ export async function getFund (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getFund', hex2bin(hash))
     return decodeFund(result)
-  } catch (e) {
-    return ''
+  }catch (e) {
+    return "";
   }
 }
 
 // 解析音乐
 function decodeMusic (buf) {
-  if (buf == '') {
-    return ''
+  if (buf == ""){
+    return "";
   }
   buf = hex2bin(buf)
   const u = {}
@@ -206,15 +204,15 @@ export async function getMusic (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getMusic', hex2bin(hash))
     return decodeMusic(result)
-  } catch (e) {
-    return ''
+  }catch (e) {
+    return "";
   }
 }
 
 // 解析医疗
 function decodeMedical (buf) {
-  if (buf == '') {
-    return ''
+  if (buf == ""){
+    return "";
   }
   buf = hex2bin(buf)
   const u = {}
@@ -247,15 +245,15 @@ export async function getMedical (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getMedical', hex2bin(hash))
     return decodeMedical(result)
-  } catch (e) {
-    return ''
+  }catch (e) {
+    return "";
   }
 }
 
 // 解析保险
 function decodeInsure (buf) {
-  if (buf == '') {
-    return ''
+  if (buf == ""){
+    return "";
   }
   buf = hex2bin(buf)
   const u = {}
@@ -289,15 +287,15 @@ export async function getInsure (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getInsure', hex2bin(hash))
     return decodeInsure(result)
-  } catch (e) {
-    return ''
+  }catch (e) {
+    return "";
   }
 }
 
 // 解析著作版权
 function decodeBook (buf) {
-  if (buf == '') {
-    return ''
+  if (buf == ""){
+    return "";
   }
   buf = hex2bin(buf)
   const u = {}
@@ -329,15 +327,15 @@ export async function getBook (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getBook', hex2bin(hash))
     return decodeBook(result)
-  } catch (e) {
-    return ''
+  }catch (e) {
+    return "";
   }
 }
 
 // 解析产品溯源
 function decodeProduct (buf) {
-  if (buf == '') {
-    return ''
+  if (buf == ""){
+    return "";
   }
   buf = hex2bin(buf)
   const u = {}
@@ -376,8 +374,8 @@ export async function getProduct (hash) {
 
 // 解析焊接
 function decodeWeld (buf) {
-  if (buf == '') {
-    return ''
+  if (buf == ""){
+    return "";
   }
   buf = hex2bin(buf)
   const u = {}
@@ -465,8 +463,8 @@ export async function getFinance (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getFinance', hex2bin(hash))
     return decodeFinance(result)
-  } catch (e) {
-    return ''
+  }catch (e) {
+    return "";
   }
 }
 // 解析加密熊
@@ -539,3 +537,71 @@ export async function getBear (pk) {
     return ''
   }
 }
+
+// 保存通讯录
+export async function addAddressBook(payload, publickey) {
+  const c = await getBookContract()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'addBook', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+// 获取通讯录
+export async function getAddressBooks(address) {
+  try {
+    let result = await rpc.viewContract(await getBookContract(), 'getBooks', [address])
+    return decodeAddressBooks(result)
+  }catch (e) {
+    return "";
+  }
+}
+
+class Book{
+    username = ''
+    phone = ''
+    memo = ''
+    height = 0
+    constructor(username, phone,memo,height) {
+      this.username = username;
+      this.phone = phone;
+      this.memo = memo;
+      this.height = height;
+    }
+    toString() {
+      return '(' + this.username + ', ' + this.phone + ')';
+    }
+}
+
+// 解析金融
+function decodeAddressBooks(buf) {
+  if (buf != '') {
+    buf = hex2bin(buf)
+    let  li = rlp.RLPList.fromEncoded(buf);
+    console.log(li)
+    const ret = [];
+    for (let i = 0; i < li.length(); i++) {
+      let ii = li.list(i);
+      ret.push(fromEncoded(ii));
+  }
+    return ret
+  }
+  return ''
+}
+
+function fromEncoded(buf) {
+  const li = new rlp.RLPListReader(buf);
+  const book = new Book('', '', '', 0);
+  book.username = li.string();
+  book.phone = li.string();
+  book.memo = li.string();
+  book.height = li.number();
+  return book;
+}
+

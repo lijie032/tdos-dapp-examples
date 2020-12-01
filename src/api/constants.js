@@ -1,5 +1,6 @@
 import { ABI, VirtualMachine, RPC, publicKey2Address, privateKey2PublicKey, Contract, hex2bin, bin2hex} from '@salaku/js-sdk'
 import abi from '@/contracts/dapps.abi.json'
+import bookAbi from '@/contracts/addresslistdapp.abi.json'
 import abi_secretbeardapp from '@/contracts/secretbeardapp.abi.json'
 import axios from 'axios'
 
@@ -16,6 +17,14 @@ export async function getABI() {
   abiCache = await axios.get(abi).then(r =>r.data)
   return abiCache
 }
+
+export async function getBookABI() {
+  if (abiCache)
+    return abiCache
+  abiCache = await axios.get(bookAbi).then(r =>r.data)
+  return abiCache
+}
+
 
 // dev 环境下使用假节点
 export const ENV = localStorage.getItem('env') === 'dev' ? 'dev' : 'prod'
@@ -49,6 +58,10 @@ export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, abi)
+}
+
+export async function getBookContract() {
+  return new Contract(CONTRACT_BOOKS_ADDRESS, bookAbi)
 }
 
 export async function getContract_secretbeardapp() {
