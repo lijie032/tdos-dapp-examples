@@ -65,7 +65,7 @@ h1,h2,h3,h4,h5{font-weight: normal;}
 }
 
 .logo-browser{
-  width: 50px;height:50px; position: absolute; right:50px;top:50px;
+  width: 50px;height:50px; position: absolute; right:20px;top:20px;
   a{background: url(~@/assets/img/browser_logo.png) center no-repeat;}
 }
 
@@ -150,6 +150,29 @@ h1,h2,h3,h4,h5{font-weight: normal;}
 .record-scroll{height:100%;}
 
 .el-scrollbar__wrap{overflow-x:hidden;}
+
+
+.coin-select{
+  width:100%;
+  .el-input--suffix{
+    .el-input__inner,.is-focus{border: 1px solid #BABABA !important; height:50px; line-height:50px; font-size:16px;}
+  }
+  
+ 
+}
+
+.coin-attribute{
+  .el-textarea{display: block;}
+
+  .el-textarea__inner{font-size:16px; color:#333333; outline: none; border: 1px solid #BABABA;}
+  .el-textarea__inner:focus{ outline: none !important;}
+}
+
+.w-coin-select{
+  .el-scrollbar{height:80px;}
+  .el-select-dropdown__item{ padding-left: 20px;}
+}
+
 
 @media screen and (max-width: 1420px){
    .n-select{

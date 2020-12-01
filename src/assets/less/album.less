@@ -1,0 +1,50 @@
+.bg-wrap{background: url(../img/album_bg.png) center no-repeat; background-size: cover;-webkit-background-size: cover;}
+.album-list{font-size:0px; width:1240px; margin: 0 auto;}
+.album-col{width:608px;height:412px; border: 1px dotted #fff; margin:12px 0;}
+.album-col{
+    position: relative; display: inline-block;
+    .pic{
+        width: 100%;height:100%;overflow: hidden;
+        img{width:100%;min-height:100%}
+    }
+    .picInfo{ 
+        position: absolute; left:24px; right:24px;bottom: 24px;top:24px;
+        .time{font-size: 24px; color:#fff;}
+        .hash-value{position: absolute;width:100%;left:0px;bottom:0px;
+        font-size:16px;color:#fff;}
+    }
+   
+   
+}
+
+.album-add{
+    display: table;width:100%;height:100%; 
+    
+   .mess{font-size:18px;color:#fff; text-align: center; padding-top: 20px;}
+    .add_btn{width:175px;height:177px; display: block; background: url(../img/album_add.png) center no-repeat; margin:0 auto;}
+}
+.album-col:nth-child(2n){margin-left:20px;}
+.no-data-album-list{text-align: center;}
+.add{position: absolute;width:100%;height:100%;left:0px;top:0px;  opacity: 0;}
+
+.trans{
+    background:rgba(0,0,0,.4); position: fixed;left:0px;top:0px;z-index:99; right:0; bottom:0;overflow:auto;
+   .confrim-box{width:600px; position: absolute; top:50%; margin-top: -240px;left:50%; margin-left: -300px; background:#fff;
+      .borderRadius(5px,5px,5px,5px); overflow: hidden;
+    } 
+   .confrim-header{padding: 0 20px;height:70px;line-height: 70px;position: relative;.line-gradient(right,#4285F3,#373C46);font-size:24px;color:#fff;}
+   .close{width:40px;height:40px;display: block;position: absolute;right:10px;top:50%;margin-top: -20px;
+background: url(../img/addressbook_close.png) center no-repeat;}
+   .confirm-body{
+       padding:100px 0 80px 0;
+       p{text-align: center; padding: 0 20px;}
+       .pt{font-size:18px;color:#333;}
+       .pt-hash{padding-right: 50px; padding-top: 10px;}
+       .mess{font-size:16px;color:#bfbfbf; padding-top: 40px;}
+       .btn-copy{width:30px;height: 30px;display:inline-block; background: url(../img/icon_copy1.png) center no-repeat; vertical-align: middle;}
+   }
+   .btnbox{text-align: center; padding: 20px 0;}
+   .btn-confrim{width:140px;height:50px;text-align: center; line-height: 50px;.line-gradient(right,#4285F3,#373C46);font-size:18px; color:#fff;
+    .borderRadius(5px,5px,5px,5px);   
+   }
+}
