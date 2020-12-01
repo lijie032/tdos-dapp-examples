@@ -73,28 +73,32 @@ export function init(): void {
     log('聊天合约已部署');
 }
 
-export function hasUser(addr: Address): boolean {
-    return userIds.has(addr);
+export function hasUser(): boolean {
+    const msg = Context.msg();
+    return userIds.has(msg.sender);
 }
 
-export function registration(addr: Address, nickname: string): void {
-    assert(!userIds.has(addr), "user has registration");
+export function registration(nickname: string): void {
+    const msg = Context.msg();
+    assert(!userIds.has(msg.sender), "user has registration");
     let lastUserId = Globals.get<u64>('lastUserId');
-    userIds.set(addr, nickname);
+    userIds.set(msg.sender, nickname);
     Globals.set<u64>('lastUserId', lastUserId + 1);
 }
 
-export function getNickname(addr: Address): string {
-    assert(userIds.has(addr), "user has not registration");
-    return userIds.get(addr);
+export function getNickname(): string {
+    const msg = Context.msg();
+    assert(userIds.has(msg.sender), "user has not registration");
+    return userIds.get(msg.sender);
 }
 
-export function saveChat(addr: Address, context: string, time: string): void {
-    assert(userIds.has(addr), "user has not registration");
-    let nickname = userIds.get(addr);
+export function saveChat(context: string, time: string): void {
+    const msg = Context.msg();
+    assert(userIds.has(msg.sender), "user has not registration");
+    let nickname = userIds.get(msg.sender);
     let chatContextsArray = decodeChatContexts(Globals.get<ArrayBuffer>('contexts'));
     const h = Context.header()
-    let chatContext = new ChatContext(addr, nickname, context, time, h.height);
+    let chatContext = new ChatContext(msg.sender, nickname, context, time, h.height);
     chatContextsArray.push(chatContext)
     Globals.set<ArrayBuffer>('contexts', encodeChatContexts(chatContextsArray));
 }

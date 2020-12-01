@@ -63,11 +63,12 @@ export function init(): void {
     log('通讯录合约已部署');
 }
 
-export function addBook(addr: Address, username: string, phone: string, memo: string): void {
+export function addBook(username: string, phone: string, memo: string): void {
+    const msg = Context.msg();
     let BookArray : Array<Book>
-    if(addressList.has(addr))
+    if(addressList.has(msg.sender))
     {
-        BookArray = decodeBooks(addressList.get(addr));
+        BookArray = decodeBooks(addressList.get(msg.sender));
     }
     else
     {
@@ -77,13 +78,14 @@ export function addBook(addr: Address, username: string, phone: string, memo: st
     let book = new Book(username, phone, memo, h.height);
     BookArray.push(book);
     let saveBookArrayBuffer = encodeBooks(BookArray);
-    addressList.set(addr, saveBookArrayBuffer);
+    addressList.set(msg.sender, saveBookArrayBuffer);
 }
 
-export function getBooks(addr: Address): ArrayBuffer {
-    if(addressList.has(addr))
+export function getBooks(): ArrayBuffer {
+    const msg = Context.msg();
+    if(addressList.has(msg.sender))
     {
-        return addressList.get(addr);
+        return addressList.get(msg.sender);
     }
     return new ArrayBuffer(0);
 }
