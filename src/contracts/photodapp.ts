@@ -77,11 +77,10 @@ export function addPhoto(photo: ArrayBuffer, photofix: string): void {
     photoList.set(msg.sender, savePhotoArrayBuffer);
 }
 
-export function getPhotos(): ArrayBuffer {
-    const msg = Context.msg();
-    if(photoList.has(msg.sender))
+export function getPhotos(addr: Address): ArrayBuffer {
+    if(photoList.has(addr))
     {
-        return photoList.get(msg.sender);
+        return photoList.get(addr);
     }
     return new ArrayBuffer(0);
 }

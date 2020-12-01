@@ -16,6 +16,7 @@
        <router-link target="_blank" to='/album'>相册</router-link>
        <router-link target="_blank" to='/issueCoins'>发行代币</router-link>
        <router-link target="_blank" to='/crowdFunding'>项目众筹</router-link>
+       <router-link target="_blank" to='/vote'>投票</router-link>
     </div>
 </template>
 <script>

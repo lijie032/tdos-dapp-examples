@@ -8,7 +8,7 @@
           	 <div class="p-container">
           	 	  <div class="searchIn">
           	 	  	 <input placeholder="可复制事务哈希至此查询" />
-          	 	  	 <a class="pointer cf-btn a-search">查询</a>
+          	 	  	 <a class="pointer cf-btn a-search" @click="search()">查询</a>
           	 	  </div>
           	 	  <div class="project-info" v-for="(item,index) in projectList" :key="index">
 					 <div class="hot-icon cf-btn">
@@ -125,7 +125,7 @@
 						</div>
 					</div>
 					<div class="btnbox">
-						<a class="cf-btn pointer bot-btn" @click="rasieSuc=false;addScroll()">我知道了</a>
+						<a class="cf-btn pointer bot-btn" @click="rasieResult=false;addScroll()">我知道了</a>
 					</div>
 				</div>
 			</div>
@@ -154,7 +154,7 @@ export default {
             targetAmount:'300,000',raisedAmount:'250,000',partNumber:'1,200'}],
             isRasie:false, //点击募集展示
             rasieSuc:false,//募集成功展示
-            rasieResult:true,
+            rasieResult:false,
         }
     },
     components:{
@@ -175,7 +175,14 @@ export default {
         	let that = this;
 			that.isRasie = true;
 			TpScroll.RemoveScroll();
-        },
+		},
+		
+		//查询
+		search(){
+           let that = this;
+		   that.rasieResult = true;
+		   TpScroll.RemoveScroll();
+		},
         
         //募集确认
         clickRasie(){
