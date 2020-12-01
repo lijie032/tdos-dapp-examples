@@ -44,6 +44,7 @@ export const CONTRACT_CHAT_ADDRESS = 'b6dc4bb054a7b63669f99ecf7a5e73399ee132ea' 
 export const CONTRACT_BOOKS_ADDRESS = '6c0a450644a9616571412b975b3042814df094cd' // 通讯录合约地址
 export const CONTRACT_PHOTO_ADDRESS = '32e0181e28dc36e9f1e3eda2b87e3d8ad68bb8fd' // 相册合约地址
 export const CONTRACT_PHOTO_ADDRESS = '0cf65e367967f6cd88bbd9561283ae71eb260ef9' // 发行代币合约地址
+export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f' // 交易合约地址
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, await getABI())
