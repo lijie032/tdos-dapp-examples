@@ -1,0 +1,74 @@
+.bg-wrap{background: url(../img/coin_bg.png) center no-repeat; background-size: cover; -webkit-background-size: cover;}
+.page-container{
+    width:1100px;margin: 0 auto; padding: 30px 0;.borderRadius(0,0,5px,5px); overflow: hidden;
+    > h3{font-size:60px;color:#333; text-align: center; padding-bottom: 30px;}
+    .coin-attribute{
+        background:#f9f9f9;overflow: hidden; font-size:0px; padding-bottom: 30px;
+        .coin-50{width:48%;display: inline-block; vertical-align: middle; padding: 0 1%;}
+        .lab{font-size:18px;color:#333; line-height:60px;}
+        .coin-50 input{width:100%;border: 1px solid #BABABA;box-shadow: 0px 8px 5px 0px rgba(0, 0, 0, 0.06);-webkit-box-shadow: 0px 8px 5px 0px rgba(0, 0, 0, 0.06);
+        height: 50px;line-height: 50px;padding: 10px 20px;.borderRadius(5px,5px,5px,5px);font-size:16px;}
+        textarea{width:100%; font-size:16px;}
+        .coin-100{width:98%}
+    }
+
+    .btnbox,.coin-header{.line-gradient(right,#005C97,#333995);padding: 15px 30px; text-align: center; }
+    .btn-public{width:500px;height:50px;display: block; text-align: center; line-height: 50px;
+       background:#fff; color:#4776E6; font-size:18px; margin:0 auto;.borderRadius(5px,5px,5px,5px);
+    }
+    .coin-header{height:50px; line-height: 50px; font-size:24px; color:#fff; text-align: left; position: relative;}
+
+
+    .searchIn{padding-right: 50px;width:450px;height:40px;.borderRadius(5px,5px,5px,5px);position: absolute; right:20px;
+        top:50%;margin-top: -20px; background:#fff; overflow: hidden;
+        input{height:30px;line-height: 30px;padding: 5px 0; width:430px; border:0 none; vertical-align: top; padding-left: 20px;}
+        .asearch{width:40px;height: 40px;position: absolute; top:0px;right:0px; background: #fff url(../img/coin_searchh.png) center no-repeat;}
+
+        
+     }
+    .noSearch{
+        background: 0 none; width: 40px;
+        .asearch{width:40px;height: 40px;position: absolute; top:0px;right:0px; background: url(../img/coin_searchn.png) center no-repeat;}
+    }
+}
+
+
+
+.trans{
+   width:100%;position: fixed;;left:0px;top:0; top:0;right:0; bottom:0; background: rgba(0,0,0,.4);overflow:auto;
+   .dis-table{width:100%;height:100%;}
+    .trans-main{width: 100%;height:100%; display: table-cell; vertical-align: middle;}
+    .info-main{width:500px;margin: 0 auto; background:#fff;.borderRadius(5px,5px,5px,5px);overflow: hidden;}
+    .con-header{height:60px;padding: 0 20px; position: relative;.line-gradient(right,#005C97,#363795); font-size:18px; color:#fff; line-height: 60px;}
+   
+    .btn-box{padding: 20px 0;}
+    .btn-sure{width:120px;height:40px;text-align: center; line-height:40px;font-size:16px;color:#fff;.line-gradient(right,#005C97,#363795);
+        
+        display: block;.borderRadius(5px,5px,5px,5px);overflow: hidden; margin: 0 auto;
+    }
+    .close{width:20px;height:20px;display: block;position: absolute; right:20px;top:50%;margin-top: -10px;
+    background: url(../img/coin_close.png) center no-repeat;}
+    .con-text{margin:0 20px; padding-top:60px; padding-bottom: 20px;
+        .p-hash{
+            padding-top: 10px;padding-bottom: 5px; text-align: left;
+            > span{word-wrap:break-word;}
+        }
+        p{text-align: center;}
+        .copy{width:20px;height: 20px;display: inline-block; vertical-align: middle;
+           background: url(../img/icon_copy1.png) center no-repeat; margin-left:10px;
+        }
+    }
+    .p-mess{font-size:14px;color:#b7b7b7;}
+
+
+    /*搜索结果修改*/
+    .result-trans{
+        text-align: left;
+        .info-main{width:400px}
+        .btn-sure{display: block; width: auto; margin: 0 20px;}
+        .con-text{
+            padding-top: 10px; padding-bottom: 10px;
+            p{font-size:16px; color:#333; text-align: left; padding:2px 0;}
+        }
+    }
+}

@@ -93,12 +93,10 @@ export function buyLevel(): void {
     bearList.set(msg.sender, bear.getEncoded());
 }
 
-export function hasBear(): boolean {
-    const msg = Context.msg();
-    return bearList.has(msg.sender);
+export function hasBear(addr: Address): boolean {
+    return bearList.has(addr);
 }
 
-export function getBear(): ArrayBuffer {
-    const msg = Context.msg();
-    return bearList.get(msg.sender);
+export function getBear(addr: Address): ArrayBuffer {
+    return bearList.get(addr);
 }

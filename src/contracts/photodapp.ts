@@ -59,11 +59,12 @@ export function init(): void {
     log('相册合约已部署');
 }
 
-export function addPhoto(addr: Address, photo: ArrayBuffer, photofix: string): void {
+export function addPhoto(photo: ArrayBuffer, photofix: string): void {
+    const msg = Context.msg();
     let PhotoArray : Array<Photo>
-    if(photoList.has(addr))
+    if(photoList.has(msg.sender))
     {
-        PhotoArray = decodePhotos(photoList.get(addr));
+        PhotoArray = decodePhotos(photoList.get(msg.sender));
     }
     else
     {
@@ -73,13 +74,14 @@ export function addPhoto(addr: Address, photo: ArrayBuffer, photofix: string): v
     let photoinfo = new Photo(photo, photofix, h.height);
     PhotoArray.push(photoinfo);
     let savePhotoArrayBuffer = encodePhotos(PhotoArray);
-    photoList.set(addr, savePhotoArrayBuffer);
+    photoList.set(msg.sender, savePhotoArrayBuffer);
 }
 
-export function getPhotos(addr: Address): ArrayBuffer {
-    if(photoList.has(addr))
+export function getPhotos(): ArrayBuffer {
+    const msg = Context.msg();
+    if(photoList.has(msg.sender))
     {
-        return photoList.get(addr);
+        return photoList.get(msg.sender);
     }
     return new ArrayBuffer(0);
 }

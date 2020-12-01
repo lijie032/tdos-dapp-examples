@@ -262,5 +262,21 @@ export default new Router({
       name: 'addressBook',
       component: resolve=>(require(["@/views/addressBook/index"],resolve))
     },
+    {
+      path: '/album',//相册
+      name: 'album',
+      component: resolve=>(require(["@/views/album/index"],resolve))
+    },
+    {
+      path: '/issueCoins',//发币
+      name: 'issueCoins',
+      component: resolve=>(require(["@/views/issueCoins/index"],resolve))
+    },
+    {
+      path: '/crowdFunding',//发币
+      name: 'crowdFunding',
+      component: resolve=>(require(["@/views/crowdFunding/index"],resolve))
+    },
+    
   ]
 })

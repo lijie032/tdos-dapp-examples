@@ -83,7 +83,7 @@ module.exports = {
       },
       // contracts 下的文件使用 file-loader 加载
       {
-        test: /contracts\/.*\.(json|wasm|map)$/,
+        test: /contracts\/.*\.(wasm|map)$/,
         loader: 'file-loader',
         // type: 'javascript/auto',
         options: {

@@ -81,11 +81,10 @@ export function addBook(username: string, phone: string, memo: string): void {
     addressList.set(msg.sender, saveBookArrayBuffer);
 }
 
-export function getBooks(): ArrayBuffer {
-    const msg = Context.msg();
-    if(addressList.has(msg.sender))
+export function getBooks(addr: Address): ArrayBuffer {
+    if(addressList.has(addr))
     {
-        return addressList.get(msg.sender);
+        return addressList.get(addr);
     }
     return new ArrayBuffer(0);
 }
