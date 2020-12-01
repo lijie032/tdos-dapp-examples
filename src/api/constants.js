@@ -39,10 +39,10 @@ export function persistVM(){
 
 export const rpc = new RPC('192.168.1.89', '6011')
 export const CONTRACT_ADDRESS = '30f1acbde6a9111a3cde642bfbc30310e293cd67' // 十个存证合约地址
-export const CONTRACT_SECRET_BEAR_ADDRESS = '6c6142c0a388ed0cf715d017a4bbffb45538c72b' // 加密熊合约地址
+export const CONTRACT_SECRET_BEAR_ADDRESS = '73969ed1bdf86e84cff51ba1b7e6b5941926a590' // 加密熊合约地址
 export const CONTRACT_CHAT_ADDRESS = '29f6214439a28a97a912b19c343e197de6422ba9' // 聊天室合约地址
 export const CONTRACT_BOOKS_ADDRESS = '2416bf6826d2b727e5526600ef0d94bccf62e55b' // 通讯录合约地址
-export const CONTRACT_PHOTO_ADDRESS = '38ef9818e6435fafd00e9f6883b7f16c2206d556' // 相册合约地址
+export const CONTRACT_PHOTO_ADDRESS = '3a9dace4bae494b2c3688776b26dffc54f67a7ab' // 相册合约地址
 export const CONTRACT_TOKEN_ADDRESS = '0cf65e367967f6cd88bbd9561283ae71eb260ef9' // 发行代币合约地址
 export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f' // 交易合约地址
 
