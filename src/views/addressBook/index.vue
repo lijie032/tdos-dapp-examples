@@ -18,7 +18,7 @@
                         <div class="data-left">
                             <div class="data-content">
                                 <div class="searchbox">
-                                    <div class="search-in"><input placeholder="请输入姓名查找"/></div>
+                                    <div class="search-in"><input placeholder="请输入姓名查找" v-model="searchKey"/></div>
                                     <a class="btnSearch pointer" @click="search">搜索</a>
                                 </div>
                                 <el-scrollbar class="record-scroll" ref="myScrollbar">
@@ -67,7 +67,7 @@
 
                                 </div>
                                 <div class="btnbox">
-                                    <a class="btn-back pointer" type="button">返回</a>
+                                    <a class="btn-back pointer" type="button" @click="back()">返回</a>
                                 </div>
                             </el-scrollbar>
                             </div>
@@ -113,7 +113,7 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import {publicKey2Address} from '@salaku/js-sdk'
-import { addAddressBook, getAddressBooks } from "@/api/dapps";
+import { addAddressBook, getAddressBooks, getTransaction } from "@/api/dapps";
 export default {
     data(){
         return{
@@ -123,7 +123,8 @@ export default {
             remark:'',
             number:'',
             isShow:false,
-            selectUser: {},   
+            selectUser: {},
+            searchKey:'',
           addressList:[
             //   {username:'陈慧',phone:'123488699',height:'7859654',hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',
             //   affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'},
@@ -182,15 +183,32 @@ export default {
             let addr = publicKey2Address(pk);
             let books = await getAddressBooks(addr);
             that.addressList = [];
-            books.forEach((item)=>{
-                that.addressList.push({username:item.username, phone:item.phone, height:item.height, remark:item.memo, affair_hash:'', hash:''})
-            });
+            if (that.searchKey != ""){
+                books.forEach((item)=>{
+                    getTransaction(item.hash).then(t => {
+                        if (that.searchKey == item.username){
+                            that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:t.blockHeight, affair_hash:t.blockHash})
+                        }
+                    });      
+                });
+            } else {
+                books.forEach((item)=>{
+                    getTransaction(item.hash).then(t => {
+                        that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:t.blockHeight, affair_hash:t.blockHash})
+                    });      
+                });        
+            }
+            
        },
        showRight(item){
         let that = this;
         that.isShow = true;
         that.selectUser = item;
         },
+        back(){
+            let that = this;
+            that.isShow = false; 
+        }
     },
     
     mounted(){

@@ -507,12 +507,12 @@ class Book{
     username = ''
     phone = ''
     memo = ''
-    height = 0
-    constructor(username, phone,memo,height) {
+    hash = ''
+    constructor(username, phone,memo,hash) {
       this.username = username;
       this.phone = phone;
       this.memo = memo;
-      this.height = height;
+      this.hash = hash;
     }
     toString() {
       return '(' + this.username + ', ' + this.phone + ')';
@@ -541,7 +541,7 @@ function fromEncoded(buf) {
   book.username = li.string();
   book.phone = li.string();
   book.memo = li.string();
-  book.height = li.number();
+  book.hash = bin2hex(li.bytes());
   return book;
 }
 
