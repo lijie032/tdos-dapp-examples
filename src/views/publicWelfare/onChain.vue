@@ -82,47 +82,60 @@
 </template>
 
 <script>
-import { saveDonor } from "@/api/dapps";
+  import {saveDonor} from '@/api/dapps'
 
-export default {
-  data() {
-    return {
-      donationName: "",
-      donationContent: "",
-      donationAddress: "",
-      beneficiary: "",
-      mechanism: "",
-      explain: "",
-    };
-  },
-  methods: {
-    async doConfirm(e) {
-      let that = this;
-      let payload = {
-        name: that.donationName,
-        content: that.donationContent,
-        beneficiaryAddress: that.donationAddress,
-        beneficiary: that.beneficiary,
-        donation: that.mechanism,
-        state: that.explain,
-      };
-      let pk = that.getPK();
-      if (pk == "") {
-        return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+  export default {
+    data () {
+      return {
+        donationName: '',
+        donationContent: '',
+        donationAddress: '',
+        beneficiary: '',
+        mechanism: '',
+        explain: '',
       }
-
-      let tx = await saveDonor(payload, pk);
-      let sendTx = JSON.stringify(tx);
-      that.$refs.sendTx.href =
-        "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
-      that.$refs.sendTx.click();
-      return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
-      // this.$router.push({path:'/publicWelfare'})
     },
-  },
-};
+    methods: {
+      async doConfirm (e) {
+        let that = this
+        let payload = {
+          name: that.donationName,
+          content: that.donationContent,
+          beneficiaryAddress: that.donationAddress,
+          beneficiary: that.beneficiary,
+          donation: that.mechanism,
+          state: that.explain,
+        }
+        let pk = that.getPK()
+        if (pk == '') {
+          return that.$toast('获取账户失败，请打开TDOS插件', 3000)
+        }
+
+        let tx = await saveDonor(payload, pk)
+        let sendTx = JSON.stringify(tx)
+        that.$refs.sendTx.href =
+          'javascript:sendMessageToContentScriptByPostMessage(\'' + sendTx + '\')'
+        that.$refs.sendTx.click()
+        return that.$toast('事务已生成，请打开TDOS插件进行广播', 3000)
+      },
+      timer_tx () {
+        let that = this
+        let value = that.getRes()
+        if (value != '') {
+          this.$router.push({path:'/publicWelfare'})
+          return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
+        }
+      }
+    },
+    mounted () {
+      this.timer = setInterval(this.timer_tx, 1000)
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
+    }
+  }
 </script>
 
 <style scoped lang="less">
-@import url(../../assets/less/publicWelfare.less);
+  @import url(../../assets/less/publicWelfare.less);
 </style>>

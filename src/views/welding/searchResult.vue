@@ -5,43 +5,40 @@
               <h3 class="r_title">上链信息</h3>
               <div class="result-info">
                   <div class="r-content">
-                     
+
                        <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">WPQR号：</div>
-                           <div class="lab-info">XXXXXXXXXXXXXXXXXXX</div>
+                           <div class="lab-info"><a id="wqpr"></a></div>
                        </div>
-                      
+
                         <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">焊接人员名称：</div>
-                           <div class="lab-info">张三</div>
+                           <div class="lab-info"><a id="person"></a></div>
                        </div>
                         <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">设备名称：</div>
-                           <div class="lab-info">烟囱</div>
+                           <div class="lab-info"><a id="name"></a></div>
                        </div>
-                      
-                        <div class="d-text">
+                       <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">区块高度：</div>
-                           <div class="lab-info">6598526</div>
+                           <div class="lab-info"><a id="height"></a></div>
+                       </div>
+                       <div class="d-text">
+                         <span class="s-icon"></span>
+                         <div class="lab">区块哈希：</div>
+                         <div class="lab-info"><a id="block_hash"></a></div>
                        </div>
                         <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">事务哈希：</div>
-                           <div class="lab-info">weq3595cdas12d6q5we610f2a1ds563665c9as8d8asdasdczxc</div>
+                           <div class="lab-info"><a id="transaction_hash"></a></div>
                        </div>
-                        <div class="d-text">
-                           <span class="s-icon"></span>
-                           <div class="lab">上链时间:</div>
-                           <div class="lab-info">2020-05-06 19:06:15</div>
-                       </div>
-                     
-
                        <div class="r-btn-box">
-                           <a class="pointer btnsure">确认</a>
+                           <a class="pointer btnsure" @click="back">返回</a>
                        </div>
                   </div>
 
@@ -52,6 +49,32 @@
 </template>
 
 <script>
+  import explorer from '@/components/browser.vue'
+
+  export default {
+    data () {
+      return {}
+    },
+    components: {
+      explorer
+    },
+    methods: {
+      back () {
+        this.$router.push({path: '/welding'})
+      }
+    },
+    mounted: function () {
+      let t = this.$route.query.transaction
+      let result = this.$route.query.result
+      let tx_hash = this.$route.query.tx_hash
+      document.getElementById('block_hash').innerHTML = t.blockHash
+      document.getElementById('transaction_hash').innerHTML = tx_hash
+      document.getElementById('height').innerHTML = t.blockHeight
+      document.getElementById('wqpr').innerHTML = result.wpqr
+      document.getElementById('person').innerHTML = result.welder
+      document.getElementById('name').innerHTML = result.device
+    }
+  }
 </script>
 
 <style scoped lang="less">

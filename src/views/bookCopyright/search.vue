@@ -31,8 +31,6 @@
            return that.$toast('获取账户失败，请打开TDOS插件', 3000)
          }
          let result = await getBook(hash, pk)
-         console.log(1111111)
-         console.log(result);
          if (result == '') {
            this.$toast('暂无内容', 2000)
          } else {

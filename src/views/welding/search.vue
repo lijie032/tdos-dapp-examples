@@ -1,47 +1,59 @@
 <template>
   <div class="pageWrap  search-wrap n-search-wrap ">
-     
-      <div class="page-main ">
-           <div class="logo-intro">
-              <div class="logo"></div>
-              TDOS焊接链
-           </div>
-           
-           <div class="search-box ">
-               <div class="search-bg">
-                   <h3>焊接链查询</h3>
-               </div>
-               <div class="dis-table search-box-in">
-                    <div class="din-box">
-                        <div class="in-box">
-                            <input placeholder="请输入事务哈希值"/> 
-                            <!--<a class="close pointer"></a>-->
-                        </div>
-                        <a class="searchbtn pointer"  @click="search">搜索</a>
-                    </div>
-               </div>
-           </div>
 
+    <div class="page-main ">
+      <div class="logo-intro">
+        <div class="logo"></div>
+        TDOS焊接链
       </div>
+
+      <div class="search-box ">
+        <div class="search-bg">
+          <h3>焊接链查询</h3>
+        </div>
+        <div class="dis-table search-box-in">
+          <div class="din-box">
+            <div class="in-box">
+              <input placeholder="请输入事务哈希值" ref="hash"/>
+              <!--<a class="close pointer"></a>-->
+            </div>
+            <a class="searchbtn pointer" @click="search">搜索</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
   </div>
 </template>
 
 <script>
-export default{
-    data(){
-        return{
-
+  import { getWeld, getTransaction} from '@/api/dapps'
+  export default {
+    data () {
+      return {}
+    }, methods: {
+      async search () {
+        let that = this;
+        let hash = this.$refs.hash.value;
+        let pk = await that.getPK();
+        if (pk == '') {
+          return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
-    },methods:{
-       search(){
-           this.$toast('请输入搜索内容',2000)
-       }
+        let result = await getWeld(hash, pk)
+        if (result == '') {
+          this.$toast('暂无内容', 2000)
+        } else {
+          getTransaction(hash).then(t => {
+            that.$router.push({path: '/welding/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
+          })
+        }
+      }
     }
-}
+  }
 </script>
 
 <style scoped lang="less">
-@import url(../../assets/less/finance.less);
-@import url(../../assets/less/welding.less);
+  @import url(../../assets/less/finance.less);
+  @import url(../../assets/less/welding.less);
 </style>>

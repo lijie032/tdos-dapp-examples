@@ -1,5 +1,5 @@
 // 部署公益合约
-import {ENV, rpc, getABI, getContract, httpRPC,getBookContract} from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp} from './constants'
 import {
   bin2hex,
   constants,
@@ -366,9 +366,9 @@ export async function saveProduct (payload, publickey) {
 export async function getProduct (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getProduct', hex2bin(hash))
-    return decodeFinance(result)
-  }catch (e) {
-    return "";
+    return decodeProduct(result)
+  } catch (e) {
+    return ''
   }
 }
 
@@ -381,17 +381,8 @@ function decodeWeld (buf) {
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.wpqr = rd.string()
-  u.wpqrfix = rd.string()
-  u.report = rd.string()
-  u.reportfix = rd.string()
-  u.reported = rd.string()
-  u.reportedfix = rd.string()
-  u.wps = rd.string()
-  u.wpsfix = rd.string()
-  u.test = rd.string()
-  u.testfix = rd.string()
-  u.labreport = rd.string()
-  u.labreportfix = rd.string()
+  u.welder = rd.string()
+  u.device = rd.string()
   return u
 }
 
@@ -414,9 +405,9 @@ export async function saveWeld (payload, publickey) {
 export async function getWeld (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getWeld', hex2bin(hash))
-    return decodeFinance(result)
-  }catch (e) {
-    return "";
+    return decodeWeld(result)
+  } catch (e) {
+    return ''
   }
 }
 
@@ -475,7 +466,76 @@ export async function getFinance (hash) {
   }catch (e) {
     return "";
   }
+}
+// 解析加密熊
+function decodeBear (buf) {
+  if (buf != '') {
+    buf = hex2bin(buf)
+    const u = {}
+    const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+    u.username = rd.string()
+    u.birth = rd.string()
+    u.aggressivity = rd.number()
+    u.bloodvolume = rd.number()
+    u.stature = rd.number()
+    u.tonnage = rd.number()
+    u.defense = rd.number()
+    u.level = rd.number()
+    u.hash = bin2hex(rd.bytes())
+    return u
+  }
+  return ''
+}
 
+// 加密熊购买
+export async function buyBear (payload, publickey) {
+  const c = await getContract_secretbeardapp()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'buy', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+// 加密熊升级
+export async function buyLevel (publickey) {
+  const c = await getContract_secretbeardapp()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'buyLevel', [], 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+// 是否加密熊
+export async function hasBear (pk) {
+  try {
+    let add = publicKey2Address(pk)
+    return await rpc.viewContract(await getContract_secretbeardapp(), 'hasBear', [add])
+  } catch (e) {
+    return ''
+  }
+}
+
+// 获取密熊
+export async function getBear (pk) {
+  try {
+    let add = publicKey2Address(pk)
+    let bear =  await rpc.viewContract(await getContract_secretbeardapp(), 'getBear', [add])
+    return decodeBear(bear)
+  } catch (e) {
+    return ''
+  }
 }
 
 // 保存通讯录
