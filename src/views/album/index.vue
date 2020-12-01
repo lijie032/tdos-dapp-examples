@@ -1,0 +1,113 @@
+<template>
+    <div class="pageWrap bg-wrap dis-table">
+        <explorer :type="type"></explorer>
+        
+        <div class="page-main content-middle">
+            <!--图片上传最多四张-->
+           <div class="album-list" :class="{'no-data-album-list':imgList.length==0}">
+              <div class="album-col" v-for="(item,index) in imgList" :key="index">
+                  <div class="pic">
+                      <img :src="item"/>
+                  </div>
+                  <div class="picInfo">
+                      <div class="time">2020-08-09 16:45:12 上传</div>
+                      <div class="hash-value">
+                          <p>该相片已存证上链，上链哈希为：</p>
+                          <p>kjd5d5q4w8eq212fs1df5sd4g8dfhfgh4gfnj541gh5j4gh8hgj78ghj78gh</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="album-col ">
+                 
+                  <div class="album-add">
+                      
+                    <div class="content-middle">
+                        <div class="add_btn"></div>
+                        <p class="mess">点击添加相片上传，相片将会被存证上链。</p>
+                    </div>
+                  </div>
+                   <input  class="add" @change="tirggerFile($event)" type="file" name="imgs[]" multiple accept="image/gif, image/png, image/jpg, image/jpeg">
+<img src="" id="imgs">/>
+              </div>
+           </div>
+        </div>
+        
+        <!--相册上传成功弹出框-->
+       <div class="trans" v-if="isSuc">
+           <div class="confrim-box">
+               <div class="confrim-header">
+                   相片上传成功
+                   <a class="close pointer" @click="hideIsSuc()">
+                       
+                   </a>
+               </div>
+               <div class="confirm-body">
+                   <p class="pt">相片已上传并上链存证成功！以下是您的事务哈希：</p>
+                   <p  class="pt pt-hash">
+                       <span>da65sd69qw9qwe612dasf14d5g48g4df8h4gf5h48re9ter9</span>
+                       <a class="btn-copy pointer"></a>
+                   </p>
+                   <p class="mess">您可复制事务哈希并点击右上角按钮至“TDS浏览器”查询。）</p>
+               </div>
+               <div class="btnbox">
+                   <button class="btn-confrim pointer" @click="unploadConfirm">我知道了</button>
+               </div>
+           </div>
+       </div>
+
+
+    </div>
+</template>
+<script>
+import explorer from '@/components/browser1.vue'
+import TpScroll from '@/assets/js/tp-scroll.js'
+export default {
+    data(){
+        return{
+         type:1,
+          dialogImageUrl: '',
+          dialogVisible: false,
+          imgList:[],
+          isSuc:false,
+        }
+    },
+    components:{
+        explorer
+    },
+    methods:{
+       tirggerFile: function(event) {
+        let file = event.target.files[0];
+        let url = "";
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        let that = this;
+        reader.onload = function(e) {
+        
+            url = this.result.substring(this.result.indexOf(",") + 1);
+         
+            that.imgList.push("data:image/png;base64," + url)
+            // that.$refs['imgimg'].setAttribute('src','data:image/png;base64,'+url);
+        };
+        that.isSuc=true;
+        TpScroll.RemoveScroll();
+      },
+
+      //上传之后确认
+      unploadConfirm(){
+          let that = this; 
+         that.hideIsSuc();
+      },
+
+      hideIsSuc(){
+          this.isSuc=false;
+          TpScroll.AddScroll();
+      }
+    },
+    mounted(){
+      
+    }
+}
+</script>
+<style scoped lang="less">
+   @import url(../../assets/less/album.less);
+</style>

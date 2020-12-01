@@ -12,7 +12,10 @@
        <router-link target="_blank" to='/shopping'>购物</router-link>
        <router-link target="_blank" to='/cryptoBear'>加密熊</router-link>
        <router-link target="_blank" to='/chat'>聊天</router-link>
-       <router-link target="_blank" to='addressBook'>通讯录</router-link>
+       <router-link target="_blank" to='/addressBook'>通讯录</router-link>
+       <router-link target="_blank" to='/album'>相册</router-link>
+       <router-link target="_blank" to='/issueCoins'>发行代币</router-link>
+       <router-link target="_blank" to='/crowdFunding'>项目众筹</router-link>
     </div>
 </template>
 <script>
