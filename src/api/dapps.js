@@ -1,5 +1,5 @@
 // 部署公益合约
-import {ENV, rpc, getABI, getContract, httpRPC} from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC, getContract_secretbeardapp} from './constants'
 import {
   bin2hex,
   constants,
@@ -30,8 +30,8 @@ export function getTransaction (hash) {
 
 // 解析公益
 function decodeDonor (buf) {
-  if (buf == ""){
-    return "";
+  if (buf == '') {
+    return ''
   }
   buf = hex2bin(buf)
   const u = {}
@@ -48,6 +48,8 @@ function decodeDonor (buf) {
 // 公益保存
 export async function saveDonor (payload, publickey) {
   const c = await getContract()
+  console.log("1111111")
+  console.log(c)
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
@@ -65,15 +67,15 @@ export async function getDonor (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getDonor', hash)
     return decodeDonor(result)
-  }catch (e) {
-    return "";
+  } catch (e) {
+    return ''
   }
 }
 
 // 解析物流
 function decodeLogistics (buf) {
-  if (buf == ""){
-    return "";
+  if (buf == '') {
+    return ''
   }
   buf = hex2bin(buf)
   const u = {}
@@ -108,15 +110,15 @@ export async function getLogistics (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getLogistics', hex2bin(hash))
     return decodeLogistics(result)
-  }catch (e) {
-    return "";
+  } catch (e) {
+    return ''
   }
 }
 
 // 解析资产
 function decodeFund (buf) {
-  if (buf == ""){
-    return "";
+  if (buf == '') {
+    return ''
   }
   buf = hex2bin(buf)
   const u = {}
@@ -163,15 +165,15 @@ export async function getFund (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getFund', hex2bin(hash))
     return decodeFund(result)
-  }catch (e) {
-    return "";
+  } catch (e) {
+    return ''
   }
 }
 
 // 解析音乐
 function decodeMusic (buf) {
-  if (buf == ""){
-    return "";
+  if (buf == '') {
+    return ''
   }
   buf = hex2bin(buf)
   const u = {}
@@ -204,15 +206,15 @@ export async function getMusic (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getMusic', hex2bin(hash))
     return decodeMusic(result)
-  }catch (e) {
-    return "";
+  } catch (e) {
+    return ''
   }
 }
 
 // 解析医疗
 function decodeMedical (buf) {
-  if (buf == ""){
-    return "";
+  if (buf == '') {
+    return ''
   }
   buf = hex2bin(buf)
   const u = {}
@@ -245,15 +247,15 @@ export async function getMedical (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getMedical', hex2bin(hash))
     return decodeMedical(result)
-  }catch (e) {
-    return "";
+  } catch (e) {
+    return ''
   }
 }
 
 // 解析保险
 function decodeInsure (buf) {
-  if (buf == ""){
-    return "";
+  if (buf == '') {
+    return ''
   }
   buf = hex2bin(buf)
   const u = {}
@@ -287,15 +289,15 @@ export async function getInsure (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getInsure', hex2bin(hash))
     return decodeInsure(result)
-  }catch (e) {
-    return "";
+  } catch (e) {
+    return ''
   }
 }
 
 // 解析著作版权
 function decodeBook (buf) {
-  if (buf == ""){
-    return "";
+  if (buf == '') {
+    return ''
   }
   buf = hex2bin(buf)
   const u = {}
@@ -327,15 +329,15 @@ export async function getBook (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getBook', hex2bin(hash))
     return decodeBook(result)
-  }catch (e) {
-    return "";
+  } catch (e) {
+    return ''
   }
 }
 
 // 解析产品溯源
 function decodeProduct (buf) {
-  if (buf == ""){
-    return "";
+  if (buf == '') {
+    return ''
   }
   buf = hex2bin(buf)
   const u = {}
@@ -366,32 +368,23 @@ export async function saveProduct (payload, publickey) {
 export async function getProduct (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getProduct', hex2bin(hash))
-    return decodeFinance(result)
-  }catch (e) {
-    return "";
+    return decodeProduct(result)
+  } catch (e) {
+    return ''
   }
 }
 
 // 解析焊接
 function decodeWeld (buf) {
-  if (buf == ""){
-    return "";
+  if (buf == '') {
+    return ''
   }
   buf = hex2bin(buf)
   const u = {}
   const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
   u.wpqr = rd.string()
-  u.wpqrfix = rd.string()
-  u.report = rd.string()
-  u.reportfix = rd.string()
-  u.reported = rd.string()
-  u.reportedfix = rd.string()
-  u.wps = rd.string()
-  u.wpsfix = rd.string()
-  u.test = rd.string()
-  u.testfix = rd.string()
-  u.labreport = rd.string()
-  u.labreportfix = rd.string()
+  u.welder = rd.string()
+  u.device = rd.string()
   return u
 }
 
@@ -414,9 +407,9 @@ export async function saveWeld (payload, publickey) {
 export async function getWeld (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getWeld', hex2bin(hash))
-    return decodeFinance(result)
-  }catch (e) {
-    return "";
+    return decodeWeld(result)
+  } catch (e) {
+    return ''
   }
 }
 
@@ -472,8 +465,77 @@ export async function getFinance (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getFinance', hex2bin(hash))
     return decodeFinance(result)
-  }catch (e) {
-    return "";
+  } catch (e) {
+    return ''
   }
+}
+// 解析加密熊
+function decodeBear (buf) {
+  if (buf != '') {
+    buf = hex2bin(buf)
+    const u = {}
+    const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+    u.username = rd.string()
+    u.birth = rd.string()
+    u.aggressivity = rd.number()
+    u.bloodvolume = rd.number()
+    u.stature = rd.number()
+    u.tonnage = rd.number()
+    u.defense = rd.number()
+    u.level = rd.number()
+    u.hash = bin2hex(rd.bytes())
+    return u
+  }
+  return ''
+}
 
+// 加密熊购买
+export async function buyBear (payload, publickey) {
+  const c = await getContract_secretbeardapp()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'buy', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+// 加密熊升级
+export async function buyLevel (publickey) {
+  const c = await getContract_secretbeardapp()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'buyLevel', [], 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+// 是否加密熊
+export async function hasBear (pk) {
+  try {
+    let add = publicKey2Address(pk)
+    return await rpc.viewContract(await getContract_secretbeardapp(), 'hasBear', [add])
+  } catch (e) {
+    return ''
+  }
+}
+
+// 获取密熊
+export async function getBear (pk) {
+  try {
+    let add = publicKey2Address(pk)
+    let bear =  await rpc.viewContract(await getContract_secretbeardapp(), 'getBear', [add])
+    return decodeBear(bear)
+  } catch (e) {
+    return ''
+  }
 }

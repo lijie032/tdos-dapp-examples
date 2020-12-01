@@ -1,5 +1,6 @@
 import { ABI, VirtualMachine, RPC, publicKey2Address, privateKey2PublicKey, Contract, hex2bin, bin2hex} from '@salaku/js-sdk'
 import abi from '@/contracts/dapps.abi.json'
+import abi_secretbeardapp from '@/contracts/secretbeardapp.abi.json'
 import axios from 'axios'
 
 // import wasm from '@/contracts/dapps.wasm'
@@ -48,6 +49,10 @@ export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, abi)
+}
+
+export async function getContract_secretbeardapp() {
+  return new Contract(CONTRACT_SECRET_BEAR_ADDRESS, abi_secretbeardapp)
 }
 
 // 捐赠人的私钥
