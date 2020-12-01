@@ -130,6 +130,9 @@
     mounted () {
       this.timer = setInterval(this.timer_tx, 1000)
     },
+    beforeDestroy() {
+      clearInterval(this.timer);
+    }
   }
 </script>
 
