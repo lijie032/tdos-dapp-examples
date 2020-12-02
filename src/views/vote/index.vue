@@ -4,39 +4,32 @@
      
       <div class="page-main content-middle">
           <div class="page-content">
-          	 <div class="pageTitle">关于区块链的投票命题关于区块链的投票命题</div>
+          	 <div class="pageTitle">{{title}}</div>
           	 <div class="p-container">
           	 	<div class="v-Proposition">
-                     <div class="v-name">我同意此观点</div>
+                     <div class="v-name">{{voteA}}</div>
 					 <div class="v-detail-intro">
                         <el-scrollbar style="height:100%">
-							<p>文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文本内容文本内容文本内
-								容文本内容 文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文。
-							   容文本内容 文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文。
-							   容文本内容 文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文。
-							   容文本内容 文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文。
+							<p>{{infoA}}
 							</p>
                         </el-scrollbar>
 					 </div>
 					 <div class="btnbox">
-						 <button class="btn pointer" @click="agree()">确认选择并投票</button>
+						 <button class="btn pointer" @click="agree(0)">确认选择并投票</button>
+						 <a ref="sendTx"></a>
 					 </div>
 				</div>
 				<div class="vs"></div>
 				<div class="v-Proposition">
-                     <div class="v-name">我不同意</div>
+                     <div class="v-name">{{voteB}}</div>
 					 <div class="v-detail-intro">
                         <el-scrollbar style="height:100%">
-							<p>文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文本内容文本内容文本内
-								容文本内容 文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文。
-							   容文本内容 文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文。
-							   容文本内容 文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文。
-							   容文本内容 文本内容文本内容文本内容文本内容文本内容文本内容文本内容 文本内容文本内容文本内容文。
-							</p>
+							<p>{{infoB}}</p>
                         </el-scrollbar>
 					 </div>
 					 <div class="btnbox">
-						 <button class="btn pointer" @click="agree()">确认选择并投票</button>
+						 <button class="btn pointer" @click="agree(1)">确认选择并投票</button>
+						 <a ref="sendTx"></a>
 					 </div>
 				</div>
           	 </div>
@@ -57,15 +50,21 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
+import { getVote, vote} from "@/api/dapps";
 export default {
     data(){
         return{
 			type:1,//头部右上角浏览器
-            projectList:[{title:'由TDOS平台发布',intro:'众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍...',time:'2020-09-12 16:45:12',
-            targetAmount:'300,000',raisedAmount:'250,000',partNumber:'1,200'},
-            {title:'由TDOS平台发布',intro:'众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍...',time:'2020-09-12 16:45:12',
-            targetAmount:'300,000',raisedAmount:'250,000',partNumber:'1,200'}],
-       
+            // projectList:[{title:'由TDOS平台发布',intro:'众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍...',time:'2020-09-12 16:45:12',
+            // targetAmount:'300,000',raisedAmount:'250,000',partNumber:'1,200'},
+            // {title:'由TDOS平台发布',intro:'众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍...',time:'2020-09-12 16:45:12',
+            // targetAmount:'300,000',raisedAmount:'250,000',partNumber:'1,200'}],
+			// projectList:[],
+       		title: '',
+    		voteA: '',
+    		voteB: '',
+    		infoA: '',
+    		infoB: '',
             chainSuc:false,//募集成功展示
        
         }
@@ -82,11 +81,7 @@ export default {
 	      return value
 	    }
 	  },
-    methods:{
-      
-		
-		
-        
+    methods:{        
         //募集确认
         clickRasie(){
         	let that = this;
@@ -100,12 +95,38 @@ export default {
 		},
 
 		//点击按钮跳转到界面
-		agree(){
+		async agree(i){
 			let that = this;
-			that.$router.push({path:'/vote/result'})
-			
+			// that.$router.push({path:'/vote/result'})
+            let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+			let payload = {
+                offset: i,
+            };
+            let tx = await vote(payload, pk);
+            let sendTx = JSON.stringify(tx);
+            that.$refs.sendTx.href =
+                "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+            that.$refs.sendTx.click();
+            return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
+		},
+
+		async getVoteInfo(){
+			let that = this;
+			let voteInfo = await getVote();
+			that.title = voteInfo.title;
+			that.voteA = voteInfo.voteA;
+			that.voteB = voteInfo.voteB;
+			that.infoA = voteInfo.infoA;
+			that.infoB = voteInfo.infoB;
+			console.log(voteInfo)
 		}
 		
-    }
+    },
+    mounted(){
+	  	this.getVoteInfo();	
+    },
 }
 </script>

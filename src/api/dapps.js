@@ -1,5 +1,5 @@
 // 部署公益合约
-import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract } from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract } from './constants'
 import {
   bin2hex,
   constants,
@@ -608,7 +608,7 @@ function fromEncoded(buf) {
   return book;
 }
 
-// 保存通讯录
+
 export async function addPhoto(payload, publickey) {
   const c = await getAlbumContract()
   if (ENV === 'prod') {
@@ -623,7 +623,7 @@ export async function addPhoto(payload, publickey) {
   }
 }
 
-// 保存通讯录
+
 export async function getPhotos(address) {
   try {
     let result = await rpc.viewContract(await getAlbumContract(), 'getPhotos', [address])
@@ -648,7 +648,6 @@ function decodePhotos(buf) {
   return ''
 }
 
-
 function fromEncodedPhotos(buf) {
   const li = new rlp.RLPListReader(buf);
   const u = {}
@@ -656,4 +655,44 @@ function fromEncodedPhotos(buf) {
   u.fix =li.string();
   u.hash = bin2hex(li.bytes());
   return u;
+}
+
+export async function getVote() {
+  try {
+    let result = await rpc.viewContract(await getVoteContract(), 'getVote', [])
+    return decodeVote(result)
+  }catch (e) {
+    return "";
+  }
+}
+
+function decodeVote (buf) {
+  if (buf != '') {
+    buf = hex2bin(buf)
+    const u = {}
+    const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+    u.title = rd.string()
+    u.voteA = rd.string()
+    u.voteB = rd.string()
+    u.infoA = rd.string()
+    u.infoB = rd.string()
+    u.amountA = rd.number()
+    u.amountB = rd.number()
+    return u
+  }
+  return ''
+}
+
+export async function vote(payload, publickey) {
+  const c = await getVoteContract()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'vote', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
 }

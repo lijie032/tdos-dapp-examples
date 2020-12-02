@@ -4,6 +4,7 @@ import bookAbi from '@/contracts/addresslistdapp.abi.json'
 import abi_secretbeardapp from '@/contracts/secretbeardapp.abi.json'
 import axios from 'axios'
 import photoAbi from '@/contracts/photodapp.abi.json'
+import voteAbi from '@/contracts/votedapp.abi.json'
 
 // import wasm from '@/contracts/dapps.wasm'
 
@@ -75,6 +76,11 @@ export async function getAlbumContract() {
 export async function getContract_secretbeardapp() {
   return new Contract(CONTRACT_SECRET_BEAR_ADDRESS, abi_secretbeardapp)
 }
+
+export async function getVoteContract() {
+  return new Contract(CONTRACT_VOTE_ADDRESS, voteAbi)
+}
+
 
 // 捐赠人的私钥
 export const PRIVATE_KEY =
