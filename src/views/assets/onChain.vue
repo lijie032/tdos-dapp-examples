@@ -81,6 +81,7 @@
         let that = this;
         let t = that.getRes();
         if (t != ""){
+          this.$router.push({path:'/assets'})
           return that.$toast("事务广播成功，事务哈希为："+t, 3000);
         }
       }

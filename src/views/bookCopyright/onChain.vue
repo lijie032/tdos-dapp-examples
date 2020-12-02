@@ -72,7 +72,21 @@
           'javascript:sendMessageToContentScriptByPostMessage(\'' + sendTx + '\')'
         that.$refs.sendTx.click()
         return that.$toast('事务已生成，请打开TDOS插件进行广播', 3000)
+      },
+      get(){
+        let that = this;
+        let t = that.getRes();
+        if (t != ""){
+          this.$router.push({path:'/bookCopyright'})
+          return that.$toast("事务广播成功，事务哈希为："+t, 3000);
+        }
       }
+    },
+    mounted() {
+      this.timer = setInterval(this.get, 1000);
+    },
+    beforeDestroy() {
+      clearInterval(this.timer);
     }
   }
 </script>

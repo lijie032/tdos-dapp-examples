@@ -53,10 +53,11 @@ export const CONTRACT_ADDRESS = '30f1acbde6a9111a3cde642bfbc30310e293cd67' // �
 export const CONTRACT_SECRET_BEAR_ADDRESS = '73969ed1bdf86e84cff51ba1b7e6b5941926a590' // 加密熊合约地址
 export const CONTRACT_CHAT_ADDRESS = '29f6214439a28a97a912b19c343e197de6422ba9' // 聊天室合约地址
 export const CONTRACT_BOOKS_ADDRESS = 'b237c1b692036bacb3a859aa0c3e11b74166dc8f' // 通讯录合约地址
-export const CONTRACT_PHOTO_ADDRESS = '3a9dace4bae494b2c3688776b26dffc54f67a7ab' // 相册合约地址
+export const CONTRACT_PHOTO_ADDRESS = '3427f80b90761366683ed5c383aa1e37115b6c69' // 相册合约地址
 export const CONTRACT_TOKEN_ADDRESS = '0cf65e367967f6cd88bbd9561283ae71eb260ef9' // 发行代币合约地址
 export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f' // 交易合约地址
 export const CONTRACT_LIMIT_ADDRESS = 'ca4a410ea6238c25e7d2b9964bdde18960702c9e' // 权限合约地址
+export const CONTRACT_CROWDSALE_ADDRESS = '23a9f79e578da0e6f9ea17836f78b829ad035e17' // 众筹合约地址
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, abi)

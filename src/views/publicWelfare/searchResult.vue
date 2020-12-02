@@ -65,8 +65,6 @@
       let transaction = this.$route.query.transaction;
       let result = this.$route.query.result;
       let tx_hash = this.$route.query.tx_hash;
-      console.log(transaction);
-      console.log(result);
       document.getElementById("from").innerHTML = result.name;
       document.getElementById("goods").innerHTML = result.content;
       document.getElementById("info").innerHTML = result.state;
