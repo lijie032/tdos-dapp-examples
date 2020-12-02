@@ -182,22 +182,29 @@ export default {
             }
             let addr = publicKey2Address(pk);
             let books = await getAddressBooks(addr);
+            books.sort(function(a,b){
+                return a.username.localeCompare(b.username);
+            });
+            
             that.addressList = [];
+            books.forEach((item)=>{
+            getTransaction(item.hash).then(t => {
+                        item.height = t.blockHeight;
+                        item.affair_hash = t.blockHash
+                    });
+                });     
             if (that.searchKey != ""){
                 books.forEach((item)=>{
-                    getTransaction(item.hash).then(t => {
-                        if (that.searchKey == item.username){
-                            that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:t.blockHeight, affair_hash:t.blockHash})
-                        }
-                    });      
+                    if (that.searchKey == item.username){
+                        that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:item.blockHeight, affair_hash:item.blockHash})
+                    }    
                 });
             } else {
                 books.forEach((item)=>{
-                    getTransaction(item.hash).then(t => {
-                        that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:t.blockHeight, affair_hash:t.blockHash})
-                    });      
+                    that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:item.blockHeight, affair_hash:item.blockHash})    
                 });        
-            }
+            };
+
        },
        showRight(item){
         let that = this;

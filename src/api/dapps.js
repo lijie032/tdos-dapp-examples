@@ -568,11 +568,15 @@ class Book{
     phone = ''
     memo = ''
     hash = ''
-    constructor(username, phone,memo,hash) {
+    height = 0
+    affair_hash = ''
+    constructor(username, phone,memo,hash,height,affair_hash) {
       this.username = username;
       this.phone = phone;
       this.memo = memo;
       this.hash = hash;
+      this.height = height;
+      this.affair_hash = affair_hash;
     }
     toString() {
       return '(' + this.username + ', ' + this.phone + ')';
