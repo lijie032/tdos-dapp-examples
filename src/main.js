@@ -12,6 +12,9 @@ import 'element-ui/lib/theme-chalk/index.css';//样式文件一定要引入
 import storage from "@/storage";
 
 Vue.config.productionTip = false
+import limitNum from './assets/js/onlyNum'
+
+Vue.directive('limitNum', limitNum);
 
 Vue.use(ElementUI);
 

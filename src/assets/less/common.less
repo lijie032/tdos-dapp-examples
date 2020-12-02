@@ -153,6 +153,14 @@ h1,h2,h3,h4,h5{font-weight: normal;}
 .is-horizontal {    display: none;
 }
 
+a{
+  -moz-user-select:none;/*火狐*/
+  -webkit-user-select:none;/*webkit浏览器*/
+  -ms-user-select:none;/*IE10*/
+  -khtml-user-select:none;/*早期浏览器*/
+  user-select:none;
+}
+
 .coin-select{
   width:100%;
   .el-input--suffix{

@@ -287,6 +287,21 @@ export default new Router({
       name: 'vote_result',
       component: resolve=>(require(["@/views/vote/voteResult"],resolve))
     },
+    {
+      path: '/authority',//TDOS权限
+      name: 'authority',
+      component: resolve=>(require(["@/views/authority/index"],resolve))
+    },
+    {
+      path: '/flashLoan',//闪电贷
+      name: 'flashLoan',
+      component: resolve=>(require(["@/views/flashLoan/index"],resolve))
+    },
+    {
+      path: '/coinExchange',//资产呼唤
+      name: 'coinExchange',
+      component: resolve=>(require(["@/views/coinExchange/index"],resolve))
+    },
     
   ]
 })
