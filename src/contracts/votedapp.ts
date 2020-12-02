@@ -90,3 +90,7 @@ export function vote(offset: u64): void {
 export function hasVote(addr: Address): boolean {
     return voterInfoList.has(addr);
 }
+
+export function getVote(): ArrayBuffer {
+    return Globals.get<ArrayBuffer>('voteInfo');
+}
