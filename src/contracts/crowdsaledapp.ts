@@ -8,30 +8,30 @@ class CrowdSale{
     fundingGoal: u64
     amount: u64
     info: string
-    height: u64
+    hash: ArrayBuffer
 
     constructor(
         addr: string,
         fundingGoal: u64,
         amount: u64,
         info: string,
-        height: u64
+        hash: ArrayBuffer
     ) {
         this.addr = addr;
         this.fundingGoal = fundingGoal;
         this.amount = amount;
         this.info = info;
-        this.height = height;
+        this.hash = hash;
     }
 
     static fromEncoded(buf: ArrayBuffer): CrowdSale {
         const li = RLPList.fromEncoded(buf);
-        const crowdSale = new CrowdSale('',0,0,'', 0);
+        const crowdSale = new CrowdSale('',0,0,'', new ArrayBuffer(0));
         crowdSale.addr = li.getItem(0).string();
         crowdSale.fundingGoal = li.getItem(1).u64();
         crowdSale.amount = li.getItem(2).u64();
         crowdSale.info = li.getItem(3).string();
-        crowdSale.height = li.getItem(3).u64();
+        crowdSale.hash = li.getItem(3).bytes();
         return crowdSale;
     }
 
@@ -41,7 +41,7 @@ class CrowdSale{
         els.push(RLP.encodeU64(this.fundingGoal));
         els.push(RLP.encodeU64(this.amount));
         els.push(RLP.encodeString(this.info));
-        els.push(RLP.encodeU64(this.height));
+        els.push(RLP.encodeBytes(this.hash));
         return RLP.encodeElements(els);
     }
 }
@@ -119,15 +119,18 @@ export function init(): void {
 
 export function transfer(offset: u64, amount: u64): void {
     const tx = Context.transaction();
-    const h = Context.header();
     let crowdSaleInfos = decodeCrowdSaleInfos(Globals.get<ArrayBuffer>('crowdSaleInfoList'));
     crowdSaleInfos[i32(offset)].amountRaised = crowdSaleInfos[i32(offset)].amountRaised + amount;
     crowdSaleInfos[i32(offset)].people = crowdSaleInfos[i32(offset)].people + 1;
-    let crowdSale = new CrowdSale(crowdSaleInfos[i32(offset)].addr, crowdSaleInfos[i32(offset)].fundingGoal, amount, crowdSaleInfos[i32(offset)].info, h.height);
+    let crowdSale = new CrowdSale(crowdSaleInfos[i32(offset)].addr, crowdSaleInfos[i32(offset)].fundingGoal, amount, crowdSaleInfos[i32(offset)].info, tx.hash);
     crowdSaleList.set(tx.hash, crowdSale.getEncoded())
     Globals.set('crowdSaleInfoList', encodeCrowdSaleInfos(crowdSaleInfos));
 }
 
 export function getCrowdSaleInfo(): ArrayBuffer {
     return Globals.get<ArrayBuffer>('crowdSaleInfoList');
+}
+
+export function getCrowdSale(hash: ArrayBuffer): ArrayBuffer {
+    return crowdSaleList.get(hash);
 }
