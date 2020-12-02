@@ -7,7 +7,7 @@
           	 <div class="pageTitle">欢迎来到TDOS权限查询</div>
           	 <div class="p-container">
           	 	  <div class="searchIn">
-          	 	  	 <input placeholder="您可将连接复制至此来查询权限" />
+          	 	  	 <input placeholder="您可将连接复制至此来查询权限" v-model="searchSerial"/>
           	 	  	 <a class="pointer cf-btn a-search" @click="search()"><span>查询</span></a>
           	 	  </div>
 
@@ -36,7 +36,6 @@
                  </div>
                  <div class="authority-data">
                  	  <div class="d-time">起始时间：<span>2020-06-07 15:15:45</span></div>
-                 	  <div class="d-time">结束时间：<span>2020-06-07 15:15:45</span></div>
                  </div>
         	 	  </div>
         	 	  <div class="btnbox">
@@ -46,10 +45,6 @@
         </div>
 	    </div>
       </div>
-      
-     
-      
-      
   </div>
 </template>
 
@@ -64,11 +59,12 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
+import { getTime, hasSerial } from "@/api/limitdapp";
 export default {
     data(){
         return{
-			     type:1,//头部右上角浏览器
-           
+			type:1,//头部右上角浏览器
+			searchSerial: '',//注册码
             isSearch:false, //点击募集展示
         }
     },
@@ -85,20 +81,17 @@ export default {
 	    }
 	  },
     methods:{
-    clickConfirm(){
-    	let that = this;
-		   that.isSearch = false;
-		   TpScroll.AddScroll()
-    },
+		clickConfirm(){
+			let that = this;
+			that.isSearch = false;
+			TpScroll.AddScroll()
+		},
 		//查询
 		search(){
            let that = this;
 		   that.isSearch = true;
 		   TpScroll.RemoveScroll();
 		},
-        
-      
-
 		addScroll(){
            TpScroll.AddScroll()
 		}

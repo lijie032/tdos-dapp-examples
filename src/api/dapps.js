@@ -696,3 +696,15 @@ export async function vote(payload, publickey) {
     return tx
   }
 }
+
+
+export async function hasVote(address) {
+  try {
+    let result = await rpc.viewContract(await getVoteContract(), 'hasVote', [address]) 
+    console.log("=======2====="+result)
+    return result
+  }catch (e) {
+    return "";
+  }
+}
+

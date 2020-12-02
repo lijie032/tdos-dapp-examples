@@ -4,28 +4,30 @@
      
       <div class="page-main content-middle">
           <div class="page-content vote-result">
-          	 <div class="pageTitle">关于区块链的投票命题关于区块链的投票命题</div>
+          	 <div class="pageTitle">{{title}}</div>
           	 <div class="p-container">
 				<div class="vote-number">
 				    <div class="numberbox">总计票数 
-						<span class="number-1">5<em class="line"></em></span>
-						<span>0<em class="line"></em></span>
+						<span class="number-1">{{amountA + amountB}}<em class="line"></em></span>
+						
+						<!--
+						<span><em class="line"></em></span>
 						<span>7<em class="line"></em></span>
 						<span>6<em class="line"></em></span>
 						<span>0<em class="line"></em></span>
-						<span>3<em class="line"></em></span>
+						<span>3<em class="line"></em></span>-->
 						票
 					</div>
 				</div>
           	 	<div class="v-Proposition">
                    <div class="result-pic result-pic-suc">
 					   <div class="dis-table">
-						   <div class="content-middle">票数：205648 60%</div>
+						   <div class="content-middle">票数：{{amountA}} {{(amountA * 100.0 / (amountA + amountB)).toFixed(2)}}%</div>
 					   </div>
 				   </div>
 				   <div class="result-text">
 					   <el-scrollbar style="height:100%">
-						   <p>文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内文本内容文本内容文本内 容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本 内容文本内。</p>
+						   <p>{{infoA}}</p>
 					   </el-scrollbar>
 				   </div>
 				</div>
@@ -33,17 +35,17 @@
 				<div class="v-Proposition">
                      <div class="result-pic result-pic-fail">
 						<div class="dis-table">
-							<div class="content-middle">票数：185673 40%</div>
+							<div class="content-middle">票数：{{amountB}} {{(amountB * 100.0 / (amountA + amountB)).toFixed(2)}}%</div>
 						</div>
 					 </div>
 					 <div class="result-text">
 					   <el-scrollbar style="height:100%">
-						   <p>文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内文本内容文本内容文本内 容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本 内容文本内。</p>
+						   <p>{{infoB}}</p>
 					   </el-scrollbar>
 				   </div>
 				</div>
           	 </div>
-			 <p class="v-intro">关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于 该项目的一些解释性说明关于该项目的一些解释性说明</p>
+			 <!--<p class="v-intro">关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于 该项目的一些解释性说明关于该项目的一些解释性说明</p>-->
           </div>
          
       </div>
@@ -89,6 +91,7 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
+import { getVote } from "@/api/dapps";
 export default {
     data(){
         return{
@@ -99,6 +102,13 @@ export default {
             targetAmount:'300,000',raisedAmount:'250,000',partNumber:'1,200'}],
        
             chainSuc:false,//募集成功展示
+			title: '',
+    		voteA: '',
+    		voteB: '',
+    		infoA: '',
+    		infoB: '',
+			amountA: 0,
+			amountB: 0,
        
         }
     },
@@ -115,14 +125,21 @@ export default {
 	    }
 	  },
     methods:{
-      
-		
-		
-
 
 		addScroll(){
            TpScroll.AddScroll()
-		}
+		},
+		async getVoteInfo(){
+			let that = this;
+			let voteInfo = await getVote();
+			that.title = voteInfo.title;
+			that.voteA = voteInfo.voteA;
+			that.voteB = voteInfo.voteB;
+			that.infoA = voteInfo.infoA;
+			that.infoB = voteInfo.infoB;
+			that.amountA = voteInfo.amountA;
+			that.amountB = voteInfo.amountB;
+		},
 		
 	},
 	mounted(){
@@ -130,6 +147,7 @@ export default {
 		let that = this;
 		that.chainSuc = true;
 		TpScroll.RemoveScroll();
+		that.getVoteInfo();
 	}
 }
 </script>

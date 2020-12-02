@@ -50,7 +50,8 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
-import { getVote, vote} from "@/api/dapps";
+import { getVote, vote, hasVote} from "@/api/dapps";
+import {publicKey2Address} from '@salaku/js-sdk'
 export default {
     data(){
         return{
@@ -121,12 +122,30 @@ export default {
 			that.voteB = voteInfo.voteB;
 			that.infoA = voteInfo.infoA;
 			that.infoB = voteInfo.infoB;
-			console.log(voteInfo)
+		},
+
+		async hasVoted(){
+			let that = this;
+			let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+            let addr = publicKey2Address(pk);
+			let u = await hasVote(addr);
+			return u;
 		}
 		
     },
     mounted(){
-	  	this.getVoteInfo();	
+		let that = this;
+		that.hasVoted().then(t=>{
+			if (t){
+				that.$router.push({path:'/vote/result'})
+			}else{
+				that.getVoteInfo();
+			}
+		})
+		
     },
 }
 </script>

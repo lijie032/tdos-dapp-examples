@@ -31,6 +31,7 @@
 <script>
   import explorer from '@/components/browser1.vue'
   import {buyBear, hasBear} from '@/api/dapps'
+  import { showLoading, hideLoading } from '@/assets/js/loading';
 
   export default {
     data () {
@@ -78,6 +79,7 @@
     },
     mounted () {
       this.timer = setInterval(this.get, 1000)
+      showLoading();
     },
     beforeDestroy () {
       clearInterval(this.timer)
