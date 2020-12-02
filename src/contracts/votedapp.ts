@@ -1,7 +1,7 @@
 export {__malloc, __change_t, __peek} from '../../node_modules/@salaku/js-sdk/lib/prelude'
 import { Context, Store, log, Address, Globals, RLPList, RLP } from '../../node_modules/@salaku/js-sdk/lib'
 
-const voterInfoList = Store.from<Address, u64>('voterInfoList');
+const voterInfoList = Store.from<Address, ArrayBuffer>('voterInfoList');
 
 class VoteInfo{
     title: string
@@ -71,9 +71,10 @@ export function init(): void {
 
 export function vote(offset: u64): void {
     const msg = Context.msg();
+    const tx = Context.transaction();
     if(!voterInfoList.has(msg.sender))
     {
-        voterInfoList.set(msg.sender, offset);
+        voterInfoList.set(msg.sender, tx.hash);
     }
     let voteInfo = VoteInfo.fromEncoded(Globals.get<ArrayBuffer>('voteInfo'));
     if(offset == 0)
@@ -93,4 +94,8 @@ export function hasVote(addr: Address): boolean {
 
 export function getVote(): ArrayBuffer {
     return Globals.get<ArrayBuffer>('voteInfo');
+}
+
+export function getVoteInfo(addr: Address): ArrayBuffer {
+    return voterInfoList.get(addr);
 }

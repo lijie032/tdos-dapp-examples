@@ -17,15 +17,15 @@
                     </div>
                     <div class="coin-50">
                         <div class="lab">资产名称</div>
-                        <input class="border-box" axlength="15"/>
+                        <input class="border-box" axlength="15" v-model="name"/>
                     </div>
                     <div class="coin-50">
                         <div class="lab">资产所有者</div>
-                        <input class="border-box" axlength="15"/>
+                        <input class="border-box" axlength="15" v-model="owner"/>
                     </div>
                     <div class="coin-50">
                         <div class="lab">初期发行量</div>
-                        <input class="border-box" maxlength="10"/>
+                        <input class="border-box" maxlength="10" v-model="amount"/>
                     </div>
                
                     <div class="coin-50">
@@ -119,6 +119,7 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
+import { saveToken, getToken } from "@/api/tokendapp";
 export default {
     data(){
         return{

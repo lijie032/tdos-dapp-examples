@@ -4,6 +4,7 @@ import bookAbi from '@/contracts/addresslistdapp.abi.json'
 import abi_secretbeardapp from '@/contracts/secretbeardapp.abi.json'
 import axios from 'axios'
 import photoAbi from '@/contracts/photodapp.abi.json'
+import limitAbi from '@/contracts/limitdapp.abi.json'
 
 // import wasm from '@/contracts/dapps.wasm'
 
@@ -58,7 +59,7 @@ export const CONTRACT_TOKEN_ADDRESS = '0cf65e367967f6cd88bbd9561283ae71eb260ef9'
 export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f' // 交易合约地址
 export const CONTRACT_LIMIT_ADDRESS = 'ca4a410ea6238c25e7d2b9964bdde18960702c9e' // 权限合约地址
 export const CONTRACT_CROWDSALE_ADDRESS = 'a4385ccb556b3507b958d1a405e5ed627fb2f50d' // 众筹合约地址
-export const CONTRACT_VOTE_ADDRESS = '173c21705c08ea2d8a5f2657ffb9be05c13233fc' // 投票合约地址
+export const CONTRACT_VOTE_ADDRESS = '96b95e02eb881c4cd2a0d554fa85aa4259785b37' // 投票合约地址
 export const CONTRACT_LEND_ADDRESS = '61303b4bc01a05ba83924cdad60e84f248a088d5' // 闪电贷合约地址
 
 export async function getContract() {
@@ -71,6 +72,10 @@ export async function getBookContract() {
 
 export async function getAlbumContract() {
   return new Contract(CONTRACT_PHOTO_ADDRESS, photoAbi)
+}
+
+export async function getLimitContract() {
+  return new Contract(CONTRACT_LIMIT_ADDRESS, limitAbi)
 }
 
 export async function getContract_secretbeardapp() {
