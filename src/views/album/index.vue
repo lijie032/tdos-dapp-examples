@@ -7,13 +7,13 @@
            <div class="album-list" :class="{'no-data-album-list':imgList.length==0}">
               <div class="album-col" v-for="(item,index) in imgList" :key="index">
                   <div class="pic">
-                      <img :src="item"/>
+                      <img :src="item.url"/>
                   </div>
                   <div class="picInfo">
-                      <div class="time">2020-08-09 16:45:12 上传</div>
+                      <div class="time">{{item.createdAt}} 上传</div>
                       <div class="hash-value">
                           <p>该相片已存证上链，上链哈希为：</p>
-                          <p>kjd5d5q4w8eq212fs1df5sd4g8dfhfgh4gfnj541gh5j4gh8hgj78ghj78gh</p>
+                          <p>{{item.hash}}</p>
                       </div>
                   </div>
               </div>
@@ -63,7 +63,7 @@
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
 import {publicKey2Address} from '@salaku/js-sdk'
-import { addPhoto, getPhotos } from "@/api/dapps";
+import { addPhoto, getPhotos, getTransaction } from "@/api/dapps";
 export default {
     data(){
         return{
@@ -92,7 +92,6 @@ export default {
             url = this.result.substring(this.result.indexOf(",") + 1);
             // that.imgList.push("data:image/png;base64," + url)
             let fix= file.name.substring(file.name.lastIndexOf("."), file.name.length);
-            console.log('===================url=============' + url)
             let payload  = {
                 photo:    url,
                 photofix: fix,
@@ -127,13 +126,27 @@ export default {
             let addr = publicKey2Address(pk);
             let photos = await getPhotos(addr);
             photos.forEach((item)=>{
-                that.imgList.push("data:image/png;base64," + item.photo)
+                 getTransaction(item.hash).then(t => {
+                     that.imgList.push({url:"data:image/png;base64," + item.photo, hash:item.hash, createdAt: new Date(t.createdAt * 1000)})
+                 });
             });
-            console.log(photos)
+      },
+      timer_tx () {
+        let that = this
+        let value = that.getRes()
+        if (value != '') {
+          return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
+        }
       }
     },
     mounted(){
+        let that = this;
+        that.imgList= [];
         this.getPhotos();
+        this.timer = setInterval(this.timer_tx, 1000)
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
     }
 }
 </script>

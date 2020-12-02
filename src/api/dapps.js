@@ -649,6 +649,7 @@ function fromEncodedPhotos(buf) {
   const li = new rlp.RLPListReader(buf);
   const u = {}
   u.photo = li.string();
-  u.fix = hex2bin(li.bytes());
+  u.fix =li.string();
+  u.hash = bin2hex(li.bytes());
   return u;
 }
