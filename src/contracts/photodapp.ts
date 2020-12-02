@@ -7,24 +7,24 @@ const photoList = Store.from<Address, ArrayBuffer>('photoList');
 class Photo{
     photo: string
     phonefix: string
-    height: u64
+    hash: ArrayBuffer
 
     constructor(
         photo: string,
         phonefix: string,
-        height: u64
+        hash: ArrayBuffer
     ) {
         this.photo = photo;
         this.phonefix = phonefix;
-        this.height = height;
+        this.hash = hash;
     }
 
     static fromEncoded(buf: ArrayBuffer): Photo {
         const li = RLPList.fromEncoded(buf);
-        const photo = new Photo('', '', 0);
+        const photo = new Photo('', '', new ArrayBuffer(0));
         photo.photo = li.getItem(0).string();
         photo.phonefix = li.getItem(1).string();
-        photo.height = li.getItem(2).u64();
+        photo.hash = li.getItem(2).bytes();
         return photo;
     }
 
@@ -32,7 +32,7 @@ class Photo{
         const els = new Array<ArrayBuffer>();
         els.push(RLP.encodeString(this.photo));
         els.push(RLP.encodeString(this.phonefix));
-        els.push(RLP.encodeU64(this.height));
+        els.push(RLP.encodeBytes(this.hash));
         return RLP.encodeElements(els);
     }
 }
@@ -70,8 +70,8 @@ export function addPhoto(photo: string, photofix: string): void {
     {
         PhotoArray = new Array<Photo>();
     }
-    const h = Context.header();
-    let photoinfo = new Photo(photo, photofix, h.height);
+    const tx = Context.transaction();
+    let photoinfo = new Photo(photo, photofix, tx.hash);
     PhotoArray.push(photoinfo);
     let savePhotoArrayBuffer = encodePhotos(PhotoArray);
     photoList.set(msg.sender, savePhotoArrayBuffer);

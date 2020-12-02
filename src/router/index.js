@@ -297,6 +297,11 @@ export default new Router({
       name: 'flashLoan',
       component: resolve=>(require(["@/views/flashLoan/index"],resolve))
     },
+    {
+      path: '/coinExchange',//资产呼唤
+      name: 'coinExchange',
+      component: resolve=>(require(["@/views/coinExchange/index"],resolve))
+    },
     
   ]
 })

@@ -7,13 +7,13 @@
            <div class="album-list" :class="{'no-data-album-list':imgList.length==0}">
               <div class="album-col" v-for="(item,index) in imgList" :key="index">
                   <div class="pic">
-                      <img :src="item"/>
+                      <img :src="item.url"/>
                   </div>
                   <div class="picInfo">
-                      <div class="time">2020-08-09 16:45:12 上传</div>
+                      <div class="time">{{item.createdAt}} 上传</div>
                       <div class="hash-value">
                           <p>该相片已存证上链，上链哈希为：</p>
-                          <p>kjd5d5q4w8eq212fs1df5sd4g8dfhfgh4gfnj541gh5j4gh8hgj78ghj78gh</p>
+                          <p>{{item.hash}}</p>
                       </div>
                   </div>
               </div>
@@ -24,6 +24,7 @@
                     <div class="content-middle">
                         <div class="add_btn"></div>
                         <p class="mess">点击添加相片上传，相片将会被存证上链。</p>
+                        <a ref="sendTx"></a>
                     </div>
                   </div>
                    <input  class="add" @change="tirggerFile($event)" type="file" name="imgs[]" multiple accept="image/gif, image/png, image/jpg, image/jpeg">
@@ -61,6 +62,8 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
+import {publicKey2Address} from '@salaku/js-sdk'
+import { addPhoto, getPhotos, getTransaction } from "@/api/dapps";
 export default {
     data(){
         return{
@@ -75,20 +78,32 @@ export default {
         explorer
     },
     methods:{
-       tirggerFile: function(event) {
+        tirggerFile:  function(event) {
         let file = event.target.files[0];
         let url = "";
         var reader = new FileReader();
         reader.readAsDataURL(file);
         let that = this;
-        reader.onload = function(e) {
-        
+        let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+        reader.onload = async function(e) {
             url = this.result.substring(this.result.indexOf(",") + 1);
-         
-            that.imgList.push("data:image/png;base64," + url)
-            // that.$refs['imgimg'].setAttribute('src','data:image/png;base64,'+url);
+            // that.imgList.push("data:image/png;base64," + url)
+            let fix= file.name.substring(file.name.lastIndexOf("."), file.name.length);
+            let payload  = {
+                photo:    url,
+                photofix: fix,
+            }
+            let tx = await addPhoto(payload, pk);
+            let sendTx = JSON.stringify(tx);
+            that.$refs.sendTx.href =
+                "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+            that.$refs.sendTx.click();
+            return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
         };
-        that.isSuc=true;
+        // that.isSuc=true;
         TpScroll.RemoveScroll();
       },
 
@@ -101,10 +116,37 @@ export default {
       hideIsSuc(){
           this.isSuc=false;
           TpScroll.AddScroll();
+      },
+      async getPhotos(){
+            let that = this;
+            let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+            let addr = publicKey2Address(pk);
+            let photos = await getPhotos(addr);
+            photos.forEach((item)=>{
+                 getTransaction(item.hash).then(t => {
+                     that.imgList.push({url:"data:image/png;base64," + item.photo, hash:item.hash, createdAt: new Date(t.createdAt * 1000)})
+                 });
+            });
+      },
+      timer_tx () {
+        let that = this
+        let value = that.getRes()
+        if (value != '') {
+          return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
+        }
       }
     },
     mounted(){
-      
+        let that = this;
+        that.imgList= [];
+        this.getPhotos();
+        this.timer = setInterval(this.timer_tx, 1000)
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
     }
 }
 </script>
