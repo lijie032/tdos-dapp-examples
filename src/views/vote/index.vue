@@ -133,8 +133,14 @@ export default {
             let addr = publicKey2Address(pk);
 			let u = await hasVote(addr);
 			return u;
-		}
-		
+		},
+		timer_tx () {
+        	let that = this
+        	let value = that.getRes()
+        	if (value != '') {
+          		return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
+        	}
+      	}
     },
     mounted(){
 		let that = this;
@@ -145,7 +151,10 @@ export default {
 				that.getVoteInfo();
 			}
 		})
-		
+		that.timer = setInterval(this.timer_tx, 1000)
     },
+	beforeDestroy() {
+      clearInterval(this.timer)
+    }
 }
 </script>

@@ -145,7 +145,7 @@ export default {
 	mounted(){
 		//刚进来展示投票结果
 		let that = this;
-		that.chainSuc = true;
+		that.chainSuc = false;
 		TpScroll.RemoveScroll();
 		that.getVoteInfo();
 	}
