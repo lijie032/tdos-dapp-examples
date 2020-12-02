@@ -126,10 +126,16 @@ export default {
             let addr = publicKey2Address(pk);
             let photos = await getPhotos(addr);
             photos.forEach((item)=>{
+                
                  getTransaction(item.hash).then(t => {
+                  
                      that.imgList.push({url:"data:image/png;base64," + item.photo, hash:item.hash, createdAt: new Date(t.createdAt * 1000)})
                  });
+                
             });
+            
+         that.imgList.sort(that.compare('createdAt'));
+          
       },
       timer_tx () {
         let that = this
@@ -137,7 +143,16 @@ export default {
         if (value != '') {
           return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
         }
-      }
+      },
+
+      //时间排序
+      compare(key){
+        return function(value1,value2){
+            var val1=value1.key;
+            var val2=value2.key;
+            return val1-val2;
+        } 
+     }
     },
     mounted(){
         let that = this;
