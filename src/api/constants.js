@@ -58,7 +58,7 @@ export const CONTRACT_TOKEN_ADDRESS = '0cf65e367967f6cd88bbd9561283ae71eb260ef9'
 export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f' // 交易合约地址
 export const CONTRACT_LIMIT_ADDRESS = 'ca4a410ea6238c25e7d2b9964bdde18960702c9e' // 权限合约地址
 export const CONTRACT_CROWDSALE_ADDRESS = 'a4385ccb556b3507b958d1a405e5ed627fb2f50d' // 众筹合约地址
-export const CONTRACT_CROWDSALE_ADDRESS = '8470ade34b28744f701afc43548342d645d11ff3' // 投票合约地址
+export const CONTRACT_VOTE_ADDRESS = '8470ade34b28744f701afc43548342d645d11ff3' // 投票合约地址
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, abi)
