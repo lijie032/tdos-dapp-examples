@@ -45,11 +45,6 @@
          
       </div>
       
-
-      
-    
-     
-      
   </div>
 </template>
 
@@ -108,6 +103,7 @@ export default {
 		agree(){
 			let that = this;
 			that.$router.push({path:'/vote/result'})
+			
 		}
 		
     }

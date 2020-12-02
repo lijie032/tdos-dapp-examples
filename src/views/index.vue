@@ -17,6 +17,8 @@
        <router-link target="_blank" to='/issueCoins'>发行代币</router-link>
        <router-link target="_blank" to='/crowdFunding'>项目众筹</router-link>
        <router-link target="_blank" to='/vote'>投票</router-link>
+        <router-link target="_blank" to='/authority'>TDOS权限</router-link>
+         <router-link target="_blank" to='/flashLoan'>闪电贷</router-link>
     </div>
 </template>
 <script>
