@@ -5,12 +5,12 @@ export const ZERO_ARRAYBUFFER = new ArrayBuffer(0)
 const photoList = Store.from<Address, ArrayBuffer>('photoList');
 
 class Photo{
-    photo: ArrayBuffer
+    photo: string
     phonefix: string
     height: u64
 
     constructor(
-        photo: ArrayBuffer,
+        photo: string,
         phonefix: string,
         height: u64
     ) {
@@ -21,8 +21,8 @@ class Photo{
 
     static fromEncoded(buf: ArrayBuffer): Photo {
         const li = RLPList.fromEncoded(buf);
-        const photo = new Photo(ZERO_ARRAYBUFFER, '', 0);
-        photo.photo = li.getItem(0).bytes();
+        const photo = new Photo('', '', 0);
+        photo.photo = li.getItem(0).string();
         photo.phonefix = li.getItem(1).string();
         photo.height = li.getItem(2).u64();
         return photo;
@@ -30,7 +30,7 @@ class Photo{
 
     getEncoded(): ArrayBuffer {
         const els = new Array<ArrayBuffer>();
-        els.push(RLP.encodeBytes(this.photo));
+        els.push(RLP.encodeString(this.photo));
         els.push(RLP.encodeString(this.phonefix));
         els.push(RLP.encodeU64(this.height));
         return RLP.encodeElements(els);
@@ -59,7 +59,7 @@ export function init(): void {
     log('相册合约已部署');
 }
 
-export function addPhoto(photo: ArrayBuffer, photofix: string): void {
+export function addPhoto(photo: string, photofix: string): void {
     const msg = Context.msg();
     let PhotoArray : Array<Photo>
     if(photoList.has(msg.sender))
