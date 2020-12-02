@@ -9,7 +9,7 @@ function resolve(src){
     return path.relative(process.cwd(), path.join(__dirname, src))
 }
 
-let src = process.env['ENTRY'] || resolve('addresslistdapp.ts')
+let src = process.env['ENTRY'] || resolve('photodapp.ts')
 
 const { compileABI } = require('@salaku/js-sdk')
 
