@@ -3,6 +3,7 @@ import abi from '@/contracts/dapps.abi.json'
 import bookAbi from '@/contracts/addresslistdapp.abi.json'
 import abi_secretbeardapp from '@/contracts/secretbeardapp.abi.json'
 import axios from 'axios'
+import photoAbi from '@/contracts/photodapp.abi.json'
 
 // import wasm from '@/contracts/dapps.wasm'
 
@@ -63,6 +64,10 @@ export async function getContract() {
 
 export async function getBookContract() {
   return new Contract(CONTRACT_BOOKS_ADDRESS, bookAbi)
+}
+
+export async function getAlbumContract() {
+  return new Contract(CONTRACT_PHOTO_ADDRESS, photoAbi)
 }
 
 export async function getContract_secretbeardapp() {

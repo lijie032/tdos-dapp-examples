@@ -24,6 +24,7 @@
                     <div class="content-middle">
                         <div class="add_btn"></div>
                         <p class="mess">点击添加相片上传，相片将会被存证上链。</p>
+                        <a ref="sendTx"></a>
                     </div>
                   </div>
                    <input  class="add" @change="tirggerFile($event)" type="file" name="imgs[]" multiple accept="image/gif, image/png, image/jpg, image/jpeg">
@@ -61,6 +62,8 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
+import {publicKey2Address} from '@salaku/js-sdk'
+import { addPhoto, getPhotos } from "@/api/dapps";
 export default {
     data(){
         return{
@@ -75,20 +78,33 @@ export default {
         explorer
     },
     methods:{
-       tirggerFile: function(event) {
+        tirggerFile:  function(event) {
         let file = event.target.files[0];
         let url = "";
         var reader = new FileReader();
         reader.readAsDataURL(file);
         let that = this;
-        reader.onload = function(e) {
-        
+        let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+        reader.onload = async function(e) {
             url = this.result.substring(this.result.indexOf(",") + 1);
-         
-            that.imgList.push("data:image/png;base64," + url)
-            // that.$refs['imgimg'].setAttribute('src','data:image/png;base64,'+url);
+            // that.imgList.push("data:image/png;base64," + url)
+            let fix= file.name.substring(file.name.lastIndexOf("."), file.name.length);
+            console.log('===================url=============' + url)
+            let payload  = {
+                photo:    url,
+                photofix: fix,
+            }
+            let tx = await addPhoto(payload, pk);
+            let sendTx = JSON.stringify(tx);
+            that.$refs.sendTx.href =
+                "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+            that.$refs.sendTx.click();
+            return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
         };
-        that.isSuc=true;
+        // that.isSuc=true;
         TpScroll.RemoveScroll();
       },
 
@@ -101,10 +117,23 @@ export default {
       hideIsSuc(){
           this.isSuc=false;
           TpScroll.AddScroll();
+      },
+      async getPhotos(){
+            let that = this;
+            let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+            let addr = publicKey2Address(pk);
+            let photos = await getPhotos(addr);
+            photos.forEach((item)=>{
+                that.imgList.push("data:image/png;base64," + item.photo)
+            });
+            console.log(photos)
       }
     },
     mounted(){
-      
+        this.getPhotos();
     }
 }
 </script>

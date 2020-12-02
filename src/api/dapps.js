@@ -1,5 +1,5 @@
 // 部署公益合约
-import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp} from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract } from './constants'
 import {
   bin2hex,
   constants,
@@ -579,7 +579,6 @@ class Book{
     }
 }
 
-// 解析金融
 function decodeAddressBooks(buf) {
   if (buf != '') {
     buf = hex2bin(buf)
@@ -605,3 +604,51 @@ function fromEncoded(buf) {
   return book;
 }
 
+// 保存通讯录
+export async function addPhoto(payload, publickey) {
+  const c = await getAlbumContract()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'addPhoto', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+// 保存通讯录
+export async function getPhotos(address) {
+  try {
+    let result = await rpc.viewContract(await getAlbumContract(), 'getPhotos', [address])
+    return decodePhotos(result)
+  }catch (e) {
+    return "";
+  }
+}
+
+function decodePhotos(buf) {
+  if (buf != '') {
+    buf = hex2bin(buf)
+    let  li = rlp.RLPList.fromEncoded(buf);
+    console.log(li)
+    const ret = [];
+    for (let i = 0; i < li.length(); i++) {
+      let ii = li.list(i);
+      ret.push(fromEncodedPhotos(ii));
+  }
+    return ret
+  }
+  return ''
+}
+
+
+function fromEncodedPhotos(buf) {
+  const li = new rlp.RLPListReader(buf);
+  const u = {}
+  u.photo = li.string();
+  u.fix = hex2bin(li.bytes());
+  return u;
+}
