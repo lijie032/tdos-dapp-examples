@@ -8,6 +8,7 @@ import voteAbi from '@/contracts/votedapp.abi.json'
 import limitAbi from '@/contracts/limitdapp.abi.json'
 import abi_crowdsaledapp from '@/contracts/crowdsaledapp.abi.json'
 import abi_chatdapp from '@/contracts/chatdapp.abi.json'
+import tokenAbi from '@/contracts/tokendapp.abi.json'
 
 // import wasm from '@/contracts/dapps.wasm'
 
@@ -98,6 +99,9 @@ export async function  getContract_chatdapp() {
   return new Contract(CONTRACT_CHAT_ADDRESS, abi_chatdapp)
 }
 
+export async function  getContract_token() {
+  return new Contract(CONTRACT_TOKEN_ADDRESS, tokenAbi)
+}
 
 // 捐赠人的私钥
 export const PRIVATE_KEY =

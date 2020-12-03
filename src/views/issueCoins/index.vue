@@ -130,13 +130,14 @@ export default {
             value: '2',
             label: '否'
             }],
-            remark:'',//资产说明
+            name: '',
+            owner: '',
+            amount:'',
             isMore:'',//是否增发
+            remark:'',//资产说明
             publicSuc:false,//发币是否成功
-
             searchText:'',//搜索内容
             isSearch:false,//是否搜索
-
             searchResult:false//搜索结果是否显示
         }
     },
@@ -145,9 +146,26 @@ export default {
     },
     methods:{
        publicCoin(){
-           let that = this;
-           that.publicSuc=true;
-           TpScroll.RemoveScroll();
+            let that = this;
+            let seo;
+            if(that.isMore=='1')
+            {seo =true}
+            else{seo =false}
+            let payload = {
+                name:that.name, owner:that.owner, totalSupply:that.amount, seo: seo, info:that.remark
+            };
+            let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+            let token = saveToken(payload, pk);
+            let sendTx = JSON.stringify(token);
+            that.$refs.sendTx.href =
+            "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+            that.$refs.sendTx.click();
+            return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
+            that.publicSuc=true;
+            TpScroll.RemoveScroll();
        },
        //发布结果页隐藏
        hidepublicSuc(){

@@ -1,4 +1,4 @@
-import { ENV, rpc, getContract, httpRPC } from './constants'
+import { ENV, rpc, getContract_token, httpRPC } from './constants'
 import {
   bin2hex,
   constants,
@@ -45,7 +45,7 @@ function decodeToken (buf) {
   
   // token保存
   export async function saveToken (payload, publickey) {
-    const c = await getContract()
+    const c = await getContract_token()
     if (ENV === 'prod') {
       let builder = new TransactionBuilder(
         constants.POA_VERSION,
@@ -61,7 +61,7 @@ function decodeToken (buf) {
   // token获取
   export async function getToken (hash) {
     try {
-      let result = await rpc.viewContract(await getContract(), 'getToken', hash)
+      let result = await rpc.viewContract(await getContract_token(), 'getToken', hash)
       return decodeToken(result)
     }catch (e) {
       return "";
