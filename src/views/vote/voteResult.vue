@@ -62,9 +62,9 @@
 						<a class="pointer close" @click="chainSuc=false;addScroll()"></a>
 					</div>
 					<div class="popup-content chain-content">
-						<p class="chain-title">恭喜您投票成功！您的选择是“同意此观点”！以下是您的事务哈希：</p>
+						<p class="chain-title">恭喜您投票成功！您的选择是“{{vote}}”！以下是您的事务哈希：</p>
 						<div class="hash-value">
-							<span>3da2s6dqw5e6qw56f2as6fd6g5sg65eqw65f5ds6f52d6qwe6q41qw51e4re49tre9g4er16et6re4te4ere4er</span>
+							<span>{{hash}}</span>
 							<a class="copy pointer"></a>
 						</div>
 						<p class="p-mess">（您可复制上方哈希值并点击右上角按钮至“TDS浏览器”查询。）</p>
@@ -91,7 +91,8 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
-import { getVote } from "@/api/dapps";
+import {publicKey2Address} from '@salaku/js-sdk'
+import { getVote,getVoteInfo,getVoterInfo } from "@/api/dapps";
 export default {
     data(){
         return{
@@ -109,7 +110,8 @@ export default {
     		infoB: '',
 			amountA: 0,
 			amountB: 0,
-       
+			hash:'',
+			vote:'',
         }
     },
     components:{
@@ -140,14 +142,39 @@ export default {
 			that.amountA = voteInfo.amountA;
 			that.amountB = voteInfo.amountB;
 		},
-		
+		async getVoteHash(){
+			let that = this;
+			let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+            let addr = publicKey2Address(pk);
+			let txHash = await getVoteInfo(addr);
+			that.hash = txHash;
+		},
+		async getVoteWho(){
+			let that = this;
+			let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+            let addr = publicKey2Address(pk);
+			let who = await getVoterInfo(addr);
+			if (who == 0){
+				that.vote = that.voteA;
+			} else {
+				that.vote = that.voteB;
+			}
+		}	
 	},
 	mounted(){
 		//刚进来展示投票结果
 		let that = this;
-		that.chainSuc = false;
+		that.getVoteHash();
+		that.chainSuc = true;
 		TpScroll.RemoveScroll();
 		that.getVoteInfo();
+		that.getVoteWho();
 	}
 }
 </script>

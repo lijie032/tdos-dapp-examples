@@ -701,10 +701,26 @@ export async function vote(payload, publickey) {
 export async function hasVote(address) {
   try {
     let result = await rpc.viewContract(await getVoteContract(), 'hasVote', [address]) 
-    console.log("=======2====="+result)
     return result
   }catch (e) {
     return "";
   }
 }
 
+export async function getVoteInfo(address) {
+  try {
+    let result = await rpc.viewContract(await getVoteContract(), 'getVoteInfo', [address]) 
+    return result
+  }catch (e) {
+    return "";
+  }
+}
+
+export async function getVoterInfo(address) {
+  try {
+    let result = await rpc.viewContract(await getVoteContract(), 'getVoterInfo', [address]) 
+    return result
+  }catch (e) {
+    return "";
+  }
+}
