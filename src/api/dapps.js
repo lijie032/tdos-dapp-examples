@@ -1,5 +1,9 @@
 // 部署公益合约
+<<<<<<< HEAD
 import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getLendContract } from './constants'
+=======
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getContract_crowdsaledapp, getContract_chatdapp } from './constants'
+>>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3
 import {
   bin2hex,
   constants,
@@ -608,7 +612,7 @@ function fromEncoded(buf) {
   return book;
 }
 
-
+// 保存通讯录
 export async function addPhoto(payload, publickey) {
   const c = await getAlbumContract()
   if (ENV === 'prod') {
@@ -623,7 +627,7 @@ export async function addPhoto(payload, publickey) {
   }
 }
 
-
+// 保存通讯录
 export async function getPhotos(address) {
   try {
     let result = await rpc.viewContract(await getAlbumContract(), 'getPhotos', [address])
@@ -647,6 +651,7 @@ function decodePhotos(buf) {
   }
   return ''
 }
+
 
 function fromEncodedPhotos(buf) {
   const li = new rlp.RLPListReader(buf);
@@ -700,7 +705,7 @@ export async function vote(payload, publickey) {
 
 export async function hasVote(address) {
   try {
-    let result = await rpc.viewContract(await getVoteContract(), 'hasVote', [address]) 
+    let result = await rpc.viewContract(await getVoteContract(), 'hasVote', [address])
     return result
   }catch (e) {
     return "";
@@ -709,7 +714,7 @@ export async function hasVote(address) {
 
 export async function getVoteInfo(address) {
   try {
-    let result = await rpc.viewContract(await getVoteContract(), 'getVoteInfo', [address]) 
+    let result = await rpc.viewContract(await getVoteContract(), 'getVoteInfo', [address])
     return result
   }catch (e) {
     return "";
@@ -718,13 +723,14 @@ export async function getVoteInfo(address) {
 
 export async function getVoterInfo(address) {
   try {
-    let result = await rpc.viewContract(await getVoteContract(), 'getVoterInfo', [address]) 
+    let result = await rpc.viewContract(await getVoteContract(), 'getVoterInfo', [address])
     return result
   }catch (e) {
     return "";
   }
 }
 
+<<<<<<< HEAD
 
 export async function getTotalMoney() {
   try {
@@ -737,18 +743,64 @@ export async function getTotalMoney() {
 
 export async function lend(payload, publickey) {
   const c = await getLendContract()
+=======
+// 解析众筹
+function decodeCrowdSale (buf) {
+  if (buf != '') {
+    const ret = []
+    buf = hex2bin(buf)
+    let li = rlp.RLPList.fromEncoded(buf)
+    for (let i = 0; i < li.length(); i++) {
+      let ii = li.list(i)
+      ret.push(fromEncoded_CrowdSale(ii))
+    }
+    return ret
+  }
+  return ''
+}
+
+function fromEncoded_CrowdSale (buf) {
+  const li = new rlp.RLPListReader(buf)
+  const crowdSale = {}
+  crowdSale.addr = li.string()
+  crowdSale.fundingGoal = li.number()
+  crowdSale.amountRaised = li.number()
+  crowdSale.people = li.number()
+  crowdSale.info = li.string()
+  return crowdSale
+}
+
+// 获取所有众筹信息
+export async function getCrowdSaleInfo () {
+  try {
+    let result = await rpc.viewContract(await getContract_crowdsaledapp(), 'getCrowdSaleInfo', [])
+    return decodeCrowdSale(result)
+  } catch (e) {
+    return ''
+  }
+}
+
+// 发起众筹
+export async function transfer (payload, publickey) {
+  const c = await getContract_crowdsaledapp()
+>>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
       privatekey
     )
+<<<<<<< HEAD
     const tx = builder.buildContractCall(c, 'lend', payload, 0)
+=======
+    const tx = builder.buildContractCall(c, 'transfer', payload, 0)
+>>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3
     tx.nonce = await syncNonce(publickey)
     tx.from = publickey
     return tx
   }
 }
 
+<<<<<<< HEAD
 export async function getLendInfo(hash) {
   try {
     let result = await rpc.viewContract(await getLendContract(), 'getLendInfo', [hash]) 
@@ -769,7 +821,73 @@ function decodeLendInfo (buf) {
     u.interest = rd.number()
     u.rate = rd.number()
     u.height = rd.number()
+=======
+// 解析众筹
+function decodeCrowdSale_one (buf) {
+  if (buf != '') {
+    const u = {}
+    buf = hex2bin(buf)
+    // let ll = rlp.RLPList.fromEncoded(buf)
+    // const li = new rlp.RLPListReader(ll)
+    const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+    u.address = rd.string();
+    u.fundingGoal = rd.number();
+    u.amount = rd.number();
+    u.info = rd.string();
+    u.hash = bin2hex(rd.bytes());
+    console.log(u)
+
+>>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3
     return u
   }
   return ''
 }
+<<<<<<< HEAD
+=======
+
+// 获取单个众筹信息
+export async function getCrowdSale (hash) {
+  try {
+    let crowdSale =  await rpc.viewContract(await getContract_crowdsaledapp(), 'getCrowdSale', hex2bin(hash))
+    return decodeCrowdSale_one(crowdSale)
+  } catch (e) {
+    return ''
+  }
+}
+
+// 查看是否拥有聊天账户
+export async function hasUser (pk) {
+  try {
+    let add = publicKey2Address(pk)
+    return await rpc.viewContract(await getContract_chatdapp(), 'hasUser', [add])
+  } catch (e) {
+    return ''
+  }
+}
+
+// 获取聊天室用户数量
+export async function getUserId () {
+  try {
+    return await rpc.viewContract(await getContract_chatdapp(), 'getUserId', [])
+  } catch (e) {
+    return ''
+  }
+}
+
+// 添加聊天室用户
+export async function registration (payload,publickey) {
+  const c = await getContract_chatdapp()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'registration', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+
+>>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3

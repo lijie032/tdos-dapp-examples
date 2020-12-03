@@ -224,12 +224,12 @@ export default {
 		},
 
 		async getTotalMoney(){
-			let that = this;
+		   let that = this;
            let money  = await getTotalMoney();
 		   if (money != 0){
 				that.allMoney = money;
 		   }
-		},
+		}
 		
     },
 	 mounted(){

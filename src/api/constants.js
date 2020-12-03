@@ -6,7 +6,13 @@ import axios from 'axios'
 import photoAbi from '@/contracts/photodapp.abi.json'
 import voteAbi from '@/contracts/votedapp.abi.json'
 import limitAbi from '@/contracts/limitdapp.abi.json'
+<<<<<<< HEAD
 import lendAbi from '@/contracts/lenddapp.abi.json'
+=======
+import abi_crowdsaledapp from '@/contracts/crowdsaledapp.abi.json'
+import abi_chatdapp from '@/contracts/chatdapp.abi.json'
+import tokenAbi from '@/contracts/tokendapp.abi.json'
+>>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3
 
 // import wasm from '@/contracts/dapps.wasm'
 
@@ -92,6 +98,18 @@ export async function getLendContract() {
   return new Contract(CONTRACT_LEND_ADDRESS, lendAbi)
 }
 
+
+export async function  getContract_crowdsaledapp() {
+  return new Contract(CONTRACT_CROWDSALE_ADDRESS, abi_crowdsaledapp)
+}
+
+export async function  getContract_chatdapp() {
+  return new Contract(CONTRACT_CHAT_ADDRESS, abi_chatdapp)
+}
+
+export async function  getContract_token() {
+  return new Contract(CONTRACT_TOKEN_ADDRESS, tokenAbi)
+}
 
 // 捐赠人的私钥
 export const PRIVATE_KEY =
