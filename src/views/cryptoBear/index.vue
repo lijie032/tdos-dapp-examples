@@ -48,9 +48,9 @@
           return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
         let has = await hasBear(pk)
-         if (has) {
-           that.$router.push({path: '/cryptoBear/bearInfo'})
-         }
+        if (has) {
+            that.$router.push({path: '/cryptoBear/bearInfo'})
+        }
       },
       async isOnchain () {
         let that = this
@@ -74,7 +74,10 @@
       async timer_tx(){
         let that = this;
         let hash = that.getRes().trim();
+
         if (hash != ""){
+          console.log(1111)
+          console.log(hash)
           // this.$router.push({path:'/assets'})
             // this.delayTime = setTimeout(function(){
               
@@ -82,19 +85,19 @@
           // that.$toast("事务广播成功，事务哈希为："+t, 2000);
           showLoading("事务广播成功，事务哈希为："+hash+",请等待上链...");
                
-        
-          getTransaction(hash).then(tx => {
-             
-               if(tx!=''){
-              
-                  hideLoading();
-               }
-              
-          })
-            
+        this.timer1 = setInterval(function(){
+           getTransaction(hash).then(tx => {  
+               console.log(tx)          
+                if(tx.from!=''){
+                    hideLoading();
+                     clearInterval(that.timer1)
+                }
+                
+            })    
 
-
-          }
+                  
+           },1000)
+         } 
       }
     },
     mounted () {
@@ -104,6 +107,9 @@
     },
     beforeDestroy () {
       clearInterval(this.timer)
+      if(this.timer1){
+        clearInterval(this.timer1)
+      }
     }
   }
 </script>
