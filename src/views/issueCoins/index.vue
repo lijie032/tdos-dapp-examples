@@ -100,7 +100,7 @@
                     <p>资产名称：{{code}}</p>
                     <p>初期发行量：{{totalSupply}}</p>
                     <p class="p-line1">所有者：{{owner}}</p>
-                    <p>是否允许增发：{{sex ? '是':'否'}}</p>
+                    <p>是否允许增发：{{seo ? '是':'否'}}</p>
                     <p>资产说明：{{info}}</p>
                  </div>
                  <div class="btn-box">
@@ -180,16 +180,14 @@ export default {
 
        //点击搜索调用事件
        async search(){
-           let that = this;
-           that.searchResult = true;
-           let u = await getToken(that.searchText);
-           that.code = u.code;
-           that.owner = u.owner;
-           that.totalSupply = u.totalSupply;
+            let that = this;
+            that.searchResult = true;
+            let u = await getToken(that.searchText);
+            that.code = u.name;
+            that.owner = u.owner;
+            that.totalSupply = u.totalSupply;
             that.seo = u.seo;
             that.info = u.info;
-           console.log(u)
-            
        },
        hideSearch(){
            let that = this;
