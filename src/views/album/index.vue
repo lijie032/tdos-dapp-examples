@@ -10,7 +10,7 @@
                       <img :src="item.url"/>
                   </div>
                   <div class="picInfo">
-                      <div class="time">{{item.createdAt}} 上传</div>
+                      <div class="time">{{item.createdAt | dateFormat}} 上传</div>
                       <div class="hash-value">
                           <p>该相片已存证上链，上链哈希为：</p>
                           <p>{{item.hash}}</p>
