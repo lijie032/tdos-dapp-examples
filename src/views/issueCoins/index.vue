@@ -178,6 +178,7 @@ export default {
        //点击搜索调用事件
        search(){
            let that = this;
+           let u = await getLendInfo(that.searchText);
           if(!that.isSearch){
             that.isSearch=true
 
