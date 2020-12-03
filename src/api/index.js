@@ -37,6 +37,7 @@ export function formatDate(d, fmt) {
   return fmt
 }
 
+
 export function emptyDonor() {
   return {
     name: '',

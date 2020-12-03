@@ -84,10 +84,10 @@
 						</div>
 						<div class="result-col">
 							<span class="lab">借贷信息</span>
-							<p>借贷金额：90,000</p>
-							<p>借贷时间：2020-09-15 17:45:25</p>
-							<p>盈利金额：5,000</p>
-							<p>利息金额：2,000</p>
+							<p>借贷金额：{{amount}}</p>
+							<p>借贷时间：{{new Date(time * 1000)}}</p>
+							<p>盈利金额：{{profit}}</p>
+							<p>利息金额：{{rate * amount / 100}}</p>
 						</div>
 					</div>
 					<div class="btnbox">
@@ -105,6 +105,7 @@ import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
 import { Loading } from 'element-ui';
 import { getTotalMoney, lend, getTransaction, getLendInfo } from "@/api/dapps";
+// import {dateFormat} from "@/api/index.js";
 
 export default {
     data(){
@@ -125,6 +126,12 @@ export default {
 			hash: '',
 			blockHeight:0,
 			blockHash:'',
+			amount:0,
+			time:0,
+			profit:0,
+			interest:0,
+			rate:0,
+			height:0,
         }
     },
     components:{
@@ -166,6 +173,12 @@ export default {
 						that.isSearch=true;
                     });
 			let u = await getLendInfo(that.hash);
+			that.amount = u.amount;
+			that.time = u.time;
+			that.profit = u.profit;
+			that.interest = u.interest;
+			that.rate = u.rate;
+			that.height = u.height;
 			console.log(u)		
 		   if(that.isSearch==false){
 			  
@@ -191,11 +204,10 @@ export default {
             }
             let payload = {
                 amount: that.money,
-                time: new Date().toLocaleTimeString(),
+                time: '2020-12-3',
                 rate: 5,
 				profit: that.money * 10 / 100,
             };
-			console.log('==========================='+new Date().toLocaleTimeString())
             let tx = await lend(payload,pk);
             let sendTx = JSON.stringify(tx);
             that.$refs.sendTx.href =
@@ -204,7 +216,6 @@ export default {
             return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
 	   },
 		
-	
 
 		addScroll(){
            TpScroll.AddScroll()
