@@ -31,11 +31,11 @@
                   <div class="no-authority">该地址暂未激活！请先完成激活！</div>
                  -->
                  <div class="p-text">
-                 	 <p class="p-tt">查询地址:</p>
-                 	 <p class="p-hash">d15weq4w5e4qw5e5d1asdf5qw65w4eq6we12das6dq6wd15weq4w5e4qw5e5d1asdf5qw65w4eq6we12das6dq6w</p>
+                 	 <p class="p-tt">查询注册码:</p>
+                 	 <p class="p-hash">{{searchSerial}}</p>
                  </div>
                  <div class="authority-data">
-                 	  <div class="d-time">起始时间：<span>2020-06-07 15:15:45</span></div>
+                 	  <div class="d-time">截止时间：<span>{{time}}</span></div>
                  </div>
         	 	  </div>
         	 	  <div class="btnbox">
@@ -60,12 +60,14 @@
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
 import { getTime, hasSerial } from "@/api/limitdapp";
+
 export default {
     data(){
         return{
 			type:1,//头部右上角浏览器
 			searchSerial: '',//注册码
             isSearch:false, //点击募集展示
+			time : '',
         }
     },
     components:{
@@ -87,15 +89,32 @@ export default {
 			TpScroll.AddScroll()
 		},
 		//查询
-		search(){
+		async search(){
            let that = this;
-		   that.isSearch = true;
+		   let bool = await hasSerial(that.searchSerial);
+		   if (bool){
+			   let t = await getTime();
+			   if (t != ''){
+				   	let date = new Date(t );
+					let now = new Date();
+					if(date < now) {
+						return that.$toast('注册码过期', 3000)
+					}
+				   	that.time = t;
+				   	that.isSearch = true;
+			   }
+		   } else {
+			   that.$toast('注册码不存在', 3000)
+		   }
 		   TpScroll.RemoveScroll();
 		},
 		addScroll(){
            TpScroll.AddScroll()
 		}
 		
-    }
+    },
+	mounted(){
+		
+	}
 }
 </script>
