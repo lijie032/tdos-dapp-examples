@@ -207,7 +207,7 @@ export default {
                 amount: that.money,
                 time: this.dateFormat(new Date().toString()),
                 rate: 5,
-				profit: that.money * 10 / 100,
+				profit: Math.ceil(that.money * 10 / 100),
 			};
 			
             let tx = await lend(payload,pk);
