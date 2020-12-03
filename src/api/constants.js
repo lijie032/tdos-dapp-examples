@@ -60,7 +60,7 @@ export const CONTRACT_TOKEN_ADDRESS = '0cf65e367967f6cd88bbd9561283ae71eb260ef9'
 export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f' // 交易合约地址
 export const CONTRACT_LIMIT_ADDRESS = '9a6563abb11cbf662cb9b2a344ee8b9459fabcee' // 权限合约地址
 export const CONTRACT_CROWDSALE_ADDRESS = 'a4385ccb556b3507b958d1a405e5ed627fb2f50d' // 众筹合约地址
-export const CONTRACT_VOTE_ADDRESS = '96b95e02eb881c4cd2a0d554fa85aa4259785b37' // 投票合约地址
+export const CONTRACT_VOTE_ADDRESS = '88d59ef8bcca85ec032a734a28eea43ba6145623' // 投票合约地址
 export const CONTRACT_LEND_ADDRESS = '61303b4bc01a05ba83924cdad60e84f248a088d5' // 闪电贷合约地址
 
 export async function getContract() {

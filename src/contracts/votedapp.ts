@@ -2,6 +2,7 @@ export {__malloc, __change_t, __peek} from '../../node_modules/@salaku/js-sdk/li
 import { Context, Store, log, Address, Globals, RLPList, RLP } from '../../node_modules/@salaku/js-sdk/lib'
 
 const voterInfoList = Store.from<Address, ArrayBuffer>('voterInfoList');
+const voterInfo = Store.from<Address, u64>('voterInfo');
 
 class VoteInfo{
     title: string
@@ -75,6 +76,7 @@ export function vote(offset: u64): void {
     if(!voterInfoList.has(msg.sender))
     {
         voterInfoList.set(msg.sender, tx.hash);
+        voterInfo.set(msg.sender, offset);
     }
     let voteInfo = VoteInfo.fromEncoded(Globals.get<ArrayBuffer>('voteInfo'));
     if(offset == 0)
@@ -98,4 +100,8 @@ export function getVote(): ArrayBuffer {
 
 export function getVoteInfo(addr: Address): ArrayBuffer {
     return voterInfoList.get(addr);
+}
+
+export function getVoterInfo(addr: Address): u64 {
+    return voterInfo.get(addr);
 }
