@@ -30,7 +30,7 @@
 </template>
 <script>
   import explorer from '@/components/browser1.vue'
-  import {buyBear, hasBear} from '@/api/dapps'
+  import {buyBear, hasBear, getTransaction} from '@/api/dapps'
   import { showLoading, hideLoading } from '@/assets/js/loading';
 
   export default {
@@ -48,9 +48,9 @@
           return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
         let has = await hasBear(pk)
-        if (has) {
-          that.$router.push({path: '/cryptoBear/bearInfo'})
-        }
+         if (has) {
+           that.$router.push({path: '/cryptoBear/bearInfo'})
+         }
       },
       async isOnchain () {
         let that = this
@@ -68,17 +68,37 @@
         that.$refs.sendTx.click()
         return that.$toast('事务已生成，请打开TDOS插件进行广播', 3000)
       },
-      timer_tx(){
+      test(v){
+        
+      },
+      async timer_tx(){
         let that = this;
-        let t = that.getRes();
-        if (t != ""){
+        let hash = that.getRes().trim();
+        if (hash != ""){
           // this.$router.push({path:'/assets'})
-          return that.$toast("事务广播成功，事务哈希为："+t, 3000);
-        }
+            // this.delayTime = setTimeout(function(){
+              
+          // },1700)
+          // that.$toast("事务广播成功，事务哈希为："+t, 2000);
+          showLoading("事务广播成功，事务哈希为："+hash+",请等待上链...");
+               
+        
+          getTransaction(hash).then(tx => {
+             
+               if(tx!=''){
+              
+                  hideLoading();
+               }
+              
+          })
+            
+
+
+          }
       }
     },
     mounted () {
-      showLoading();
+      // 
       this.get()
       this.timer = setInterval(this.timer_tx, 1000)
     },
