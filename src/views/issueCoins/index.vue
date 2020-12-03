@@ -55,6 +55,7 @@
 
                 <div class="btnbox">
                     <button type="button" class="btn-public pointer" @click="publicCoin">确认发布</button>
+                     <a ref="sendTx"></a>
                 </div>
 
             </div>
@@ -145,7 +146,7 @@ export default {
         explorer
     },
     methods:{
-       publicCoin(){
+       async publicCoin(){
             let that = this;
             let seo;
             if(that.isMore=='1')
@@ -158,7 +159,7 @@ export default {
             if (pk == "") {
                 return that.$toast("获取账户失败，请打开TDOS插件", 3000);
             }
-            let token = saveToken(payload, pk);
+            let token = await saveToken(payload, pk);
             let sendTx = JSON.stringify(token);
             that.$refs.sendTx.href =
             "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
