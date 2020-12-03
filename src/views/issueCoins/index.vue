@@ -181,8 +181,11 @@ export default {
        //点击搜索调用事件
        async search(){
             let that = this;
-            that.searchResult = true;
             let u = await getToken(that.searchText);
+            if (u == ""){
+          		return that.$toast('暂无信息', 3000)
+        	}
+            that.searchResult = true;
             that.code = u.name;
             that.owner = u.owner;
             that.totalSupply = u.totalSupply;

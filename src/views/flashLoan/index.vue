@@ -173,6 +173,9 @@ export default {
 						that.isSearch=true;
                     });
 			let u = await getLendInfo(that.hash);
+			if (u == ""){
+          		return that.$toast('暂无信息', 3000)
+        	}
 			that.amount = u.amount;
 			that.time = u.time;
 			that.profit = u.profit;
