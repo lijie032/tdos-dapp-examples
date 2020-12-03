@@ -125,20 +125,20 @@ export default {
             }
             let addr = publicKey2Address(pk);
             let photos = await getPhotos(addr);
-            photos.forEach((item)=>{
-                
-                 getTransaction(item.hash).then(t => {
-                  
-                     that.imgList.push({url:"data:image/png;base64," + item.photo, hash:item.hash, createdAt: new Date(t.createdAt * 1000)})
+            await Promise.all(photos.map(async item => {
+                    await  getTransaction(item.hash).then(t => {
+                     item.createdAt = new Date(t.createdAt * 1000);
                  });
-                
+            }))
+            photos.sort(that.compare('createdAt'));
+            photos.forEach((item)=>{
+                that.imgList.push({url:"data:image/png;base64," + item.photo, hash:item.hash, createdAt:item.createdAt})
             });
             
-         that.imgList.sort(that.compare('createdAt'));
-          
+            
       },
       timer_tx () {
-        let that = this
+        let that = this;
         let value = that.getRes()
         if (value != '') {
           return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
