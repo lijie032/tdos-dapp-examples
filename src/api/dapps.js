@@ -1,9 +1,7 @@
 // 部署公益合约
-<<<<<<< HEAD
-import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getLendContract } from './constants'
-=======
-import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getContract_crowdsaledapp, getContract_chatdapp } from './constants'
->>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3
+
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getLendContract,getContract_crowdsaledapp, getContract_chatdapp } from './constants'
+
 import {
   bin2hex,
   constants,
@@ -730,8 +728,6 @@ export async function getVoterInfo(address) {
   }
 }
 
-<<<<<<< HEAD
-
 export async function getTotalMoney() {
   try {
     let result = await rpc.viewContract(await getLendContract(), 'getTotalMoney', []) 
@@ -743,7 +739,20 @@ export async function getTotalMoney() {
 
 export async function lend(payload, publickey) {
   const c = await getLendContract()
-=======
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'lend', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+
+
 // 解析众筹
 function decodeCrowdSale (buf) {
   if (buf != '') {
@@ -780,27 +789,22 @@ export async function getCrowdSaleInfo () {
   }
 }
 
+
 // 发起众筹
 export async function transfer (payload, publickey) {
   const c = await getContract_crowdsaledapp()
->>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3
   if (ENV === 'prod') {
     let builder = new TransactionBuilder(
       constants.POA_VERSION,
       privatekey
     )
-<<<<<<< HEAD
-    const tx = builder.buildContractCall(c, 'lend', payload, 0)
-=======
     const tx = builder.buildContractCall(c, 'transfer', payload, 0)
->>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3
     tx.nonce = await syncNonce(publickey)
     tx.from = publickey
     return tx
   }
 }
 
-<<<<<<< HEAD
 export async function getLendInfo(hash) {
   try {
     let result = await rpc.viewContract(await getLendContract(), 'getLendInfo', [hash]) 
@@ -821,7 +825,11 @@ function decodeLendInfo (buf) {
     u.interest = rd.number()
     u.rate = rd.number()
     u.height = rd.number()
-=======
+    return u
+  }
+  return ''
+}
+
 // 解析众筹
 function decodeCrowdSale_one (buf) {
   if (buf != '') {
@@ -836,14 +844,12 @@ function decodeCrowdSale_one (buf) {
     u.info = rd.string();
     u.hash = bin2hex(rd.bytes());
     console.log(u)
-
->>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3
     return u
   }
   return ''
 }
-<<<<<<< HEAD
-=======
+
+
 
 // 获取单个众筹信息
 export async function getCrowdSale (hash) {
@@ -888,6 +894,3 @@ export async function registration (payload,publickey) {
     return tx
   }
 }
-
-
->>>>>>> 8fb67cb12b3d32a9c2cf15f6902ef983c7eea2e3
