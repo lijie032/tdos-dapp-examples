@@ -132,5 +132,9 @@ export function getCrowdSaleInfo(): ArrayBuffer {
 }
 
 export function getCrowdSale(hash: ArrayBuffer): ArrayBuffer {
-    return crowdSaleList.get(hash);
+    if(crowdSaleList.has(hash))
+    {
+        return crowdSaleList.get(hash);
+    }
+    return new ArrayBuffer(0);
 }
