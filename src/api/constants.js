@@ -61,7 +61,7 @@ export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f
 export const CONTRACT_LIMIT_ADDRESS = 'dd3dae9d8fcbe39a9b9b799cb2cad073de3a1f1c' // 权限合约地址
 export const CONTRACT_CROWDSALE_ADDRESS = 'a76fbc7fbb136336cbad6f32519b7150b53156bc' // 众筹合约地址
 export const CONTRACT_VOTE_ADDRESS = '88d59ef8bcca85ec032a734a28eea43ba6145623' // 投票合约地址
-export const CONTRACT_LEND_ADDRESS = '61303b4bc01a05ba83924cdad60e84f248a088d5' // 闪电贷合约地址
+export const CONTRACT_LEND_ADDRESS = 'f91e459cac7a3ab43d1cfa30be0e3a84afd37c33' // 闪电贷合约地址
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, abi)

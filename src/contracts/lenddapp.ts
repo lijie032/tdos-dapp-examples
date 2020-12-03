@@ -74,3 +74,7 @@ export function lend(amount: u64, time: string, rate: u64, profit: u64): ArrayBu
 export function getLendInfo(hash: ArrayBuffer): ArrayBuffer {
     return lendInfoList.get(hash);
 }
+
+export function getTotalMoney(): u64 {
+    return Globals.get<u64>('totalMoney');
+}
