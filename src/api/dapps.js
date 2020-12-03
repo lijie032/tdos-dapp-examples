@@ -1,5 +1,5 @@
 // 部署公益合约
-import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract } from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getLendContract } from './constants'
 import {
   bin2hex,
   constants,
@@ -723,4 +723,53 @@ export async function getVoterInfo(address) {
   }catch (e) {
     return "";
   }
+}
+
+
+export async function getTotalMoney() {
+  try {
+    let result = await rpc.viewContract(await getLendContract(), 'getTotalMoney', []) 
+    return result
+  }catch (e) {
+    return "";
+  }
+}
+
+export async function lend(payload, publickey) {
+  const c = await getLendContract()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'lend', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+export async function getLendInfo(hash) {
+  try {
+    let result = await rpc.viewContract(await getLendContract(), 'getLendInfo', [hash]) 
+    return decodeLendInfo(result)
+  }catch (e) {
+    return "";
+  }
+}
+
+function decodeLendInfo (buf) {
+  if (buf != '') {
+    buf = hex2bin(buf)
+    const u = {}
+    const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+    u.amount = rd.number()
+    u.time = rd.number()
+    u.profit = rd.number()
+    u.interest = rd.number()
+    u.rate = rd.number()
+    u.height = rd.number()
+    return u
+  }
+  return ''
 }

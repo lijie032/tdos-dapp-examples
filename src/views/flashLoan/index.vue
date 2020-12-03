@@ -8,7 +8,7 @@
               <div class="flash-form">
               	 <div class="f-header">
 					   <div class="f-header-search " :class="{'isSearch':isSearch}">
-							<input type="text" placeholder="请输入事务哈希" v-if="isSearch"/>
+							<input type="text" placeholder="请输入事务哈希" v-if="isSearch" v-model="hash"/>
 							<div class="line" v-if="isSearch"></div>
 							<a class="btn-search pointer" @click="search">查询</a>
 						</div>
@@ -18,11 +18,11 @@
 						
               	 </div>
 				 <div class="form-content">
-					  <div class="f-amount">当前可借贷金额：<span>460,000</span></div>
+					  <div class="f-amount">当前可借贷金额：<span>{{allMoney}}</span></div>
 					  <div class="f-in">
 						  <div class="f-in-box f-in-box-1">
-							    <p class="p-text" @click="inputFocus"  v-if="!isInput"><span></span>请输入您想要借贷的金额</p>
-							  <input placeholder="" v-if="isInput" ref="input"/>
+							    <p class="p-text" @click="inputFocus"  v-if="!isInput" ><span></span>请输入您想要借贷的金额</p>
+							  <input placeholder="" v-if="isInput" ref="input" v-model="money"/>
 						  </div>
 						  <div class="f-in-box">
 							  <p class="p-text"><span></span>当前利息为：5%</p>
@@ -31,6 +31,7 @@
 				 </div>
 				 <div class="btnbox">
 					 <a class="pointer btn-apply" @click="applyLoan">申请</a>
+					 <a ref="sendTx"></a>
 				 </div>
               </div>
           </div>
@@ -77,9 +78,9 @@
 					<div class="popup-content result-content">
 						<div class="result-col">
 							<span class="lab">该笔借贷已存证上链</span>
-							<p>区块高度：7956423</p>
-							<p>区块哈希：fsd2fw5er45ewr45ewtgd51fgdf5gdfgd1q5wrt d3qw2eq6w5eqw</p>
-							<p>事务哈希：fsd2fw5er45ewr45ewtgd51fgdf5gdfgd1q5wrt d3qw2eq6w5eqw</p>
+							<p>区块高度：{{blockHeight}}</p>
+							<p>区块哈希：{{blockHash}}</p>
+							<p>事务哈希：{{hash}}</p>
 						</div>
 						<div class="result-col">
 							<span class="lab">借贷信息</span>
@@ -103,6 +104,8 @@
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
 import { Loading } from 'element-ui';
+import { getTotalMoney, lend, getTransaction, getLendInfo } from "@/api/dapps";
+
 export default {
     data(){
         return{
@@ -116,7 +119,12 @@ export default {
 			searchsult:false,
 			isInput:false, //是否点击输入金额
 
-			isSearch:false,//是否搜索
+			isSearch:true,//是否搜索
+			allMoney:0,
+			money:0,
+			hash: '',
+			blockHeight:0,
+			blockHash:'',
         }
     },
     components:{
@@ -147,15 +155,20 @@ export default {
 			that.$nextTick(function(){	
 			  this.$refs.input.focus()
 			})
-			
 		},
 
 		//点击搜索
-		search(){
+		async search(){
 		   let that = this;
-
+			getTransaction(that.hash).then(t => {
+                        that.blockHeight = t.blockHeight;
+                        that.blockHash = t.blockHash;
+						that.isSearch=true;
+                    });
+			let u = await getLendInfo(that.hash);
+			console.log(u)		
 		   if(that.isSearch==false){
-			 that.isSearch=true;
+			  
 			 
 		   }else{
 			   that.searchsult = true
@@ -164,20 +177,53 @@ export default {
 		},
 
 		//申请借贷
-       applyLoan(){
-		 let that = this;
-		 that.applaySuc = true;
-		 TpScroll.RemoveScroll();
-		 
+       async applyLoan(){
+		 	let that = this;
+		 	if (that.money > that.allMoney){
+				that.$toast("最多可贷"+that.allMoney, 3000);
+				return;
+			}
+			// that.applaySuc = true;
+		 	TpScroll.RemoveScroll();
+			let pk = that.getPK();
+            if (pk == "") {
+                return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+            }
+            let payload = {
+                amount: that.money,
+                time: new Date().toLocaleTimeString(),
+                rate: 5,
+				profit: that.money * 10 / 100,
+            };
+			console.log('==========================='+new Date().toLocaleTimeString())
+            let tx = await lend(payload,pk);
+            let sendTx = JSON.stringify(tx);
+            that.$refs.sendTx.href =
+                "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+            that.$refs.sendTx.click();
+            return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
 	   },
 		
 	
 
 		addScroll(){
            TpScroll.AddScroll()
+		   let that = this;
+		   that.hash='';
+		},
+
+		async getTotalMoney(){
+			let that = this;
+           let money  = await getTotalMoney();
+		   if (money != 0){
+				that.allMoney = money;
+		   }
 		},
 		
-    }
+    },
+	 mounted(){
+		  this.getTotalMoney();
+	 }
 }
 </script>
 

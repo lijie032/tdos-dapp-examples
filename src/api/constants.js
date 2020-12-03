@@ -6,6 +6,7 @@ import axios from 'axios'
 import photoAbi from '@/contracts/photodapp.abi.json'
 import voteAbi from '@/contracts/votedapp.abi.json'
 import limitAbi from '@/contracts/limitdapp.abi.json'
+import lendAbi from '@/contracts/lenddapp.abi.json'
 
 // import wasm from '@/contracts/dapps.wasm'
 
@@ -85,6 +86,10 @@ export async function getContract_secretbeardapp() {
 
 export async function getVoteContract() {
   return new Contract(CONTRACT_VOTE_ADDRESS, voteAbi)
+}
+
+export async function getLendContract() {
+  return new Contract(CONTRACT_LEND_ADDRESS, lendAbi)
 }
 
 

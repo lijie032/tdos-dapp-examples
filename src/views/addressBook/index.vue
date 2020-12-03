@@ -182,26 +182,27 @@ export default {
             }
             let addr = publicKey2Address(pk);
             let books = await getAddressBooks(addr);
+          
+            
+            that.addressList = [];
+            await Promise.all(books.map(async item => {
+                    await  getTransaction(item.hash).then(t => {
+                    item.height = t.blockHeight;
+                    item.affair_hash = t.blockHash;
+                 });
+            })) 
             books.sort(function(a,b){
                 return a.username.localeCompare(b.username);
             });
-            
-            that.addressList = [];
-            books.forEach((item)=>{
-            getTransaction(item.hash).then(t => {
-                        item.height = t.blockHeight;
-                        item.affair_hash = t.blockHash
-                    });
-                });     
             if (that.searchKey != ""){
                 books.forEach((item)=>{
                     if (that.searchKey == item.username){
-                        that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:item.blockHeight, affair_hash:item.blockHash})
+                        that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:item.height, affair_hash:item.affair_hash})
                     }    
                 });
             } else {
                 books.forEach((item)=>{
-                    that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:item.blockHeight, affair_hash:item.blockHash})    
+                    that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:item.height, affair_hash:item.affair_hash})    
                 });        
             };
 
