@@ -85,7 +85,7 @@
 						<div class="result-col">
 							<span class="lab">借贷信息</span>
 							<p>借贷金额：{{amount}}</p>
-							<p>借贷时间：{{new Date(time * 1000)}}</p>
+							<p>借贷时间：{{time}}</p>
 							<p>盈利金额：{{profit}}</p>
 							<p>利息金额：{{rate * amount / 100}}</p>
 						</div>
@@ -179,7 +179,7 @@ export default {
 			that.interest = u.interest;
 			that.rate = u.rate;
 			that.height = u.height;
-			console.log(u)		
+			//console.log(u)		
 		   if(that.isSearch==false){
 			  
 			 
@@ -201,13 +201,15 @@ export default {
 			let pk = that.getPK();
             if (pk == "") {
                 return that.$toast("获取账户失败，请打开TDOS插件", 3000);
-            }
+			}
+			//console.log(this.dateFormat(new Date().toString()))
             let payload = {
                 amount: that.money,
-                time: '2020-12-3',
+                time: this.dateFormat(new Date().toString()),
                 rate: 5,
 				profit: that.money * 10 / 100,
-            };
+			};
+			
             let tx = await lend(payload,pk);
             let sendTx = JSON.stringify(tx);
             that.$refs.sendTx.href =
@@ -229,11 +231,13 @@ export default {
 		   if (money != 0){
 				that.allMoney = money;
 		   }
-		}
+		},
+		
 		
     },
 	 mounted(){
 		  this.getTotalMoney();
+		
 	 }
 }
 </script>

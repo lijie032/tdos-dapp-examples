@@ -820,7 +820,7 @@ function decodeLendInfo (buf) {
     const u = {}
     const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
     u.amount = rd.number()
-    u.time = rd.number()
+    u.time = rd.string()
     u.profit = rd.number()
     u.interest = rd.number()
     u.rate = rd.number()
