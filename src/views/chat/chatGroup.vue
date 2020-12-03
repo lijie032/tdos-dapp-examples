@@ -10,7 +10,7 @@
                <div class="record-box">
                   <el-scrollbar class="record-scroll" ref="myScrollbar">
                       <ul class="ul-record">
-                          <li v-for='(item,index) in chartRecord' :key="index">
+                          <li v-for='(item,index) in chartRecord.slice(chartRecord.length-2,chartRecord.length)' :key="index">
                              <div class="d-centent" :class="{'activecontent':item.userName==curuserName}">
                                  <div class="d-centent-userName" >{{item.userName}}：</div>
                                  <div class="d-centent-chat">{{item.content}}</div>
