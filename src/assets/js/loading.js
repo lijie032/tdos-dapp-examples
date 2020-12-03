@@ -6,7 +6,7 @@ let loading;
 const startLoading = (mes) => {
   loading = Loading.service({
     lock: true,
-    text: mes,//可以自定义文字
+    text: mes!=''?mes:'正在加载中，请稍等...',//可以自定义文字
     spinner:'el-icon-loading',//自定义加载图标类名
     background: 'rgba(0, 0, 0, 0.7)'//遮罩层背景色
   });
