@@ -56,7 +56,7 @@ export function updateTime(time: string): void {
     Globals.set<string>('endTime', time);
 }
 
-// 修改注册码过期时间
-export function getSerials(time: string): ArrayBuffer {
+// 获取白名单
+export function getSerials(): ArrayBuffer {
     return encodeStrings(serialArray);
 }
