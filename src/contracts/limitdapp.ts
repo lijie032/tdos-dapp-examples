@@ -39,7 +39,7 @@ export function hasSerial(serial: string): boolean {
 }
 
 // 获取注册码时间
-export function getTime(serial: string): string {
+export function getTime(): string {
     return  Globals.get<string>('endTime');
 }
 
