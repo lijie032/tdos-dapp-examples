@@ -125,7 +125,6 @@
           that.$router.push({path: '/cryptoBear'})
         }
         let bear = await getBear(pk)
-        console.log(bear)
         document.getElementById('aggressivity').innerHTML = bear.aggressivity
         document.getElementById('defense').innerHTML = bear.defense
         document.getElementById('stature').innerHTML = (bear.stature / 100) + 'M'

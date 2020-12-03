@@ -68,7 +68,7 @@
         that.$refs.sendTx.click()
         return that.$toast('事务已生成，请打开TDOS插件进行广播', 3000)
       },
-      get(){
+      timer_tx(){
         let that = this;
         let t = that.getRes();
         if (t != ""){
@@ -78,8 +78,9 @@
       }
     },
     mounted () {
-      this.timer = setInterval(this.get, 1000)
       showLoading();
+      this.get()
+      this.timer = setInterval(this.timer_tx, 1000)
     },
     beforeDestroy () {
       clearInterval(this.timer)
