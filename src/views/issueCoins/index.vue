@@ -9,7 +9,7 @@
                     <div class="coin-header">
                         请在下方设置代币属性
                         <div class="searchIn" :class="{'noSearch': !isSearch}">
-                            <input type="text" maxlength="24" v-model="searchText"/>
+                            <input type="text" maxlength="150" v-model="searchText"/>
                             <a class="asearch pointer "  @click="search"></a>
                         </div>
 
@@ -97,13 +97,11 @@
                      <a class="close pointer" @click="hideSearch()"></a>
                  </div>
                  <div class="con-text">
-                    <p>资产名称：法特币</p>
-                    <p>总发行量：200,000</p>
-                    <p>初期发行量：200,000</p>
-                    <p class="p-line1">创建者：dq51we4qwe41g4gsdgs84ssswsssss</p>
-                    <p class="p-line1">所有者：dq51we4qwe4422gsdgs84sxxxxx</p>
-                    <p>是否允许增发：允许增发</p>
-                    <p>资产说明：颠三倒四多颠三倒四都说人物我带我去二群无颠三倒四多颠三倒四都说人物 CAD萨斯。</p>
+                    <p>资产名称：{{code}}</p>
+                    <p>初期发行量：{{totalSupply}}</p>
+                    <p class="p-line1">所有者：{{owner}}</p>
+                    <p>是否允许增发：{{sex ? '是':'否'}}</p>
+                    <p>资产说明：{{info}}</p>
                  </div>
                  <div class="btn-box">
                      <a class="pointer btn-sure" @click="hideSearch()">
@@ -139,7 +137,12 @@ export default {
             publicSuc:false,//发币是否成功
             searchText:'',//搜索内容
             isSearch:false,//是否搜索
-            searchResult:false//搜索结果是否显示
+            searchResult:false,//搜索结果是否显示
+            code:'',
+            owner:'',
+            totalSupply:0,
+            seo:false,
+            info:'',
         }
     },
     components:{
@@ -176,16 +179,17 @@ export default {
        },
 
        //点击搜索调用事件
-       search(){
+       async search(){
            let that = this;
-           let u = await getLendInfo(that.searchText);
-          if(!that.isSearch){
-            that.isSearch=true
-
-          }else{
-              that.searchResult = true;
-              TpScroll.RemoveScroll();
-          }
+           that.searchResult = true;
+           let u = await getToken(that.searchText);
+           that.code = u.code;
+           that.owner = u.owner;
+           that.totalSupply = u.totalSupply;
+            that.seo = u.seo;
+            that.info = u.info;
+           console.log(u)
+            
        },
        hideSearch(){
            let that = this;
@@ -195,7 +199,8 @@ export default {
      
     },
     mounted(){
-      
+        let that = this;
+        that.isSearch=true;
     }
 }
 </script>
