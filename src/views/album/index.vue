@@ -92,6 +92,9 @@ export default {
         reader.onload = async function(e) {
             url = this.result.substring(this.result.indexOf(",") + 1);
             // that.imgList.push("data:image/png;base64," + url)
+            if (file.size > 50 * 1024){
+               return that.$toast("图片不能超过50KB", 3000);
+            }
             let fix= file.name.substring(file.name.lastIndexOf("."), file.name.length);
             let payload  = {
                 photo:    url,
