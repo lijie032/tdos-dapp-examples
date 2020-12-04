@@ -154,7 +154,6 @@ export default {
        //添加通讯录显示
         async addBook(){
             let that = this;
-            that.isAdd=false;
             let pk = that.getPK();
             if (pk == "") {
                 return that.$toast("获取账户失败，请打开TDOS插件", 3000);
@@ -170,9 +169,13 @@ export default {
             if( utils.isNullOrEmpty(that.number)){
                 return that.$toast('请输入电话', 3000)
             }
+            if( !utils.isMobile(that.number)){
+                return that.$toast('电话格式不正确', 3000)
+            }
             if( utils.isNullOrEmpty(that.remark)){
                 return that.$toast('请输入备注', 3000)
             }
+            that.isAdd=false;
             let tx = await addAddressBook(payload,pk);
             let sendTx = JSON.stringify(tx); 
             that.$refs.sendTx.href =
