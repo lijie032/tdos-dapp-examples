@@ -34,6 +34,7 @@
                 class="border-box"
                 type="text"
                 placeholder="请输入捐赠地址"
+                maxlength="50"
                 v-model="donationAddress"
               />
             </div>
@@ -67,6 +68,7 @@
                 type="text"
                 placeholder="请输入捐赠说明"
                 v-model="explain"
+                maxlength="30"
               />
             </div>
           </div>

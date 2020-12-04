@@ -1,6 +1,8 @@
 <template>
  <div class="right-header">
-    
+    <div class="back-home" v-if="isHome" :class="{'back-home-white':type==1}">
+       <a class="aback-h pointer"></a>
+    </div>
     <div class="back-index" :class="{'back-index-white':type==1}">
       <a class="aback pointer"></a>
     </div>
@@ -21,6 +23,10 @@ export default {
     type:{
       type:null,
       default:0
+    },
+    isHome:{
+      type:null,
+      default:false
     }
   }
 }
