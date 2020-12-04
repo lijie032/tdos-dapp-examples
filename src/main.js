@@ -14,6 +14,10 @@ import storage from "@/storage";
 Vue.config.productionTip = false
 import limitNum from './assets/js/onlyNum'
 
+import VueClipboard from 'vue-clipboard2'
+
+Vue.use(VueClipboard);
+
 Vue.directive('limitNum', limitNum);
 
 Vue.use(ElementUI);

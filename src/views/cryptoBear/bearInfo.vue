@@ -78,11 +78,11 @@
               <div>区块高度：{{height}}</div>
               <div class="p-line1">
                 区块哈希：{{blockHash}}
-                <a class="pointer a-copy"></a>
+                <a class="pointer a-copy" v-clipboard:copy="message" v-clipboard:success="onCopy" v-clipboard:error="onError"></a>
               </div>
               <div class="p-line1">
                 事务哈希：{{hash}}
-                <a class="pointer a-copy"></a>
+                <a class="pointer a-copy" v-clipboard:copy="message" v-clipboard:success="onCopy" v-clipboard:error="onError"></a>
               </div>
             </div>
           </div>
@@ -105,6 +105,7 @@
         hash:'',
         height:0,
         blockHash:'',
+        message:'dfdldfkld;flsfksl;df;lfd'
       }
     },
     components: {
@@ -112,13 +113,23 @@
     },
 
     methods: {
+
+     onCopy: function (e) {
+       let that = this
+        return that.$toast('复制成功', 2000)
+      },
+      onError: function (e) {
+        let that = this
+        return that.$toast('复制失败，请稍后重试', 2000)
+      },
+
       async showInfo () {
 
         // let t = await buyBear();
         // console.log(t)
          let that = this;
          that.isOnchain = !that.isOnchain
-         console.log('ok')
+        
       },
       async get () {
         let that = this
