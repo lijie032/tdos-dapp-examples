@@ -52,7 +52,7 @@
       async submit(){
         let that = this;
             if( utils.isNullOrEmpty(that.place)){
-                return that.$toast('请输入商品场地', 3000)
+                return that.$toast('请输入商品产地', 3000)
             }
             if( utils.isNullOrEmpty(that.brand)){
                 return that.$toast('请输入商品品牌', 3000)
