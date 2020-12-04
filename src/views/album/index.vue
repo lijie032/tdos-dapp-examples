@@ -17,9 +17,9 @@
                       </div>
                   </div>
               </div>
-              <div class="album-col ">
+              <div class="album-col " v-if="imgList.length < 4">
                  
-                  <div class="album-add">
+                  <div class="album-add" >
                       
                     <div class="content-middle">
                         <div class="add_btn"></div>
@@ -63,7 +63,8 @@
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
 import {publicKey2Address} from '@salaku/js-sdk'
-import { addPhoto, getPhotos, getTransaction } from "@/api/dapps";
+import { addPhoto, getPhotos, getTransaction } from "@/api/dapps"
+import {showLoading, hideLoading} from '@/assets/js/loading'
 export default {
     data(){
         return{
@@ -91,6 +92,9 @@ export default {
         reader.onload = async function(e) {
             url = this.result.substring(this.result.indexOf(",") + 1);
             // that.imgList.push("data:image/png;base64," + url)
+            if (file.size > 50 * 1024){
+               return that.$toast("图片不能超过50KB", 3000);
+            }
             let fix= file.name.substring(file.name.lastIndexOf("."), file.name.length);
             let payload  = {
                 photo:    url,
@@ -119,6 +123,7 @@ export default {
       },
       async getPhotos(){
             let that = this;
+            that.imgList= [];
             let pk = that.getPK();
             if (pk == "") {
                 return that.$toast("获取账户失败，请打开TDOS插件", 3000);
@@ -142,9 +147,19 @@ export default {
       },
       timer_tx () {
         let that = this;
-        let value = that.getRes()
-        if (value != '') {
-          return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
+        let hash = that.getRes().trim()
+        if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+                that.getPhotos();
+              }
+            })
+
+          }, 1000)
         }
       },
 
@@ -159,12 +174,14 @@ export default {
     },
     mounted(){
         let that = this;
-        that.imgList= [];
         this.getPhotos();
         this.timer = setInterval(this.timer_tx, 1000)
     },
     beforeDestroy() {
       clearInterval(this.timer)
+       if (this.timer1) {
+        clearInterval(this.timer1)
+      }
     }
 }
 </script>

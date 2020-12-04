@@ -1,5 +1,5 @@
 <template>
-  <div class="pageWrap bg-wrap">
+  <div class="pageWrap bg-wrap" @click="isOnchain=false">
     <explorer></explorer>
     <div class="page-main">
       <div class="p-container">
@@ -75,13 +75,13 @@
 
             <!--等级上链信息-->
             <div class="chinInfo" v-show="isOnchain">
-              <div>区块高度：7856954</div>
+              <div>区块高度：{{height}}</div>
               <div class="p-line1">
-                区块哈希：q5eq4w5e4qw5eq4w98fsdf26g9sdg9ds8fds56sdf26g9sdg9ds8fds5
+                区块哈希：{{blockHash}}
                 <a class="pointer a-copy"></a>
               </div>
               <div class="p-line1">
-                事务哈希：q5eq4w5e4qw5eq4w98fsdf26g9sdg9ds8fds56
+                事务哈希：{{hash}}
                 <a class="pointer a-copy"></a>
               </div>
             </div>
@@ -101,7 +101,10 @@
   export default {
     data () {
       return {
-        isOnchain: false
+        isOnchain: false,
+        hash:'',
+        height:0,
+        blockHash:'',
       }
     },
     components: {
@@ -110,6 +113,7 @@
 
     methods: {
       async showInfo () {
+
         // let t = await buyBear();
         // console.log(t)
          let that = this;
@@ -126,6 +130,11 @@
           that.$router.push({path: '/cryptoBear'})
         }
         let bear = await getBear(pk)
+        that.hash = bear.hash;
+        await  getTransaction(that.hash).then(t => {
+                    that.height = t.blockHeight;
+                    that.blockHash = t.blockHash;
+        });
         document.getElementById('aggressivity').innerHTML = bear.aggressivity
         document.getElementById('defense').innerHTML = bear.defense
         document.getElementById('stature').innerHTML = (bear.stature / 100) + 'M'

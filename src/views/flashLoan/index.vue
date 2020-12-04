@@ -106,6 +106,7 @@ import TpScroll from '@/assets/js/tp-scroll.js'
 import { Loading } from 'element-ui';
 import { getTotalMoney, lend, getTransaction, getLendInfo } from "@/api/dapps";
 import {isInteger} from "@/api/index.js";
+import {showLoading, hideLoading} from '@/assets/js/loading'
 
 export default {
     data(){
@@ -253,13 +254,36 @@ export default {
 			var seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
 			// 拼接
 			return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
-		}
+		},
+		timer_tx () {
+        let that = this
+        let hash = that.getRes().trim()
+        if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+				that.getTotalMoney();
+              }
+            })
+
+          }, 1000)
+        }
+      }
 		
     },
 	 mounted(){
-		  this.getTotalMoney();
-		  //console.log()
-	 }
+		this.getTotalMoney();
+		this.timer = setInterval(this.timer_tx, 1000)
+	 },
+	 beforeDestroy() {
+      clearInterval(this.timer)
+      if (this.timer1) {
+        clearInterval(this.timer1)
+      }
+    }
 }
 </script>
 
