@@ -1,6 +1,6 @@
 // 部署公益合约
 
-import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getLendContract,getContract_crowdsaledapp, getContract_chatdapp } from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getLendContract,getContract_crowdsaledapp, getContract_chatdapp, getContract_changedapp } from './constants'
 
 import {
   bin2hex,
@@ -464,6 +464,7 @@ export async function confirmFinance (hash, publickey) {
 export async function getFinance (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getFinance', hex2bin(hash))
+    console.log(result)
     return decodeFinance(result)
   }catch (e) {
     return "";
@@ -730,7 +731,7 @@ export async function getVoterInfo(address) {
 
 export async function getTotalMoney() {
   try {
-    let result = await rpc.viewContract(await getLendContract(), 'getTotalMoney', []) 
+    let result = await rpc.viewContract(await getLendContract(), 'getTotalMoney', [])
     return result
   }catch (e) {
     return "";
@@ -807,7 +808,7 @@ export async function transfer (payload, publickey) {
 
 export async function getLendInfo(hash) {
   try {
-    let result = await rpc.viewContract(await getLendContract(), 'getLendInfo', [hash]) 
+    let result = await rpc.viewContract(await getLendContract(), 'getLendInfo', [hash])
     return decodeLendInfo(result)
   }catch (e) {
     return "";
@@ -893,4 +894,95 @@ export async function registration (payload,publickey) {
     tx.from = publickey
     return tx
   }
+}
+
+// 添加聊天
+export async function saveChat (payload,publickey) {
+  const c = await getContract_chatdapp()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'saveChat', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+// 解析聊天记录
+function decodeChat (buf) {
+  if (buf != '') {
+    const ret = []
+    buf = hex2bin(buf)
+    let li = rlp.RLPList.fromEncoded(buf)
+    for (let i = 0; i < li.length(); i++) {
+      let ii = li.list(i)
+      ret.push(fromEncoded_Chat(ii))
+    }
+    return ret
+  }
+  return ''
+}
+
+function fromEncoded_Chat (buf) {
+  const li = new rlp.RLPListReader(buf)
+  const chat = {}
+  chat.sender = li.string()
+  chat.nickname = li.string()
+  chat.context = li.string()
+  chat.time = li.string()
+  chat.hash = bin2hex(li.bytes())
+  return chat
+}
+
+// 获取聊天记录
+export async function getChat () {
+  return decodeChat(await rpc.viewContract(await getContract_chatdapp(), 'getChat', []))
+}
+
+// 获取eth汇率
+export async function getETB () {
+  return await rpc.viewContract(await getContract_changedapp(), 'getETB', [])
+}
+
+// 获取btc汇率
+export async function getBTE () {
+  return await rpc.viewContract(await getContract_changedapp(), 'getBTE', [])
+}
+
+// 代币交换
+export async function saveChange (payload,publickey) {
+  const c = await getContract_changedapp()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'saveChange', payload, 0)
+    tx.nonce = await syncNonce(publickey)
+    tx.from = publickey
+    return tx
+  }
+}
+
+// 解析代币交换记录
+function fromEncoded_Change (buf) {
+  if (buf == ""){
+    return "";
+  }
+  buf = hex2bin(buf)
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.from = rd.string()
+  u.to = rd.string()
+  u.amount = rd.number()
+  u.rate = rd.string()
+  return u
+}
+
+// 获取代币交换记录
+export async function getChange () {
+  return fromEncoded_Change(await rpc.viewContract(await getContract_chatdapp(), 'getChange', []))
 }

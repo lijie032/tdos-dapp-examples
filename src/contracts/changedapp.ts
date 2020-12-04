@@ -68,5 +68,9 @@ export function saveChange(from: string, to: string, amount: u64, rate: string):
 }
 
 export function getChange(tx: ArrayBuffer): ArrayBuffer {
-    return changeList.get(tx)
+    if(changeList.has(tx))
+    {
+        return changeList.get(tx);
+    }
+    return new ArrayBuffer(0);
 }

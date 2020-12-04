@@ -10,6 +10,7 @@ import lendAbi from '@/contracts/lenddapp.abi.json'
 import abi_crowdsaledapp from '@/contracts/crowdsaledapp.abi.json'
 import abi_chatdapp from '@/contracts/chatdapp.abi.json'
 import tokenAbi from '@/contracts/tokendapp.abi.json'
+import abi_changedapp from '@/contracts/changedapp.abi.json'
 
 // import wasm from '@/contracts/dapps.wasm'
 
@@ -61,7 +62,7 @@ export const CONTRACT_CHAT_ADDRESS = 'c0eea01c0250b57ff4af5c550a745ec937d6e1a0' 
 export const CONTRACT_BOOKS_ADDRESS = 'b237c1b692036bacb3a859aa0c3e11b74166dc8f' // 通讯录合约地址
 export const CONTRACT_PHOTO_ADDRESS = 'c65c67747bbd812d79fa26a0929856100b9880fb' // 相册合约地址
 export const CONTRACT_TOKEN_ADDRESS = '0cf65e367967f6cd88bbd9561283ae71eb260ef9' // 发行代币合约地址
-export const CONTRACT_CHANGE_ADDRESS = 'ef8f2f999d9a8bd5c55407d1a2bd124c36cf413f' // 交易合约地址
+export const CONTRACT_CHANGE_ADDRESS = '3542e1e2d0ee4954f7d654ae92d1a18742f590f6' // 交易合约地址
 export const CONTRACT_LIMIT_ADDRESS = 'dd3dae9d8fcbe39a9b9b799cb2cad073de3a1f1c' // 权限合约地址
 export const CONTRACT_CROWDSALE_ADDRESS = 'a76fbc7fbb136336cbad6f32519b7150b53156bc' // 众筹合约地址
 export const CONTRACT_VOTE_ADDRESS = '88d59ef8bcca85ec032a734a28eea43ba6145623' // 投票合约地址
@@ -106,6 +107,9 @@ export async function  getContract_chatdapp() {
 
 export async function  getContract_token() {
   return new Contract(CONTRACT_TOKEN_ADDRESS, tokenAbi)
+}
+export async function  getContract_changedapp() {
+  return new Contract(CONTRACT_CHANGE_ADDRESS, abi_changedapp)
 }
 
 // 捐赠人的私钥

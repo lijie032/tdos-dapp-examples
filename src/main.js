@@ -63,7 +63,7 @@ Vue.prototype.getRes = function () {
   var res = document.getElementById('receivePTos-reulst')
   if (res != null) {
     let str = res.innerHTML
-
+    str = str.replace(/\s*/g, "");
     var box = document.getElementById("receivePTos-reulst")
     if (box) {
       box.parentNode.removeChild(box);

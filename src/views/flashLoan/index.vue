@@ -22,7 +22,7 @@
 					  <div class="f-in">
 						  <div class="f-in-box f-in-box-1">
 							    <p class="p-text" @click="inputFocus"  v-if="!isInput" ><span></span>请输入您想要借贷的金额</p>
-							  <input placeholder="" v-if="isInput" ref="input" v-model="money"/>
+							  <input placeholder="" v-if="isInput" ref="input" type="number" v-model="money"/>
 						  </div>
 						  <div class="f-in-box">
 							  <p class="p-text"><span></span>当前利息为：5%</p>
@@ -105,7 +105,7 @@ import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
 import { Loading } from 'element-ui';
 import { getTotalMoney, lend, getTransaction, getLendInfo } from "@/api/dapps";
-// import {dateFormat} from "@/api/index.js";
+import {isInteger} from "@/api/index.js";
 
 export default {
     data(){
@@ -173,6 +173,9 @@ export default {
 						that.isSearch=true;
                     });
 			let u = await getLendInfo(that.hash);
+			if (u == ""){
+          		return that.$toast('暂无信息', 3000)
+        	}
 			that.amount = u.amount;
 			that.time = u.time;
 			that.profit = u.profit;
@@ -196,6 +199,11 @@ export default {
 				that.$toast("最多可贷"+that.allMoney, 3000);
 				return;
 			}
+
+			if (that.money == 0){
+				that.$toast("贷款金额不能为0", 3000);
+				return;
+			}
 			// that.applaySuc = true;
 		 	TpScroll.RemoveScroll();
 			let pk = that.getPK();
@@ -207,7 +215,7 @@ export default {
                 amount: that.money,
                 time: this.dateFormat(new Date().toString()),
                 rate: 5,
-				profit: that.money * 10 / 100,
+				profit: Math.ceil(that.money * 10 / 100),
 			};
 			
             let tx = await lend(payload,pk);

@@ -37,8 +37,8 @@ function decodeToken (buf) {
     const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
     u.name = rd.string()
     u.owner = rd.string()
-    u.totalSupply = rd.string()
-    u.seo = rd.string()
+    u.totalSupply = rd.number()
+    u.seo = rd.bool()
     u.info = rd.string()
     return u
   }
@@ -51,6 +51,7 @@ function decodeToken (buf) {
         constants.POA_VERSION,
         privatekey
       )
+      console.log(payload)
       const tx = builder.buildContractCall(c, 'saveToken', payload, 0)
       tx.nonce = await syncNonce(publickey)
       tx.from = publickey
