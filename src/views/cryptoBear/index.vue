@@ -31,7 +31,7 @@
 <script>
   import explorer from '@/components/browser1.vue'
   import {buyBear, hasBear, getTransaction} from '@/api/dapps'
-  import { showLoading, hideLoading } from '@/assets/js/loading';
+  import {showLoading, hideLoading} from '@/assets/js/loading'
 
   export default {
     data () {
@@ -49,7 +49,7 @@
         }
         let has = await hasBear(pk)
         if (has) {
-            that.$router.push({path: '/cryptoBear/bearInfo'})
+          that.$router.push({path: '/cryptoBear/bearInfo'})
         }
       },
       async isOnchain () {
@@ -68,46 +68,39 @@
         that.$refs.sendTx.click()
         return that.$toast('事务已生成，请打开TDOS插件进行广播', 3000)
       },
-      test(v){
-        
+      test (v) {
+
       },
-      async timer_tx(){
-        let that = this;
-        let hash = that.getRes().trim();
+      async timer_tx () {
+        let that = this
+        let hash = that.getRes().trim()
 
-        if (hash != ""){
-          console.log(1111)
-          console.log(hash)
-          // this.$router.push({path:'/assets'})
-            // this.delayTime = setTimeout(function(){
-              
-          // },1700)
-          // that.$toast("事务广播成功，事务哈希为："+t, 2000);
-          showLoading("事务广播成功，事务哈希为："+hash+",请等待上链...");
-               
-        this.timer1 = setInterval(function(){
-           getTransaction(hash).then(tx => {  
-               console.log(tx)          
-                if(tx.from!=''){
-                    hideLoading();
-                     clearInterval(that.timer1)
-                }
-                
-            })    
+        if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：' + hash + ',请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                console.log(tx)
+                console.log(tx.confirms)
+                hideLoading()
+                clearInterval(that.timer1)
+                that.$router.push({path: '/cryptoBear/bearInfo'})
+              }
 
-                  
-           },1000)
-         } 
+            })
+
+          }, 1000)
+        }
       }
     },
     mounted () {
-      // 
+      //
       this.get()
       this.timer = setInterval(this.timer_tx, 1000)
     },
     beforeDestroy () {
       clearInterval(this.timer)
-      if(this.timer1){
+      if (this.timer1) {
         clearInterval(this.timer1)
       }
     }

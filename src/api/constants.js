@@ -10,6 +10,7 @@ import lendAbi from '@/contracts/lenddapp.abi.json'
 import abi_crowdsaledapp from '@/contracts/crowdsaledapp.abi.json'
 import abi_chatdapp from '@/contracts/chatdapp.abi.json'
 import tokenAbi from '@/contracts/tokendapp.abi.json'
+import abi_changedapp from '@/contracts/changedapp.abi.json'
 
 // import wasm from '@/contracts/dapps.wasm'
 
@@ -106,6 +107,9 @@ export async function  getContract_chatdapp() {
 
 export async function  getContract_token() {
   return new Contract(CONTRACT_TOKEN_ADDRESS, tokenAbi)
+}
+export async function  getContract_changedapp() {
+  return new Contract(CONTRACT_CHANGE_ADDRESS, abi_changedapp)
 }
 
 // 捐赠人的私钥
