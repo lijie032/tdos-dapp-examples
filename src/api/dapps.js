@@ -983,6 +983,7 @@ function fromEncoded_Change (buf) {
 }
 
 // 获取代币交换记录
-export async function getChange () {
-  return fromEncoded_Change(await rpc.viewContract(await getContract_chatdapp(), 'getChange', []))
+export async function getChange (hash) {
+  let u  = await rpc.viewContract(await getContract_changedapp(), 'getChange', [hash])
+  return fromEncoded_Change(u)
 }

@@ -9,7 +9,7 @@
                     <div class="coin-header">
                         请在下方设置代币属性
                         <div class="searchIn" :class="{'noSearch': !isSearch}">
-                            <input type="text" maxlength="150" v-model="searchText"/>
+                            <input type="text" maxlength="150" placeholder="您可在此输入复制的哈希值以此查询" v-model="searchText"/>
                             <a class="asearch pointer "  @click="search"></a>
                         </div>
 
@@ -25,7 +25,7 @@
                     </div>
                     <div class="coin-50">
                         <div class="lab">初期发行量</div>
-                        <input class="border-box" maxlength="10" v-model="amount"/>
+                        <input class="border-box" maxlength="10" v-limitNum v-model="amount"/>
                     </div>
                
                     <div class="coin-50">
@@ -121,6 +121,7 @@ import TpScroll from '@/assets/js/tp-scroll.js'
 import { saveToken, getToken } from "@/api/tokendapp";
 import { getTransaction } from '@/api/dapps'
 import {showLoading, hideLoading} from '@/assets/js/loading'
+import {utils} from '@/assets/js/pattern'
 export default {
     data(){
         return{
@@ -157,6 +158,22 @@ export default {
             if(that.isMore=='1')
             {seo =true}
             else{seo =false}
+            if( utils.isNullOrEmpty(that.name)){
+            return that.$toast('请输入资产名称', 3000)
+            }
+            if( utils.isNullOrEmpty(that.owner)){
+            return that.$toast('请输入资产所有者', 3000)
+            }
+            if( that.amount == 0){
+            return that.$toast('请输入初期发行量', 3000)
+            }
+            if( utils.isNullOrEmpty(that.isMore)){
+            return that.$toast('请选择是否允许增发', 3000)
+            }
+            if( utils.isNullOrEmpty(that.remark)){
+            return that.$toast('请输入资产说明', 3000)
+            }
+
             let payload = {
                 name:that.name, owner:that.owner, totalSupply:that.amount, seo: seo, info:that.remark
             };

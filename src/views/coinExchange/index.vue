@@ -10,7 +10,7 @@
 
       <div class="page-content">
         <div class="searchInBox border-box">
-           <input type="text" placeholder="您可在此输入复制的哈希值以此查询"/>
+           <input type="text" placeholder="您可在此输入复制的哈希值以此查询" v-model = "hash"/>
            <a class="btn-search pointer" @click="showResult">
 
            </a>
@@ -92,9 +92,9 @@
             <div class="popup-content result-content">
               <div class="result-col">
                 <span class="lab">互换信息</span>
-                <p>申请地址：d32qwe5q6we5f5ds4g84re8t48re4t8re4t8re4 g5df4g5dldksflds55</p>
-                <p><span>ETH:56891</span><img class="arrow" src="../../assets/img/arrow.png"/><span>BTC:78594</span></p>
-                <p>互换比率：1BTC=0.00052ETH</p>
+                <p>事务hash：{{hash}}</p>
+                <p><span>{{from}}:{{searchAmount}}</span><img class="arrow" src="../../assets/img/arrow.png"/><span>{{to}}:{{from == 'ETH'? 0.5 *searchAmount: 2 * searchAmount }}</span></p>
+                <p>互换比率：{{rate}}</p>
               </div>
               
             </div>
@@ -113,7 +113,7 @@
 <script>
   import explorer from '@/components/browser1.vue'
   import TpScroll from '@/assets/js/tp-scroll.js'
-  import { getETB, getBTE, saveChange } from '@/api/dapps'
+  import { getETB, getBTE, saveChange,getChange } from '@/api/dapps'
 
   export default {
     data () {
@@ -132,6 +132,11 @@
         isExchange: false,//货币顺序是否转换
         amount:'',
         searchResult:false,//查询结果
+        hash:'',
+        rate:'',
+        from:'',
+        to:'',
+        searchAmount: 0,
       }
     },
     components: {
@@ -159,10 +164,15 @@
         that.coin2 = obj2
       },
       //点击查询
-      showResult(){
+      async showResult(){
         let that =  this;
         that.searchResult = true;
         TpScroll.RemoveScroll()
+        let u = await getChange(that.hash);
+        that.searchAmount = u.amount;
+        that.from = u.from;
+        that.to = u.to;
+        that.rate = u.rate;
       },
       //点击确认转换
       async confirmExchange () {
@@ -198,6 +208,14 @@
         let Btc = await getBTE();
         that.coin2.proportion = "1BTC="+Eth+"Eth";
         that.coin1.proportion = "1ETH="+Btc+"Btc";
+      },
+      async getChange(){
+        let that = this
+        let u = await getChange('e7eff4961c65b9366a4e321f2f07ac35803bd1ee308e5bd39360d2df8ec1ad67');
+        that.searchAmount = u.amount;
+        that.from = u.from;
+        that.to = u.to;
+        that.rate = u.rate;
       }
 
     },
