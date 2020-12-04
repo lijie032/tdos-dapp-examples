@@ -89,12 +89,12 @@
                  </div>
                  <div class="d-in">
                      <div class="lab">姓名：</div>
-                     <input type="text" maxlength="15" v-model="userName"/>
+                     <input type="text" maxlength="15" v-model="userName" />
                  </div>
 
                 <div class="d-in">
                      <div class="lab">电话：</div>
-                     <input type="text" maxlength="11" v-model="number"/>
+                     <input type="text" maxlength="11"  v-limitNum v-model="number"/>
                  </div>
 
                 <div class="d-in d-in-textarea">
@@ -115,6 +115,7 @@ import explorer from '@/components/browser1.vue'
 import {publicKey2Address} from '@salaku/js-sdk'
 import { addAddressBook, getAddressBooks, getTransaction } from "@/api/dapps"
 import {showLoading, hideLoading} from '@/assets/js/loading'
+import {utils} from '@/assets/js/pattern'
 export default {
     data(){
         return{
@@ -153,7 +154,6 @@ export default {
        //添加通讯录显示
         async addBook(){
             let that = this;
-            that.isAdd=false;
             let pk = that.getPK();
             if (pk == "") {
                 return that.$toast("获取账户失败，请打开TDOS插件", 3000);
@@ -163,8 +163,21 @@ export default {
                 phone: that.number,
                 memo: that.remark,
             };
+            if( utils.isNullOrEmpty(that.userName)){
+                return that.$toast('请输入姓名', 3000)
+            }
+            if( utils.isNullOrEmpty(that.number)){
+                return that.$toast('请输入电话', 3000)
+            }
+            if( !utils.isMobile(that.number)){
+                return that.$toast('电话格式不正确', 3000)
+            }
+            if( utils.isNullOrEmpty(that.remark)){
+                return that.$toast('请输入备注', 3000)
+            }
+            that.isAdd=false;
             let tx = await addAddressBook(payload,pk);
-            let sendTx = JSON.stringify(tx);
+            let sendTx = JSON.stringify(tx); 
             that.$refs.sendTx.href =
                 "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
             that.$refs.sendTx.click();

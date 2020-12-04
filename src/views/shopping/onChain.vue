@@ -13,7 +13,7 @@
           </div>
           <div class="din-col din-col2">
             <div class="din border-box"><input type="text" maxlength="15" placeholder="商品种类" v-model="kind"/></div>
-            <div class="din border-box din-2"><input type="text" maxlength="15" placeholder="商品价格" v-model="price"/>
+            <div class="din border-box din-2"><input type="text" maxlength="15" placeholder="商品价格" v-limitNum v-model="price"/>
             </div>
           </div>
           <!--
@@ -35,6 +35,7 @@
   import explorer from '@/components/browser.vue'
   import {saveProduct, getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
+  import {utils} from '@/assets/js/pattern'
   export default {
     data () {
       return {
@@ -50,6 +51,18 @@
     methods: {
       async submit(){
         let that = this;
+            if( utils.isNullOrEmpty(that.place)){
+                return that.$toast('请输入商品产地', 3000)
+            }
+            if( utils.isNullOrEmpty(that.brand)){
+                return that.$toast('请输入商品品牌', 3000)
+            }
+            if( utils.isNullOrEmpty(that.kind)){
+                return that.$toast('请输入商品种类', 3000)
+            }
+            if( utils.isNullOrEmpty(that.price)){
+                return that.$toast('请输入商品价格', 3000)
+            }
         let payload = {
           place:that.place, brand:that.brand, kind:that.kind, price:that.price
         };
