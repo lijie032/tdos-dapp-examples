@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap f-pageWrap f-wrap-table">
-      <explorer></explorer>
+      <explorer :type="type" :isHome="isHome"></explorer>
       <div class="logo-intro">
          <div class="logo"></div>
          TDOS金融
@@ -17,12 +17,13 @@
 </template>
 
 <script>
-import explorer from '@/components/browser.vue'
+import explorer from '@/components/browser1.vue'
 
 export default{
   data(){
     return{
-
+        isHome:true,
+        type:1,
     }
   },
   components:{
