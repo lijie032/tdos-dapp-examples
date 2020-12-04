@@ -67,7 +67,7 @@
             <div class="popup-content chain-content">
               <p class="chain-title">恭喜您！转换成功！该笔交易已存证上链！以下是您的上链哈希：</p>
               <div class="hash-value">
-                <span>da2d6qwe6q41qw51e4re49tre9g4er16et6re4tda2d6qwe6q41qw51e4re49tre9g4er16et6re4te4ere4er</span>
+                <span>{{hash}}</span>
                 <a class="copy pointer"></a>
               </div>
               <p class="p-mess">（您可复制上方哈希值并点击右上角按钮至“TDS浏览器”查询。）</p>
@@ -113,7 +113,8 @@
 <script>
   import explorer from '@/components/browser1.vue'
   import TpScroll from '@/assets/js/tp-scroll.js'
-  import { getETB, getBTE, saveChange,getChange } from '@/api/dapps'
+  import { getETB, getBTE, saveChange,getChange,getTransaction } from '@/api/dapps'
+  import {showLoading, hideLoading} from '@/assets/js/loading'
 
   export default {
     data () {
@@ -137,6 +138,7 @@
         from:'',
         to:'',
         searchAmount: 0,
+        hash:'',
       }
     },
     components: {
@@ -216,11 +218,36 @@
         that.from = u.from;
         that.to = u.to;
         that.rate = u.rate;
+      },
+      timer_tx () {
+        let that = this
+        let hash = that.getRes().trim()
+        if (hash != '') {
+          that.hash = hash;
+          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+                that.exchangeSuc = true;
+              }
+            })
+
+          }, 1000)
+        }
       }
 
     },
     mounted: function () {
       this.get();
+      this.timer = setInterval(this.timer_tx, 1000)
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
+      if (this.timer1) {
+        clearInterval(this.timer1)
+      }
     }
   }
 </script>
