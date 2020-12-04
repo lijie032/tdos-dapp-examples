@@ -3,10 +3,17 @@
     <explorer></explorer>
 
     <div class="page-main content-middle">
-      <div class="page-content">
-        <div class="p-title">
+      <div class="p-title">
           <div class="logo"></div>
-          欢迎来到TDOS资产互换
+          <span>欢迎来到TDOS资产互换</span>
+      </div>
+
+      <div class="page-content">
+        <div class="searchInBox border-box">
+           <input type="text" placeholder="您可在此输入复制的哈希值以此查询"/>
+           <a class="btn-search pointer" @click="showResult">
+
+           </a>
         </div>
         <div class="coin-box" :class="{'coin-box-change':isExchange}">
           <div class="coin-col">
@@ -73,6 +80,31 @@
       </div>
     </div>
 
+    <!--查询结果-->
+    <div class="trans" v-if="searchResult">
+      <div class="dis-table">
+        <div class="popup-div dis-table">
+          <div class="popup-main result-popup-main">
+            <div class="popup-header">
+              查询信息
+              <a class="pointer close" @click="searchResult=false;addScroll()"></a>
+            </div>
+            <div class="popup-content result-content">
+              <div class="result-col">
+                <span class="lab">互换信息</span>
+                <p>申请地址：d32qwe5q6we5f5ds4g84re8t48re4t8re4t8re4 g5df4g5dldksflds55</p>
+                <p><span>ETH:56891</span><span>BTC:78594</span></p>
+                <p>互换比率：1BTC=0.00052ETH</p>
+              </div>
+              
+            </div>
+            <div class="btnbox">
+              <a class="cf-btn pointer bot-btn" @click="searchResult=false;addScroll()">我知道了</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -98,7 +130,8 @@
         },
 
         isExchange: false,//货币顺序是否转换
-        amount:''
+        amount:'',
+        searchResult:false,//查询结果
       }
     },
     components: {
@@ -125,7 +158,12 @@
         that.coin1 = obj1
         that.coin2 = obj2
       },
-
+      //点击查询
+      showResult(){
+        let that =  this;
+        that.searchResult = true;
+        TpScroll.RemoveScroll()
+      },
       //点击确认转换
       async confirmExchange () {
         let that = this

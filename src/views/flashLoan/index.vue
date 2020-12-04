@@ -22,7 +22,7 @@
 					  <div class="f-in">
 						  <div class="f-in-box f-in-box-1">
 							    <p class="p-text" @click="inputFocus"  v-if="!isInput" ><span></span>请输入您想要借贷的金额</p>
-							  <input placeholder="" v-if="isInput" ref="input" type="number" v-model="money"/>
+							  <input placeholder="" v-if="isInput" ref="input" type="text" v-limitNum v-model="money"/>
 						  </div>
 						  <div class="f-in-box">
 							  <p class="p-text"><span></span>当前利息为：5%</p>

@@ -1,7 +1,13 @@
 <template>
-  <div class="logo-explorer logo-browser " :class="{'logo-browser-white':type==1}">
-      <a class=" pointer"></a>
-  </div>
+ <div class="right-header">
+    
+    <div class="back-index" :class="{'back-index-white':type==1}">
+      <a class="aback pointer"></a>
+    </div>
+    <div class=" logo-browser " :class="{'logo-browser-white':type==1}">
+        <a class=" pointer"></a>
+    </div>
+ </div>
 </template>
 
 <script>

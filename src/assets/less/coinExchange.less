@@ -1,17 +1,25 @@
 .bg_wrap{background: url(../img/assetexchange_bg.png) center no-repeat; background-size: cover; -webkit-background-size: cover;}
 
-.page-content{width:1198px;margin: 0 auto; margin-top: -40px;;
+
+.p-title{
+    font-size:60px;color:#474747; text-align: center; padding: 25px 0; padding-bottom: 80px;
+    span{display: inline-block;vertical-align: middle;}
+}
+.logo{
+    width:50px;height:50px; background:#AC3535; display: inline-block; vertical-align: middle; margin-right: 20px; margin-top:1px;
+    img{width:100%;min-height: 100%;}
+}
+
+
+
+.page-content{width:1198px;margin: 0 auto; 
 
     background: #F7F7F7;
     border: 1px solid #B6B6B6;
     -webkit-box-shadow: 0px 8px 31px 0px rgba(4, 0, 0, 0.1);
     box-shadow: 0px 8px 31px 0px rgba(4, 0, 0, 0.1);
     .borderRadius(5px,5px,5px,5px);
-    .p-title{font-size:30px;color:#474747; text-align: center; padding: 25px 0;}
-    .logo{
-        width:50px;height:50px; background:#AC3535; display: inline-block; vertical-align: middle; margin-right: 20px;
-        img{width:100%;min-height: 100%;}
-    }
+   
     .coin-box{text-align: center; position: relative;
         .f-col{background: #F0F0F0;border: 1px solid #B6B6B6;}
 
@@ -60,6 +68,20 @@
     }
    .bot-btn{width:140px;margin: 0 auto;}
 }
+
+
+.searchInBox{width:76%;border:1px solid #B6B6B6; margin: 0 auto; height:50px;line-height: 50px; margin-bottom:30px;
+padding-right: 60px; position: relative;
+   input{font-size:16px;color:#fff; text-align: center; width:100%; height: 50px;line-height: 50px; color:#444;}
+   .btn-search{width:50px;height: 50px; display: block; position: absolute; right:0px;top:0px;
+    background: url(../img/btn_search1.png) center no-repeat;   
+}
+}
+.trans .result-content .lab{
+    color:#757F9A; background:#fff;
+    width:200px;margin-left:-100px;left:50%;
+}
+
 @media screen and (max-width:1240px){
    .page-content{width:90%} 
 }

@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="bc-right">
-            <a class="pointer mark" @click="showInfo"></a>
+            <a class="pointer mark" @mouseover="showInfo" @mouseleave="isOnchain=false"></a>
             <div class="detailInfo">
               <h3 class="h-level">
                 当前等级<span class="s-level"><a id="level"></a></span>
@@ -113,7 +113,7 @@
         // let t = await buyBear();
         // console.log(t)
          let that = this;
-         //that.isOnchain = !that.isOnchain
+         that.isOnchain = !that.isOnchain
       },
       async get () {
         let that = this
