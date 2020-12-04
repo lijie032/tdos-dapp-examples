@@ -82,14 +82,10 @@
 </template>
 
 <script>
-<<<<<<< HEAD
   import {saveDonor, getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
 
-=======
-  import {saveDonor} from '@/api/dapps'
   import {utils} from '@/assets/js/pattern'
->>>>>>> 0097388fea6144376134d4fd00e6017d5c2a9652
   export default {
     data () {
       return {
