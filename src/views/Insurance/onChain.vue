@@ -12,7 +12,7 @@
           </div>
           <div class="din-col din-col2">
             <div class="din border-box">
-              <div class="lab">启保时间</div>
+              <div class="lab">起保时间</div>
               <el-date-picker
                 v-model="time"
                 type="date"

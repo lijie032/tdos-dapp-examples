@@ -10,7 +10,7 @@
                <div class="record-box">
                   <el-scrollbar class="record-scroll" ref="myScrollbar">
                       <ul class="ul-record">
-                          <li v-for='(item,index) in chartRecord.slice(chartRecord.length-20,chartRecord.length)' :key="index">
+                          <li v-for='(item,index) in chartRecord' :key="index">
                              <div class="d-centent" :class="{'activecontent':item.userName==curuserName}">
                                  <div class="d-centent-userName" >{{item.nickname}}：</div>
                                  <div class="d-centent-chat">{{item.context}}</div>
@@ -22,7 +22,7 @@
                   <div class="detail-box" v-show="detailIndex==index">
                     <p>区块高度：{{height}}</p>
                     <p>区块哈希：{{item.hash}}</p>
-                    <p>区块信息：{{info}}</p>
+                    <p>事务哈希：{{info}}</p>
                   </div>
                 </div>
               </li>
@@ -89,7 +89,7 @@
         let chat = await getChat();
         let num = await getUserId();
         that.num = num;
-        that.chartRecord = chat;
+        that.chartRecord = chat.reverse().slice(0,20).reverse();
         // if (chat.length<20){
         //   for (let i = 0;i<chat.length;i++){
         //     console.log(chat[i])
@@ -101,6 +101,7 @@
         // }else {
         //
         // }
+        console.log(chat)
       },
       async submit () {
         let that = this;
