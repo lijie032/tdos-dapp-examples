@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="bc-right">
-            <a class="pointer mark" @mouseover="showInfo" @mouseleave="isOnchain=false"></a>
+            <a class="pointer mark" @click.stop="showInfo" ></a>
             <div class="detailInfo">
               <h3 class="h-level">
                 当前等级<span class="s-level"><a id="level"></a></span>
@@ -118,6 +118,7 @@
         // console.log(t)
          let that = this;
          that.isOnchain = !that.isOnchain
+         console.log('ok')
       },
       async get () {
         let that = this
