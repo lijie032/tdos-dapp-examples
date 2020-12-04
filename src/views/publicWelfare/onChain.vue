@@ -112,7 +112,7 @@
           return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
 
-        /*
+        
         if( utils.isNullOrEmpty(that.donationName)){
            return that.$toast('请输入捐赠者姓名', 3000)
         }
@@ -131,7 +131,7 @@
         if( utils.isNullOrEmpty(that.explain)){
            return that.$toast('请输入捐赠说明', 3000)
         }
-        */
+        
 
 
         let tx = await saveDonor(payload, pk)
