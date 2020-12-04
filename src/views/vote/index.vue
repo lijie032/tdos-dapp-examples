@@ -50,8 +50,9 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import TpScroll from '@/assets/js/tp-scroll.js'
-import { getVote, vote, hasVote} from "@/api/dapps";
+import { getVote, vote, hasVote, getTransaction} from "@/api/dapps";
 import {publicKey2Address} from '@salaku/js-sdk'
+import {showLoading, hideLoading} from '@/assets/js/loading'
 export default {
     data(){
         return{
@@ -134,13 +135,24 @@ export default {
 			let u = await hasVote(addr);
 			return u;
 		},
-		timer_tx () {
-        	let that = this
-        	let value = that.getRes()
-        	if (value != '') {
-          		return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
-        	}
-      	}
+      timer_tx () {
+        let that = this
+        let hash = that.getRes().trim()
+        if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+                 that.$router.push({path:'/vote/result'})
+              }
+
+            })
+
+          }, 1000)
+        }
+      }
     },
     mounted(){
 		let that = this;
@@ -155,6 +167,9 @@ export default {
     },
 	beforeDestroy() {
       clearInterval(this.timer)
+      if (this.timer1) {
+        clearInterval(this.timer1)
+      }
     }
 }
 </script>

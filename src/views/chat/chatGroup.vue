@@ -46,7 +46,7 @@
 <script>
   import explorer from '@/components/browser1.vue'
   import {getUserId, saveChat, getChat, getTransaction} from '@/api/dapps'
-
+  import {showLoading, hideLoading} from '@/assets/js/loading'
   export default {
     data () {
       return {
@@ -131,11 +131,36 @@
         var minutes1 = myDate.getMinutes() <= 9 ? '0' + (myDate.getMinutes()) : myDate.getMinutes() // 分
         var seconds1 = myDate.getSeconds() <= 9 ? '0' + (myDate.getSeconds()) : myDate.getSeconds() // 秒
         return myDate.getFullYear() + '-' + month + '-' + day + ' ' + hours1 + ':' + minutes1 + ':' + seconds1
+      },
+      timer_tx () {
+        let that = this
+        let hash = that.getRes().trim()
+        if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+                that.get();
+              }
+
+            })
+
+          }, 1000)
+        }
       }
     },
 
     mounted () {
-      this.get()
+      this.get();
+      this.timer = setInterval(this.timer_tx, 1000);
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
+      if (this.timer1) {
+        clearInterval(this.timer1)
+      }
     }
   }
 </script>

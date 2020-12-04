@@ -113,7 +113,8 @@
 <script>
 import explorer from '@/components/browser1.vue'
 import {publicKey2Address} from '@salaku/js-sdk'
-import { addAddressBook, getAddressBooks, getTransaction } from "@/api/dapps";
+import { addAddressBook, getAddressBooks, getTransaction } from "@/api/dapps"
+import {showLoading, hideLoading} from '@/assets/js/loading'
 export default {
     data(){
         return{
@@ -218,9 +219,20 @@ export default {
         },
         timer_tx () {
         let that = this
-        let value = that.getRes()
-        if (value != '') {
-          return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
+        let hash = that.getRes().trim()
+        if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+                that.search();
+              }
+
+            })
+
+          }, 1000)
         }
       }
     },
@@ -232,6 +244,9 @@ export default {
     },
     beforeDestroy() {
       clearInterval(this.timer)
+      if (this.timer1) {
+        clearInterval(this.timer1)
+      }
     }
 }
 </script>

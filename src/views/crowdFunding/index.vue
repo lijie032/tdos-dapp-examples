@@ -145,6 +145,7 @@
   import explorer from '@/components/browser1.vue'
   import TpScroll from '@/assets/js/tp-scroll.js'
   import {transfer, getCrowdSaleInfo, getCrowdSale, getTransaction} from '@/api/dapps'
+  import {showLoading, hideLoading} from '@/assets/js/loading'
 
   export default {
     data () {
@@ -264,10 +265,34 @@
             partNumber: CrowdSaleInfo[1].people,
             type:1
           }]
+      },
+      timer_tx () {
+        let that = this
+        let hash = that.getRes().trim()
+        if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+                that.get();
+              }
+            })
+
+          }, 1000)
+        }
       }
     },
     mounted() {
       this.get();
+      this.timer = setInterval(this.timer_tx, 1000)
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
+      if (this.timer1) {
+        clearInterval(this.timer1)
+      }
     }
   }
 </script>

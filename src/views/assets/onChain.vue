@@ -46,6 +46,8 @@
 <script>
   import { saveFund } from '@/api/dapps'
   import explorer from '@/components/browser.vue'
+  import {getTransaction } from "@/api/dapps"
+  import {showLoading, hideLoading} from '@/assets/js/loading'
 
   export default{
     data(){
@@ -77,20 +79,33 @@
         return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
 
       },
-      get(){
+      timer_tx(){
         let that = this;
-        let t = that.getRes();
-        if (t != ""){
-          this.$router.push({path:'/assets'})
-          return that.$toast("事务广播成功，事务哈希为："+t, 3000);
+        let hash = that.getRes().trim()
+         if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+                that.$router.push({path:'/assets/search'})
+              }
+
+            })
+
+          }, 1000)
         }
       }
     },
     mounted() {
-      this.timer = setInterval(this.get, 1000);
+      this.timer = setInterval(this.timer_tx, 1000)
     },
     beforeDestroy() {
       clearInterval(this.timer);
+      if (this.timer1) {
+        clearInterval(this.timer1)
+      }
     }
   }
 </script>
