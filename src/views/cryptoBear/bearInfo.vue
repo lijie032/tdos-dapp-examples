@@ -112,8 +112,8 @@
       async showInfo () {
         // let t = await buyBear();
         // console.log(t)
-        // // let that = this;
-        // // that.isOnchain = !that.isOnchain
+         let that = this;
+         //that.isOnchain = !that.isOnchain
       },
       async get () {
         let that = this
