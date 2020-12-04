@@ -93,7 +93,7 @@
               <div class="result-col">
                 <span class="lab">互换信息</span>
                 <p>申请地址：d32qwe5q6we5f5ds4g84re8t48re4t8re4t8re4 g5df4g5dldksflds55</p>
-                <p><span>ETH:56891</span><span>BTC:78594</span></p>
+                <p><span>ETH:56891</span><img class="arrow" src="../../assets/img/arrow.png"/><span>BTC:78594</span></p>
                 <p>互换比率：1BTC=0.00052ETH</p>
               </div>
               
