@@ -83,7 +83,7 @@
 
 <script>
   import {saveDonor} from '@/api/dapps'
-
+  import {utils} from '@/assets/js/pattern'
   export default {
     data () {
       return {
@@ -97,7 +97,8 @@
     },
     methods: {
       async doConfirm (e) {
-        let that = this
+       let that = this
+
         let payload = {
           name: that.donationName,
           content: that.donationContent,
@@ -111,12 +112,35 @@
           return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
 
+        /*
+        if( utils.isNullOrEmpty(that.donationName)){
+           return that.$toast('请输入捐赠者姓名', 3000)
+        }
+        if( utils.isNullOrEmpty(that.donationContent)){
+           return that.$toast('请输入捐赠内容', 3000)
+        }
+        if( utils.isNullOrEmpty(that.donationAddress)){
+           return that.$toast('请输入捐赠地址', 3000)
+        }
+        if( utils.isNullOrEmpty(that.beneficiary)){
+           return that.$toast('请输入受益人', 3000)
+        }
+        if( utils.isNullOrEmpty(that.mechanism)){
+           return that.$toast('请输入捐赠机构', 3000)
+        }
+        if( utils.isNullOrEmpty(that.explain)){
+           return that.$toast('请输入捐赠说明', 3000)
+        }
+        */
+
+
         let tx = await saveDonor(payload, pk)
         let sendTx = JSON.stringify(tx)
         that.$refs.sendTx.href =
           'javascript:sendMessageToContentScriptByPostMessage(\'' + sendTx + '\')'
         that.$refs.sendTx.click()
         return that.$toast('事务已生成，请打开TDOS插件进行广播', 3000)
+        
       },
       timer_tx () {
         let that = this
@@ -125,7 +149,9 @@
           this.$router.push({path:'/publicWelfare'})
           return that.$toast('事务广播成功，事务哈希为：' + value, 3000)
         }
-      }
+      },
+     
+      
     },
     mounted () {
       this.timer = setInterval(this.timer_tx, 1000)

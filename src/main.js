@@ -99,9 +99,12 @@ Vue.filter('dateFormat', function(originVal) {
 
 Vue.use(toastRegistry)
 /* eslint-disable no-new */
-new Vue({
+ new Vue({
   el: '#app',
   router,
   components: { App },
   template: '<App/>'
 })
+
+
+ 
