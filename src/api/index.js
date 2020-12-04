@@ -37,6 +37,10 @@ export function formatDate(d, fmt) {
   return fmt
 }
 
+export function isInteger(obj) {
+  return Math.floor(obj) === obj
+ }
+
 
 export function emptyDonor() {
   return {
