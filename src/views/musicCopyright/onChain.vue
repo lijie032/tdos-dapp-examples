@@ -8,7 +8,7 @@
                   <h3>请认真填写以下数据，确保能准确上链</h3>
                   <div class="din-col din-col2">
                      <div class="din border-box"><input type="text" maxlength="15"  placeholder="歌曲名称" ref="name"/></div>
-                     <div class="din border-box din-2"><input type="text" maxlength="15"  placeholder="歌曲时长(分钟)" ref="time"/></div>
+                     <div class="din border-box din-2"><input type="number" maxlength="15"  placeholder="歌曲时长(分钟)" ref="time"/></div>
                   </div>
                    <div class="din-col din-col2">
                      <div class="din border-box"><input type="text" maxlength="15"   placeholder="歌手信息" ref="info"/></div>

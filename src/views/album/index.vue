@@ -125,6 +125,9 @@ export default {
             }
             let addr = publicKey2Address(pk);
             let photos = await getPhotos(addr);
+            if (photos.length > 0){
+                return;
+            }
             await Promise.all(photos.map(async item => {
                     await  getTransaction(item.hash).then(t => {
                      item.createdAt = new Date(t.createdAt * 1000);
