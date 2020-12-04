@@ -164,8 +164,11 @@ export default {
             if( utils.isNullOrEmpty(that.owner)){
             return that.$toast('请输入资产所有者', 3000)
             }
-            if( that.amount == 0){
+            if( utils.isNullOrEmpty(that.amount)){
             return that.$toast('请输入初期发行量', 3000)
+            }
+            if( that.amount > 100000){
+            return that.$toast('初期发行量不能大于100000', 3000)
             }
             if( utils.isNullOrEmpty(that.isMore)){
             return that.$toast('请选择是否允许增发', 3000)

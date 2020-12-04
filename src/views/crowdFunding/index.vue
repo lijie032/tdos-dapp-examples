@@ -12,7 +12,7 @@
             <a ref="sendTx"></a>
           </div>
           <div class="project-info" v-for="(item,index) in projectList" :key="index">
-            <input style="display: none">{{item.type}}</input>
+            <input style="display: none" >{{item.type}}</input>
             <div class="hot-icon cf-btn">
               <span class="">热门项目</span>
             </div>
@@ -65,7 +65,7 @@
             <div class="popup-content">
               <p class="p-title">目标金额:{{amount}}</p>
               <div class="d-in">
-                <input placeholder="请输入募捐金额" v-model="input_amount"/>
+                <input placeholder="请输入募捐金额" v-model="input_amount" v-limitNum/>
               </div>
             </div>
             <div class="btnbox">
@@ -223,6 +223,9 @@
         let that = this
         that.isRasie = false
         let amount = parseInt(that.input_amount)
+        if (that.input_amount >= 1000){
+          return that.$toast('募捐金额不能超过1000', 3000)
+        }
         TpScroll.RemoveScroll()
         let payload = {
           offset: type,
