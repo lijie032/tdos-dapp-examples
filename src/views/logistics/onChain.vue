@@ -31,8 +31,8 @@
                          <input class="border-box" type="text" maxlength="12" placeholder="请输入寄件物品类型" ref="send_type"/>
                      </div>
                      <div class="din">
-                         <span class="lab">真实姓名</span>
-                         <input class="border-box" type="text" maxlength="12" placeholder="请输入真实姓名" ref="send_name"/>
+                         <span class="lab">寄件人姓名</span>
+                         <input class="border-box" type="text" maxlength="12" placeholder="请输入寄件人姓名" ref="send_name"/>
                      </div>
                  </div>
 
@@ -97,7 +97,7 @@
           return that.$toast('请输入物品类型', 3000)
         }
         if( utils.isNullOrEmpty(send_name)){
-          return that.$toast('请输入真实姓名', 3000)
+          return that.$toast('请输入寄件人姓名', 3000)
         }
         if(!utils.checkIDCard(send_numb)){
           return that.$toast('请输入身份证号码', 3000)
