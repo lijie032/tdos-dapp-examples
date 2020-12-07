@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pageWrap">
        <router-link target="_blank" to='/publicWelfare'>公益</router-link>
        <router-link target="_blank" to='/finance'>金融</router-link>
        <router-link target="_blank" to='/logistics'>物流</router-link>
@@ -32,3 +32,6 @@ export default {
     }
 }
 </script>
+<style scoped lang="less">
+  @import url(../assets/less/index.less);
+</style>
