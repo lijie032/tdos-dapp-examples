@@ -8,21 +8,21 @@
                   <h3 class="from_title">登记信息</h3>
                   <div class="d-in">
                       <div class="lab">登记姓名</div>
-                     <input class="border-box" placeholder="请输入登记姓名" ref="name"/>
+                     <input class="border-box" placeholder="请输入登记姓名" ref="name" v-removeSymbol/>
                   </div>
                   <div class="d-in">
                       <div class="lab">赠予内容</div>
-                     <input class="border-box" placeholder="请输入赠予内容" ref="info"/>
+                     <input class="border-box" placeholder="请输入赠予内容" ref="info" v-removeSymbol/>
                   </div>
                   <div class="d-in">
                       <div class="lab">赠予对象</div>
-                     <input class="border-box" placeholder="请输入赠予对象" ref="to"/>
+                     <input class="border-box" placeholder="请输入赠予对象" ref="to" v-removeSymbol/>
                   </div>
                    <div class="d-in">
                       <div class="lab">赠予条件</div>
                       <div class="d-in-right">
                           当前区块高度>
-                          <input class="border-box in-height" ref="height" v-limitNum/>
+                          <input class="border-box in-height" ref="height" v-limitNum />
                        </div>
 
                   </div>

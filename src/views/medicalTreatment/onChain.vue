@@ -8,7 +8,7 @@
                   <h3 class="from_title">登记信息</h3>
                   <div class="d-in">
                       <div class="lab">病人姓名</div>
-                     <input class="border-box" type="text" maxlength="15" placeholder="请输入病人姓名" ref="name"/>
+                     <input class="border-box" type="text" maxlength="15" placeholder="请输入病人姓名" ref="name" v-removeSymbol/>
                   </div>
                   <div class="d-in">
                       <div class="lab">就诊时间</div>
@@ -22,15 +22,15 @@
                   </div>
                   <div class="d-in">
                       <div class="lab">就诊医院</div>
-                     <input class="border-box" type="text" maxlength="20" placeholder="请输入就诊医院" ref="medical"/>
+                     <input class="border-box" type="text" maxlength="20" placeholder="请输入就诊医院" ref="medical" v-removeSymbol/>
                   </div>
                    <div class="d-in">
                       <div class="lab">就诊信息</div>
-                     <input class="border-box" type="text" maxlength="50" placeholder="请输入就诊信息" ref="info"/>
+                     <input class="border-box" type="text" maxlength="50" placeholder="请输入就诊信息" ref="info" v-removeSymbol/>
                   </div>
                   <div class="d-in">
                       <div class="lab">就诊医生</div>
-                     <input class="border-box" type="text" maxlength="15" placeholder="请输入就诊医生" ref="doctor"/>
+                     <input class="border-box" type="text" maxlength="15" placeholder="请输入就诊医生" ref="doctor" v-removeSymbol/>
                   </div>
                   <div class="btnbox">
                        <a class="btn pointer" @click="submit">存证上链</a>

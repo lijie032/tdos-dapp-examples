@@ -7,15 +7,15 @@
               <div class="f-form-box">
                   <h3>请认真填写以下数据，确保能准确上链</h3>
                   <div class="din-col din-col2">
-                     <div class="din border-box"><input type="text"  placeholder="企业名称" ref="title"/></div>
-                     <div class="din border-box din-2"><input type="text"  placeholder="法人姓名" ref="name"/></div>
+                     <div class="din border-box"><input type="text"  placeholder="企业名称" ref="title" v-removeSymbol/></div>
+                     <div class="din border-box din-2"><input type="text"  placeholder="法人姓名" ref="name" v-removeSymbol/></div>
                   </div>
                    <div class="din-col din-col2">
-                     <div class="din border-box"><input type="text"  placeholder="法人证件" ref="cid"/></div>
+                     <div class="din border-box"><input type="text"  placeholder="法人证件" ref="cid" v-removeSymbol/></div>
                      <div class="din border-box din-2"><input type="text"  placeholder="融资金额" ref="sum" v-limitNum/></div>
                   </div>
                   <div class="din-col">
-                     <div class="din"><input type="text" placeholder="合同编号" ref="contract"/></div>
+                     <div class="din"><input type="text" placeholder="合同编号" ref="contract" v-removeSymbol/></div>
                   </div>
                   <div class="btnbox">
                       <a class="pointer chain-btn" @click="save">存证上链</a>

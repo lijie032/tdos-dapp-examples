@@ -7,12 +7,12 @@
         <div class="f-form-box">
           <h3>请认真填写以下数据，确保能准确上链</h3>
           <div class="din-col din-col2">
-            <div class="din border-box"><input type="text" maxlength="15" placeholder="商品产地" v-model="place"/></div>
-            <div class="din border-box din-2"><input type="text" maxlength="15" placeholder="商品品牌" v-model="brand"/>
+            <div class="din border-box"><input type="text" maxlength="15" placeholder="商品产地" v-model="place" v-removeSymbol/></div>
+            <div class="din border-box din-2"><input type="text" maxlength="15" placeholder="商品品牌" v-model="brand" v-removeSymbol/>
             </div>
           </div>
           <div class="din-col din-col2">
-            <div class="din border-box"><input type="text" maxlength="15" placeholder="商品种类" v-model="kind"/></div>
+            <div class="din border-box"><input type="text" maxlength="15" placeholder="商品种类" v-model="kind" v-removeSymbol/></div>
             <div class="din border-box din-2"><input type="text" maxlength="15" placeholder="商品价格" v-limitNum v-model="price"/>
             </div>
           </div>
