@@ -6,12 +6,12 @@
         <div class="formbox">
           <div class="din-col">
             <div class="din">
-              <span class="lab">捐赠姓名</span>
+              <span class="lab">捐赠人姓名</span>
               <input
                 class="border-box"
                 type="text"
                 maxlength="12"
-                placeholder="请输入捐赠者姓名"
+                placeholder="请输入捐赠人姓名"
                 v-model="donationName"
               />
             </div>
@@ -29,11 +29,11 @@
 
           <div class="din-col">
             <div class="din">
-              <span class="lab">捐赠地址</span>
+              <span class="lab">受益人地址</span>
               <input
                 class="border-box"
                 type="text"
-                placeholder="请输入捐赠地址"
+                placeholder="请输入受益人地址"
                 maxlength="50"
                 v-model="donationAddress"
               />
@@ -118,13 +118,13 @@
 
         
         if( utils.isNullOrEmpty(that.donationName)){
-           return that.$toast('请输入捐赠者姓名', 3000)
+           return that.$toast('请输入捐赠人姓名', 3000)
         }
         if( utils.isNullOrEmpty(that.donationContent)){
            return that.$toast('请输入捐赠内容', 3000)
         }
         if( utils.isNullOrEmpty(that.donationAddress)){
-           return that.$toast('请输入捐赠地址', 3000)
+           return that.$toast('请输入受益人地址', 3000)
         }
         if( utils.isNullOrEmpty(that.beneficiary)){
            return that.$toast('请输入受益人', 3000)
