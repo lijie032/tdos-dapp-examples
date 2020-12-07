@@ -123,7 +123,7 @@ export default {
 
 			isSearch:true,//是否搜索
 			allMoney:0,
-			money:0,
+			money:'',
 			hash: '',
 			blockHeight:0,
 			blockHash:'',
@@ -195,12 +195,13 @@ export default {
 		//申请借贷
        async applyLoan(){
 		 	let that = this;
-		 	if (that.money > that.allMoney){
+			 let money = parseInt(that.money)
+		 	if (money > that.allMoney){
 				that.$toast("最多可贷"+that.allMoney, 3000);
 				return;
 			}
 
-			if (that.money == 0){
+			if (money == 0){
 				that.$toast("贷款金额不能为0", 3000);
 				return;
 			}
@@ -211,10 +212,10 @@ export default {
                 return that.$toast("获取账户失败，请打开TDOS插件", 3000);
 			}
             let payload = {
-                amount: that.money,
+                amount: money,
                 time: this.dateFormat(new Date().toString()),
                 rate: 5,
-				profit: Math.ceil(that.money * 10 / 100),
+				profit: Math.ceil(money * 10 / 100),
 			};
 
             let tx = await lend(payload,pk);
