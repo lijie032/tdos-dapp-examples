@@ -107,6 +107,7 @@ import { Loading } from 'element-ui';
 import { getTotalMoney, lend, getTransaction, getLendInfo } from "@/api/dapps";
 import {isInteger} from "@/api/index.js";
 import {showLoading, hideLoading} from '@/assets/js/loading'
+import {utils} from '@/assets/js/pattern'
 
 export default {
     data(){
@@ -168,12 +169,20 @@ export default {
 		//点击搜索
 		async search(){
 		   let that = this;
-			getTransaction(that.hash).then(t => {
-                        that.blockHeight = t.blockHeight;
-                        that.blockHash = t.blockHash;
-						that.isSearch=true;
-                    });
-			let u = await getLendInfo(that.hash);
+			if( utils.isNullOrEmpty(that.hash)){
+            	return that.$toast('暂无信息', 3000)
+            }
+			let u;
+			try{
+				await getTransaction(that.hash).then(t => {
+							that.blockHeight = t.blockHeight;
+							that.blockHash = t.blockHash;
+							that.isSearch=true;
+						});
+				u = await getLendInfo(that.hash);		
+			}catch(err){
+				return that.$toast('暂无信息', 3000)
+			}
 			if (u == ""){
           		return that.$toast('暂无信息', 3000)
         	}
