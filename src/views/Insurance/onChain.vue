@@ -17,7 +17,7 @@
                 v-model="time"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="选择启保时间">
+                placeholder="选择起保时间">
               </el-date-picker>
             </div>
             <div class="din border-box din-2 din-select">
@@ -89,7 +89,7 @@
           return that.$toast('请输入航班信息', 3000)
         }
         if( utils.isNullOrEmpty(time)){
-          return that.$toast('请输入启保时间', 3000)
+          return that.$toast('请输入起保时间', 3000)
         }
         if( utils.isNullOrEmpty(bool)){
           return that.$toast('请选择是否延误', 3000)
@@ -119,7 +119,7 @@
         let that = this
         let hash = that.getRes().trim()
         if (hash != '') {
-          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {

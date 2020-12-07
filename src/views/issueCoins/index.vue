@@ -1,7 +1,7 @@
 <template>
     <div class="pageWrap bg-wrap dis-table">
         <explorer ></explorer>
-        
+
         <div class="page-main content-middle">
             <div class="page-container">
                 <h3>欢迎来到TDOS发行代币</h3>
@@ -13,7 +13,7 @@
                             <a class="asearch pointer "  @click="search"></a>
                         </div>
 
-                        
+
                     </div>
                     <div class="coin-50">
                         <div class="lab">资产名称</div>
@@ -27,7 +27,7 @@
                         <div class="lab">初期发行量</div>
                         <input class="border-box" maxlength="10" v-limitNum v-model="amount"/>
                     </div>
-               
+
                     <div class="coin-50">
                         <div class="lab">是否允许增发</div>
                         <el-select v-model="isMore" placeholder="请选择" class="coin-select" popper-class ="w-coin-select">
@@ -60,7 +60,7 @@
 
             </div>
          </div>
-    
+
     <div class="trans" v-if="publicSuc">
         <div class="dis-table">
          <div class="trans-main">
@@ -74,7 +74,7 @@
                      <p class="p-hash"><span>da6d56qw9eqwe26qw26f5d96g59fd7ghd4f1h5dfgfd2sf</span><a class="copy pointer"></a></p>
                      <p class="p-mess">
                          （您可复制上方哈希值并点击右上角按钮至“TDS浏览器”查询。）
-                         
+
                      </p>
                  </div>
                  <div class="btn-box">
@@ -86,7 +86,7 @@
          </div>
         </div>
     </div>
-    
+
     <!--搜索结果页-->
     <div class="trans" v-if="searchResult">
         <div class="dis-table">
@@ -112,7 +112,7 @@
          </div>
         </div>
     </div>
-    
+
     </div>
 </template>
 <script>
@@ -223,7 +223,7 @@ export default {
         let that = this
         let hash = that.getRes().trim()
         if (hash != '') {
-          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
@@ -236,7 +236,7 @@ export default {
           }, 1000)
         }
       }
-     
+
     },
     mounted(){
         let that = this;

@@ -50,13 +50,14 @@
                                 <div class="detai-info-col">
                                     <div class="din-col din-col3">
                                         <p class="ppic">区块哈希：</p>
-                                        <p>{{selectUser.affair_hash}}<span class="icon_copy pointer"></span></p>
+                                        <p>{{selectUser.affair_hash}}
+                                          <span class="icon_copy pointer" v-clipboard:copy="message" v-clipboard:success="onCopy" v-clipboard:error="onError"></span></p>
                                     </div>
                                 </div>
                                 <div class="detai-info-col">
                                     <div class="din-col din-col4">
                                         <p class="ppic">事务哈希：</p>
-                                        <p>{{selectUser.hash}}<span class="icon_copy pointer"></span></p>
+                                        <p>{{selectUser.hash}}<span class="icon_copy pointer" v-clipboard:copy="message2" v-clipboard:success="onCopy" v-clipboard:error="onError"></span></p>
                                     </div>
                                 </div>
                                 <div class="detai-info-col">
@@ -134,7 +135,9 @@ export default {
             //   affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'},
             //   {username:'陈慧',phone:'123488699',height:'7859654',hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',
             //   affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'}
-          ]
+          ],
+          message:'dfdldfkld;flsfksl;df;lfd',
+          message2:'dfdldfkld'
 
         }
     },
@@ -225,6 +228,8 @@ export default {
         let that = this;
         that.isShow = true;
         that.selectUser = item;
+        that.message = item.affair_hash;
+        that.message2 = item.hash;
         },
         back(){
             let that = this;
@@ -234,7 +239,7 @@ export default {
         let that = this
         let hash = that.getRes().trim()
         if (hash != '') {
-          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
@@ -247,7 +252,15 @@ export default {
 
           }, 1000)
         }
-      }
+      },
+      onCopy: function (e) {
+        let that = this
+        return that.$toast('复制成功', 2000)
+      },
+      onError: function (e) {
+        let that = this
+        return that.$toast('复制失败，请稍后重试', 2000)
+      },
     },
 
     mounted(){

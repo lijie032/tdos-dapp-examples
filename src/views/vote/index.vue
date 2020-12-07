@@ -1,7 +1,7 @@
 <template>
   <div class="pageWrap bg_wrap dis-table">
     <explorer :type="type"></explorer>
-     
+
       <div class="page-main content-middle">
           <div class="page-content">
           	 <div class="pageTitle">{{title}}</div>
@@ -35,9 +35,9 @@
           	 </div>
 			<!-- <p class="v-intro">关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于该项目的一些解释性说明关于 该项目的一些解释性说明关于该项目的一些解释性说明</p>-->
           </div>
-         
+
       </div>
-      
+
   </div>
 </template>
 
@@ -68,7 +68,7 @@ export default {
     		infoA: '',
     		infoB: '',
             chainSuc:false,//募集成功展示
-       
+
         }
     },
     components:{
@@ -83,7 +83,7 @@ export default {
 	      return value
 	    }
 	  },
-    methods:{        
+    methods:{
         //募集确认
         clickRasie(){
         	let that = this;
@@ -139,7 +139,7 @@ export default {
         let that = this
         let hash = that.getRes().trim()
         if (hash != '') {
-          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {

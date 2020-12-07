@@ -170,7 +170,7 @@ export default {
 		async search(){
 		   let that = this;
 			if( utils.isNullOrEmpty(that.hash)){
-            	return that.$toast('暂无信息', 3000)
+            	return that.$toast('请输入哈希', 3000)
             }
 			let u;
 			try{
@@ -179,7 +179,7 @@ export default {
 							that.blockHash = t.blockHash;
 							that.isSearch=true;
 						});
-				u = await getLendInfo(that.hash);		
+				u = await getLendInfo(that.hash);
 			}catch(err){
 				return that.$toast('暂无信息', 3000)
 			}
@@ -267,7 +267,7 @@ export default {
         let that = this
         let hash = that.getRes().trim()
         if (hash != '') {
-          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
