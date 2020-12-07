@@ -12,7 +12,7 @@ class Bear{
     tonnage: u64
     defense: u64
     level: u64
-    height: u64
+    hash: ArrayBuffer
 
     constructor(
         username: string,
@@ -23,7 +23,7 @@ class Bear{
         tonnage: u64,
         defense: u64,
         level: u64,
-        height: u64
+        hash: ArrayBuffer
     ) {
         this.username = username;
         this.birth = birth;
@@ -33,12 +33,12 @@ class Bear{
         this.tonnage = tonnage;
         this.defense = defense;
         this.level = level;
-        this.height = height;
+        this.hash = hash;
     }
 
     static fromEncoded(buf: ArrayBuffer): Bear {
         const li = RLPList.fromEncoded(buf);
-        const bear = new Bear('','',0,0,0,0,0, 0,0);
+        const bear = new Bear('','',0,0,0,0,0, 0, new ArrayBuffer(0));
         bear.username = li.getItem(0).string();
         bear.birth = li.getItem(1).string();
         bear.aggressivity = li.getItem(2).u64();
@@ -47,7 +47,7 @@ class Bear{
         bear.tonnage = li.getItem(5).u64();
         bear.defense = li.getItem(6).u64();
         bear.level = li.getItem(7).u64();
-        bear.height = li.getItem(8).u64();
+        bear.hash = li.getItem(8).bytes();
         return bear;
     }
 
@@ -61,7 +61,7 @@ class Bear{
         els.push(RLP.encodeU64(this.tonnage));
         els.push(RLP.encodeU64(this.defense));
         els.push(RLP.encodeU64(this.level));
-        els.push(RLP.encodeU64(this.height));
+        els.push(RLP.encodeBytes(this.hash));
         return RLP.encodeElements(els);
     }
 }
@@ -70,25 +70,29 @@ export function init(): void {
     log('加密熊合约已部署');
 }
 
-export function buy(addr: Address, username: string, birth: string, aggressivity: u64, bloodvolume: u64, stature: u64, tonnage: u64, defense: u64): void {
+export function buy(username: string, birth: string, aggressivity: u64, bloodvolume: u64, stature: u64, tonnage: u64, defense: u64): void {
+    const msg = Context.msg();
     const h = Context.header();
-    assert(!bearList.has(addr), "user has buy");
-    let bear = new Bear(username, birth, aggressivity, bloodvolume, stature, tonnage, defense, 1, h.height);
-    bearList.set(addr, bear.getEncoded());
+    const tx = Context.transaction();
+    assert(!bearList.has(msg.sender), "user has buy");
+    let bear = new Bear(username, birth, aggressivity, bloodvolume, stature, tonnage, defense, 1, tx.hash);
+    bearList.set(msg.sender, bear.getEncoded());
 }
 
-export function buyLevel(addr: Address): void {
-    assert(bearList.has(addr), "user has not buy");
+export function buyLevel(): void {
+    const msg = Context.msg();
+    assert(bearList.has(msg.sender), "user has not buy");
     const h = Context.header();
-    let bear = Bear.fromEncoded(bearList.get(addr));
+    const tx = Context.transaction();
+    let bear = Bear.fromEncoded(bearList.get(msg.sender));
     bear.aggressivity = bear.aggressivity + 10;
     bear.bloodvolume = bear.bloodvolume + 50000;
     bear.stature = bear.stature + 2;
     bear.tonnage = bear.tonnage + 2;
     bear.defense = bear.defense + 2000;
     bear.level = bear.level + 1;
-    bear.height = h.height;
-    bearList.set(addr, bear.getEncoded());
+    bear.hash = tx.hash;
+    bearList.set(msg.sender, bear.getEncoded());
 }
 
 export function hasBear(addr: Address): boolean {

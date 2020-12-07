@@ -15,7 +15,6 @@
           <div class="din-box">
             <div class="in-box">
               <input placeholder="请输入事务哈希" ref="hash"/>
-              <a class="close pointer"></a>
             </div>
             <a class="searchbtn pointer" @click="search">搜索</a>
           </div>
@@ -43,13 +42,12 @@
         }
         let result = await getFinance(hash, pk)
         if (result == '') {
-          that.$router.push({path: '/finance/confirminfo'})
           this.$toast('暂无内容', 2000)
         } else {
             let transaction = await getTransaction(hash);
             getTransaction(hash).then(t => {
               let that = this
-              that.$router.push({path: '/finance/confirminfo', query: {transaction: t, result: result}})
+              that.$router.push({path: '/finance/confirminfo', query: {transaction: t, result: result, tx_hash: hash}})
             })
         }
       }

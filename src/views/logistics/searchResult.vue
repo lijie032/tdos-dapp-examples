@@ -36,6 +36,11 @@
                            <div class="lab">收件人电话：</div>
                            <div class="lab-info"><a id="collect_phone"></a></div>
                        </div>
+                      <div class="d-text">
+                        <span class="s-icon"></span>
+                        <div class="lab">区块高度：</div>
+                        <div class="lab-info"><a id="height"></a></div>
+                      </div>
                        <div class="d-text">
                            <span class="s-icon"></span>
                            <div class="lab">区块哈希：</div>
@@ -73,16 +78,19 @@
         this.$router.push({path: '/logistics'})
       }
     }, mounted: function () {
-      // let transaction = this.$route.query.transaction;
-      // let result = this.$route.query.result;
-      document.getElementById("send_name").innerHTML = "123123";
-      document.getElementById("send_phone").innerHTML = "123123";
-      document.getElementById("send_type").innerHTML = "123123";
-      document.getElementById("collect_name").innerHTML = "123123";
-      document.getElementById("collect_address").innerHTML = "123123";
-      document.getElementById("collect_phone").innerHTML = "123123";
-      document.getElementById("block_hash").innerHTML = "123123";
-      document.getElementById("transaction_hash").innerHTML = "123123";
+      let t = this.$route.query.transaction;
+      let result = this.$route.query.result;
+      let tx_hash = this.$route.query.tx_hash;
+      document.getElementById("send_name").innerHTML = result.sender;
+      document.getElementById("send_phone").innerHTML = result.senderPhone;
+      document.getElementById("send_type").innerHTML = result.goods;
+      document.getElementById("collect_name").innerHTML = result.receiver;
+      document.getElementById("collect_address").innerHTML = result.address;
+      document.getElementById("collect_phone").innerHTML = result.receiverPhone;
+      document.getElementById("block_hash").innerHTML = t.blockHash;
+      document.getElementById("transaction_hash").innerHTML = tx_hash;
+      document.getElementById("height").innerHTML = t.blockHeight;
+
     }
   }
 </script>

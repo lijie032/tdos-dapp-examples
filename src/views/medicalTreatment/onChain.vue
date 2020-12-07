@@ -12,7 +12,13 @@
                   </div>
                   <div class="d-in">
                       <div class="lab">就诊时间</div>
-                     <input class="border-box" type="text" maxlength="15" placeholder="请输入就诊时间" ref="time"/>
+<!--                     <input class="border-box" type="text" maxlength="15" placeholder="请输入就诊时间" ref="time"/>-->
+                    <el-date-picker
+                      v-model="time"
+                      type="date"
+                      value-format="yyyy-MM-dd"
+                      placeholder="选择日期时间">
+                    </el-date-picker>
                   </div>
                   <div class="d-in">
                       <div class="lab">就诊医院</div>
@@ -28,6 +34,7 @@
                   </div>
                   <div class="btnbox">
                        <a class="btn pointer" @click="submit">存证上链</a>
+                       <a ref="sendTx"></a>
                   </div>
               </div>
           </div>
@@ -47,11 +54,13 @@
 
   import { saveMedical } from '@/api/dapps'
   import explorer from '@/components/browser.vue'
-
+  import { getTransaction } from '@/api/dapps'
+  import {showLoading, hideLoading} from '@/assets/js/loading'
+  import {utils} from '@/assets/js/pattern'
   export default{
     data(){
       return{
-
+        time:""
       }
     },
     components:{
@@ -59,24 +68,69 @@
     },
     methods:{
       async submit(){
-
+        let that = this;
         let name = this.$refs.name.value;
-        let time = this.$refs.time.value;
+        let time = that.time;
         let medical = this.$refs.medical.value;
         let info = this.$refs.info.value;
         let doctor = this.$refs.doctor.value;
-
-        //todo 合约参数需要增加
+        if( utils.isNullOrEmpty(name)){
+          return that.$toast('请输入病人姓名', 3000)
+        }
+        if( utils.isNullOrEmpty(time)){
+          return that.$toast('请输入就诊时间', 3000)
+        }
+        if( utils.isNullOrEmpty(medical)){
+          return that.$toast('请输入就诊医院', 3000)
+        }
+        if( utils.isNullOrEmpty(info)){
+          return that.$toast('请输入就诊信息', 3000)
+        }
+        if( utils.isNullOrEmpty(doctor)){
+          return that.$toast('请输入就诊医生', 3000)
+        }
         let payload = {
           name:name, time:time, hospital:medical, info:info, doctor:doctor
         };
 
-        //todo 获取公钥
-        let publickey = "02f9d915954e04107d11fb9689a6330c22199e1e830857bff076e033bbca2888d4";
-        let Medical = await saveMedical(payload, publickey);
-        console.log(Medical);
-        //todo 传给客户端
-        this.$router.push({path:'/medicalTreatment'})
+        let pk = that.getPK();
+        if (pk == "") {
+          return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+        }
+        let Medical = await saveMedical(payload, pk);
+        let sendTx = JSON.stringify(Medical);
+        that.$refs.sendTx.href =
+          "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+        that.$refs.sendTx.click();
+        return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
+      },
+      timer_tx () {
+        let that = this
+        let hash = that.getRes().trim()
+        if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+                 that.$router.push({path:'/medicalTreatment/search'})
+              }
+
+            })
+
+          }, 1000)
+        }
+      }
+    },
+    mounted(){
+      let that = this;
+      this.timer = setInterval(this.timer_tx, 1000)
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
+      if (this.timer1) {
+        clearInterval(this.timer1)
       }
     }
   }

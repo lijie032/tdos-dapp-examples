@@ -1,6 +1,16 @@
 import { ABI, VirtualMachine, RPC, publicKey2Address, privateKey2PublicKey, Contract, hex2bin, bin2hex} from '@salaku/js-sdk'
 import abi from '@/contracts/dapps.abi.json'
+import bookAbi from '@/contracts/addresslistdapp.abi.json'
+import abi_secretbeardapp from '@/contracts/secretbeardapp.abi.json'
 import axios from 'axios'
+import photoAbi from '@/contracts/photodapp.abi.json'
+import voteAbi from '@/contracts/votedapp.abi.json'
+import limitAbi from '@/contracts/limitdapp.abi.json'
+import lendAbi from '@/contracts/lenddapp.abi.json'
+import abi_crowdsaledapp from '@/contracts/crowdsaledapp.abi.json'
+import abi_chatdapp from '@/contracts/chatdapp.abi.json'
+import tokenAbi from '@/contracts/tokendapp.abi.json'
+import abi_changedapp from '@/contracts/changedapp.abi.json'
 
 // import wasm from '@/contracts/dapps.wasm'
 
@@ -15,6 +25,14 @@ export async function getABI() {
   abiCache = await axios.get(abi).then(r =>r.data)
   return abiCache
 }
+
+export async function getBookABI() {
+  if (abiCache)
+    return abiCache
+  abiCache = await axios.get(bookAbi).then(r =>r.data)
+  return abiCache
+}
+
 
 // dev 环境下使用假节点
 export const ENV = localStorage.getItem('env') === 'dev' ? 'dev' : 'prod'
@@ -39,12 +57,59 @@ export function persistVM(){
 
 export const rpc = new RPC('192.168.1.89', '6011')
 export const CONTRACT_ADDRESS = '30f1acbde6a9111a3cde642bfbc30310e293cd67' // 十个存证合约地址
-export const CONTRACT_SECRET_BEAR_ADDRESS = '048a35f2c8c5ef6c527d99f5d135019d268be5bd' // 加密熊合约地址
-export const CONTRACT_CHAT_ADDRESS = 'b6dc4bb054a7b63669f99ecf7a5e73399ee132ea' // 聊天室合约地址
-export const CONTRACT_BOOKS_ADDRESS = '6c0a450644a9616571412b975b3042814df094cd' // 通讯录合约地址
+export const CONTRACT_SECRET_BEAR_ADDRESS = '73969ed1bdf86e84cff51ba1b7e6b5941926a590' // 加密熊合约地址
+export const CONTRACT_CHAT_ADDRESS = 'c0eea01c0250b57ff4af5c550a745ec937d6e1a0' // 聊天室合约地址
+export const CONTRACT_BOOKS_ADDRESS = 'b237c1b692036bacb3a859aa0c3e11b74166dc8f' // 通讯录合约地址
+export const CONTRACT_PHOTO_ADDRESS = 'c65c67747bbd812d79fa26a0929856100b9880fb' // 相册合约地址
+export const CONTRACT_TOKEN_ADDRESS = '0cf65e367967f6cd88bbd9561283ae71eb260ef9' // 发行代币合约地址
+export const CONTRACT_CHANGE_ADDRESS = '3542e1e2d0ee4954f7d654ae92d1a18742f590f6' // 交易合约地址
+export const CONTRACT_LIMIT_ADDRESS = 'dd3dae9d8fcbe39a9b9b799cb2cad073de3a1f1c' // 权限合约地址
+export const CONTRACT_CROWDSALE_ADDRESS = 'a76fbc7fbb136336cbad6f32519b7150b53156bc' // 众筹合约地址
+export const CONTRACT_VOTE_ADDRESS = '88d59ef8bcca85ec032a734a28eea43ba6145623' // 投票合约地址
+export const CONTRACT_LEND_ADDRESS = 'f91e459cac7a3ab43d1cfa30be0e3a84afd37c33' // 闪电贷合约地址
 
 export async function getContract() {
-  return new Contract(CONTRACT_ADDRESS, await getABI())
+  return new Contract(CONTRACT_ADDRESS, abi)
+}
+
+export async function getBookContract() {
+  return new Contract(CONTRACT_BOOKS_ADDRESS, bookAbi)
+}
+
+export async function getAlbumContract() {
+  return new Contract(CONTRACT_PHOTO_ADDRESS, photoAbi)
+}
+
+export async function getLimitContract() {
+  return new Contract(CONTRACT_LIMIT_ADDRESS, limitAbi)
+}
+
+export async function getContract_secretbeardapp() {
+  return new Contract(CONTRACT_SECRET_BEAR_ADDRESS, abi_secretbeardapp)
+}
+
+export async function getVoteContract() {
+  return new Contract(CONTRACT_VOTE_ADDRESS, voteAbi)
+}
+
+export async function getLendContract() {
+  return new Contract(CONTRACT_LEND_ADDRESS, lendAbi)
+}
+
+
+export async function  getContract_crowdsaledapp() {
+  return new Contract(CONTRACT_CROWDSALE_ADDRESS, abi_crowdsaledapp)
+}
+
+export async function  getContract_chatdapp() {
+  return new Contract(CONTRACT_CHAT_ADDRESS, abi_chatdapp)
+}
+
+export async function  getContract_token() {
+  return new Contract(CONTRACT_TOKEN_ADDRESS, tokenAbi)
+}
+export async function  getContract_changedapp() {
+  return new Contract(CONTRACT_CHANGE_ADDRESS, abi_changedapp)
 }
 
 // 捐赠人的私钥

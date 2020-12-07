@@ -31,8 +31,8 @@
                          <input class="border-box" type="text" maxlength="12" placeholder="请输入寄件物品类型" ref="send_type"/>
                      </div>
                      <div class="din">
-                         <span class="lab">真实姓名</span>
-                         <input class="border-box" type="text" maxlength="12" placeholder="请输入真实姓名" ref="send_name"/>
+                         <span class="lab">寄件人姓名</span>
+                         <input class="border-box" type="text" maxlength="12" placeholder="请输入寄件人姓名" ref="send_name"/>
                      </div>
                  </div>
 
@@ -51,6 +51,7 @@
 
                  <div class="btnbox">
                      <a class="chain-btn pointer" @click="submit">寄件上链</a>
+                     <a ref="sendTx"></a>
                  </div>
              </div>
          </div>
@@ -61,7 +62,9 @@
 <script>
   import { saveLogistics } from '@/api/dapps'
   import explorer from '@/components/browser.vue'
-
+  import {showLoading, hideLoading} from '@/assets/js/loading'
+  import { getTransaction } from "@/api/dapps"
+  import {utils} from '@/assets/js/pattern'
   export default{
     data(){
       return{
@@ -73,29 +76,79 @@
     },
     methods:{
       async submit(){
-        //await dapps.saveFinance();
-        // sender, address, senderPhone, goods, receiver, cid, receiverPhone
-
-
+        let that = this;
         let collect_name = this.$refs.collect_name.value;
         let collect_address = this.$refs.collect_address.value;
         let collect_phone = this.$refs.collect_phone.value;
-        let sned_type = this.$refs.send_type.value;
+        let send_type = this.$refs.send_type.value;
         let send_name = this.$refs.send_name.value;
         let send_numb = this.$refs.send_numb.value;
         let send_phone = this.$refs.send_phone.value;
+        if( utils.isNullOrEmpty(collect_name)){
+          return that.$toast('请输入收件人姓名', 3000)
+        }
+        if( utils.isNullOrEmpty(collect_address)){
+          return that.$toast('请输入收件人地址', 3000)
+        }
+        if(!utils.isMobile(collect_phone)){
+          return that.$toast('请输入正确收件人电话', 3000)
+        }
+        if( utils.isNullOrEmpty(send_type)){
+          return that.$toast('请输入物品类型', 3000)
+        }
+        if( utils.isNullOrEmpty(send_name)){
+          return that.$toast('请输入寄件人姓名', 3000)
+        }
+        if(!utils.checkIDCard(send_numb)){
+          return that.$toast('请输入身份证号码', 3000)
+        }
+        if(!utils.isMobile(send_phone)){
+          return that.$toast('请输入正确电话号码', 3000)
+        }
 
-        //todo 合约参数需要增加
-        // let payload = {
-        //   title:"title",name:"name",cid:"cid",sum:"sum",contract:"contract"
-        // };
+        let payload = {
+          sender:send_name,address:collect_address,senderPhone:send_phone,goods:send_type,receiver:collect_name,cid:send_numb,receiverPhone:collect_phone
+        };
 
+        let pk = that.getPK();
+        if (pk == "") {
+          return that.$toast("获取账户失败，请打开TDOS插件", 3000);
+        }
+        let Logistics = await saveLogistics(payload, pk);
+        let sendTx = JSON.stringify(Logistics);
+        that.$refs.sendTx.href =
+          "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+        that.$refs.sendTx.click();
+        return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
+        // this.$router.push({path:'/logistics'})
+      },
+      timer_tx () {
+        let that = this
+        let hash = that.getRes().trim()
+        if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+                that.$router.push({path:'/logistics/search'})
+              }
 
-        //todo 获取公钥
-        // let publickey = "02f9d915954e04107d11fb9689a6330c22199e1e830857bff076e033bbca2888d4";
-        // let finance = await saveLogistics(payload, publickey);
-        //todo 传给客户端
-        this.$router.push({path:'/logistics'})
+            })
+
+          }, 1000)
+        }
+      }
+    },
+    mounted(){
+      let that = this;
+      this.timer = setInterval(this.timer_tx, 1000)
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
+      if (this.timer1) {
+        clearInterval(this.timer1)
       }
     }
   }

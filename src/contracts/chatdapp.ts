@@ -9,30 +9,30 @@ class ChatContext{
     nickname: string
     context: string
     time: string
-    height: u64
+    hash: ArrayBuffer
 
     constructor(
         user: Address,
         nickname: string,
         context: string,
         time: string,
-        height: u64
+        hash: ArrayBuffer
     ) {
         this.user = user;
         this.nickname = nickname;
         this.context = context;
         this.time = time;
-        this.height = height;
+        this.hash = hash;
     }
 
     static fromEncoded(buf: ArrayBuffer): ChatContext {
         const li = RLPList.fromEncoded(buf);
-        const chatContext = new ChatContext(ZERO_ADDRESS, '', '', '', 0);
+        const chatContext = new ChatContext(ZERO_ADDRESS, '', '', '', new ArrayBuffer(0));
         chatContext.user = new Address(li.getItem(0).bytes());
         chatContext.nickname = li.getItem(1).string();
         chatContext.context = li.getItem(2).string();
         chatContext.time = li.getItem(3).string();
-        chatContext.height = li.getItem(4).u64();
+        chatContext.hash = li.getItem(4).bytes();
         return chatContext;
     }
 
@@ -42,7 +42,7 @@ class ChatContext{
         els.push(RLP.encodeString(this.nickname));
         els.push(RLP.encodeString(this.context));
         els.push(RLP.encodeString(this.time));
-        els.push(RLP.encodeU64(this.height));
+        els.push(RLP.encodeBytes(this.hash));
         return RLP.encodeElements(els);
     }
 }
@@ -77,10 +77,11 @@ export function hasUser(addr: Address): boolean {
     return userIds.has(addr);
 }
 
-export function registration(addr: Address, nickname: string): void {
-    assert(!userIds.has(addr), "user has registration");
+export function registration(nickname: string): void {
+    const msg = Context.msg();
+    assert(!userIds.has(msg.sender), "user has registration");
     let lastUserId = Globals.get<u64>('lastUserId');
-    userIds.set(addr, nickname);
+    userIds.set(msg.sender, nickname);
     Globals.set<u64>('lastUserId', lastUserId + 1);
 }
 
@@ -89,16 +90,21 @@ export function getNickname(addr: Address): string {
     return userIds.get(addr);
 }
 
-export function saveChat(addr: Address, context: string, time: string): void {
-    assert(userIds.has(addr), "user has not registration");
-    let nickname = userIds.get(addr);
+export function saveChat(context: string, time: string): void {
+    const msg = Context.msg();
+    assert(userIds.has(msg.sender), "user has not registration");
+    let nickname = userIds.get(msg.sender);
     let chatContextsArray = decodeChatContexts(Globals.get<ArrayBuffer>('contexts'));
-    const h = Context.header()
-    let chatContext = new ChatContext(addr, nickname, context, time, h.height);
+    const tx = Context.transaction()
+    let chatContext = new ChatContext(msg.sender, nickname, context, time, tx.hash);
     chatContextsArray.push(chatContext)
     Globals.set<ArrayBuffer>('contexts', encodeChatContexts(chatContextsArray));
 }
 
 export function getChat(): ArrayBuffer {
     return Globals.get<ArrayBuffer>('contexts');
+}
+
+export function getUserId(): u64 {
+    return Globals.get<u64>('lastUserId');
 }

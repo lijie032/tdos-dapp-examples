@@ -1,9 +1,9 @@
 <template>
   <div class="pageWrap f-wrap-table bookCopyright-pagewrap">
-    <explorer></explorer>
+    <explorer :isHome="isHome" :type="type"></explorer>
       <div class="logo-intro">
          <div class="logo"></div>
-         TDOS版权
+         TDOS著作版权
       </div>
       <div class="page-main content-middle">
 
@@ -26,11 +26,12 @@
 </style>>
 
 <script>
-import explorer from '@/components/browser.vue'
+import explorer from '@/components/browser1.vue'
 export default {
     data(){
         return{
-
+           isHome:true,
+          type:1,
         }
     },
     components:{

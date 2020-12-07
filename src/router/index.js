@@ -257,5 +257,51 @@ export default new Router({
       name: 'chat_group',
       component: resolve=>(require(["@/views/chat/chatGroup"],resolve))
     },
+    {
+      path: '/addressBook',//通讯录
+      name: 'addressBook',
+      component: resolve=>(require(["@/views/addressBook/index"],resolve))
+    },
+    {
+      path: '/album',//相册
+      name: 'album',
+      component: resolve=>(require(["@/views/album/index"],resolve))
+    },
+    {
+      path: '/issueCoins',//发币
+      name: 'issueCoins',
+      component: resolve=>(require(["@/views/issueCoins/index"],resolve))
+    },
+    {
+      path: '/crowdFunding',//众筹
+      name: 'crowdFunding',
+      component: resolve=>(require(["@/views/crowdFunding/index"],resolve))
+    },
+    {
+      path: '/vote',//投票
+      name: 'vote',
+      component: resolve=>(require(["@/views/vote/index"],resolve))
+    },
+    {
+      path: '/vote/result',//投票上链结果
+      name: 'vote_result',
+      component: resolve=>(require(["@/views/vote/voteResult"],resolve))
+    },
+    {
+      path: '/authority',//TDOS权限
+      name: 'authority',
+      component: resolve=>(require(["@/views/authority/index"],resolve))
+    },
+    {
+      path: '/flashLoan',//闪电贷
+      name: 'flashLoan',
+      component: resolve=>(require(["@/views/flashLoan/index"],resolve))
+    },
+    {
+      path: '/coinExchange',//资产呼唤
+      name: 'coinExchange',
+      component: resolve=>(require(["@/views/coinExchange/index"],resolve))
+    },
+    
   ]
 })

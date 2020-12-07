@@ -12,13 +12,14 @@
                   </div>
                    <div class="din-col din-col2">
                      <div class="din border-box"><input type="text"  placeholder="法人证件" ref="cid"/></div>
-                     <div class="din border-box din-2"><input type="text"  placeholder="融资金额" ref="sum"/></div>
+                     <div class="din border-box din-2"><input type="text"  placeholder="融资金额" ref="sum" v-limitNum/></div>
                   </div>
                   <div class="din-col">
                      <div class="din"><input type="text" placeholder="合同编号" ref="contract"/></div>
                   </div>
                   <div class="btnbox">
                       <a class="pointer chain-btn" @click="save">存证上链</a>
+                      <a ref="sendTx"></a>
                   </div>
               </div>
          </div>
@@ -28,7 +29,9 @@
 
 <script>
 import explorer from '@/components/browser.vue'
-import { saveFinance } from '@/api/dapps'
+import { saveFinance,getTransaction } from '@/api/dapps'
+import {showLoading, hideLoading} from '@/assets/js/loading'
+import {utils} from '@/assets/js/pattern'
 export default{
   data(){
     return{
@@ -47,6 +50,22 @@ export default{
       let sum = this.$refs.sum.value;
       let contract = this.$refs.contract.value;
 
+      if( utils.isNullOrEmpty(title)){
+        return that.$toast('请输入企业名称', 3000)
+      }
+      if( utils.isNullOrEmpty(name)){
+        return that.$toast('请输入法人姓名', 3000)
+      }
+      if( !utils.checkIDCard(cid)){
+        return that.$toast('请输入正确法人证件', 3000)
+      }
+      if(sum == 0){
+        return that.$toast('请输入融资金额', 3000)
+      }
+      if( utils.isNullOrEmpty(contract)){
+        return that.$toast('请输入合同编号', 3000)
+      }
+
       let payload = {
         title:title,name:name,cid:cid,sum:sum,contract:contract
       };
@@ -55,9 +74,38 @@ export default{
         return that.$toast("获取账户失败，请打开TDOS插件", 3000);
       }
       let finance = await saveFinance(payload, pk);
-      console.log(finance);
+      let sendTx = JSON.stringify(finance);
+      that.$refs.sendTx.href =
+        "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
+      that.$refs.sendTx.click();
       return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
-      // this.$router.push({path:'/finance'})
+    },
+    timer_tx(){
+        let that = this
+        let hash = that.getRes().trim()
+        if (hash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
+          this.timer1 = setInterval(function () {
+            getTransaction(hash).then(tx => {
+              if (tx.confirms != -1) {
+                hideLoading()
+                clearInterval(that.timer1)
+                that.$router.push({path:'/finance'})
+              }
+
+            })
+
+          }, 1000)
+        }
+    }
+  },
+  mounted () {
+    this.timer = setInterval(this.timer_tx, 1000)
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+    if (this.timer1) {
+      clearInterval(this.timer1)
     }
   }
 }

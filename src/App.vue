@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="examples-app">
     <router-view/>
   </div>
 </template>
@@ -14,13 +14,16 @@ export default {
 </style>
 <style lang="less">
 
-#app {
+#examples-app {
   font-family: 'SourceHanSansCN-Light','Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
  width:100%;height:100%;
 
 }
+input,textarea{font-family:'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;}
 
 
 

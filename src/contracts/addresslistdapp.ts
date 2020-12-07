@@ -7,27 +7,27 @@ class Book{
     username: string
     phone: string
     memo: string
-    height: u64
+    hash: ArrayBuffer
 
     constructor(
         username: string,
         phone: string,
         memo: string,
-        height: u64
+        hash: ArrayBuffer
     ) {
         this.username = username;
         this.phone = phone;
         this.memo = memo;
-        this.height = height;
+        this.hash = hash;
     }
 
     static fromEncoded(buf: ArrayBuffer): Book {
         const li = RLPList.fromEncoded(buf);
-        const book = new Book('', '', '', 0);
+        const book = new Book('', '', '', new ArrayBuffer(0));
         book.username = li.getItem(0).string();
         book.phone = li.getItem(1).string();
         book.memo = li.getItem(2).string();
-        book.height = li.getItem(3).u64();
+        book.hash = li.getItem(3).bytes();
         return book;
     }
 
@@ -36,7 +36,7 @@ class Book{
         els.push(RLP.encodeString(this.username));
         els.push(RLP.encodeString(this.phone));
         els.push(RLP.encodeString(this.memo));
-        els.push(RLP.encodeU64(this.height));
+        els.push(RLP.encodeBytes(this.hash));
         return RLP.encodeElements(els);
     }
 }
@@ -63,21 +63,22 @@ export function init(): void {
     log('通讯录合约已部署');
 }
 
-export function addBook(addr: Address, username: string, phone: string, memo: string): void {
+export function addBook(username: string, phone: string, memo: string): void {
+    const msg = Context.msg();
     let BookArray : Array<Book>
-    if(addressList.has(addr))
+    if(addressList.has(msg.sender))
     {
-        BookArray = decodeBooks(addressList.get(addr));
+        BookArray = decodeBooks(addressList.get(msg.sender));
     }
     else
     {
         BookArray = new Array<Book>();
     }
-    const h = Context.header();
-    let book = new Book(username, phone, memo, h.height);
+    const tx = Context.transaction();
+    let book = new Book(username, phone, memo, tx.hash);
     BookArray.push(book);
     let saveBookArrayBuffer = encodeBooks(BookArray);
-    addressList.set(addr, saveBookArrayBuffer);
+    addressList.set(msg.sender, saveBookArrayBuffer);
 }
 
 export function getBooks(addr: Address): ArrayBuffer {

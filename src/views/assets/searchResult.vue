@@ -26,6 +26,18 @@
                        </div>
 
                   </div>
+                  <div class="d-in">
+                    <div class="lab">区块高度</div>
+                    <span><a id="block_height"></a></span>
+                  </div>
+                  <div class="d-in">
+                    <div class="lab">区块哈希</div>
+                    <span><a id="block_hash"></a></span>
+                  </div>
+                  <div class="d-in">
+                    <div class="lab">事务哈希</div>
+                    <span><a id="transaction_hash"></a></span>
+                  </div>
                   <div class="btnbox">
                        <a class="btn pointer" @click="back">信息无误</a>
                   </div>
@@ -57,12 +69,16 @@
         this.$router.push({path: '/assets'})
       }
     }, mounted: function () {
-      // let transaction = this.$route.query.transaction;
-      // let result = this.$route.query.result;
-      document.getElementById("name").innerHTML = "123123";
-      document.getElementById("info").innerHTML = "123123";
-      document.getElementById("to").innerHTML = "123123";
-      document.getElementById("height").innerHTML = "123123";
+      let t = this.$route.query.transaction;
+      let result = this.$route.query.result;
+      let tx_hash = this.$route.query.tx_hash;
+      document.getElementById("block_hash").innerHTML = t.blockHash;
+      document.getElementById("transaction_hash").innerHTML = tx_hash;
+      document.getElementById("block_height").innerHTML = t.blockHeight;
+      document.getElementById("height").innerHTML = result.condition;
+      document.getElementById("name").innerHTML = result.name;
+      document.getElementById("info").innerHTML = result.content;
+      document.getElementById("to").innerHTML = result.granter;
     }
   }
 </script>

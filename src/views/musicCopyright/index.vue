@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap f-wrap-table music-pageWrap">
-    <explorer></explorer>
+    <explorer :isHome="isHome" :type="type"></explorer>
       <div class="logo-intro">
          <div class="logo"></div>
          TDOS音乐
@@ -25,11 +25,12 @@
 </style>>
 
 <script>
-import explorer from '@/components/browser.vue'
+import explorer from '@/components/browser1.vue'
 export default {
     data(){
         return{
-
+          isHome:true,
+          type:1,
         }
     },
     components:{
