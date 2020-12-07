@@ -2,7 +2,7 @@
   <div class="pageWrap f-wrap-table logistics-pageWrap">
     <explorer :isHome="isHome" :type="type"></explorer>
       <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_logistics.png"/></div>
          TDOS物流
       </div>
       <div class="page-main content-middle">

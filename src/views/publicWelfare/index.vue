@@ -2,7 +2,7 @@
   <div class="pageWrap f-wrap-table pw-pageWrap">
     <explorer :type="type" :isHome="isHome"></explorer>
       <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_publicWelfare.png"/></div>
          TDOS公益
       </div>
       <div class="page-main content-middle">

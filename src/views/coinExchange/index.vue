@@ -4,7 +4,7 @@
 
     <div class="page-main content-middle">
       <div class="p-title">
-          <div class="logo"></div>
+          <div class="logo"><img src="../../assets/img/logo_coinExchange.png"/></div>
           <span>欢迎来到TDOS资产互换</span>
       </div>
 

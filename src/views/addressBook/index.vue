@@ -14,7 +14,7 @@
                          <p class="functMess">当前暂无联系人，请点击右上方的按钮进行添加~</p>
                      </div>
 
-                     <div class="data-box">
+                     <div class="data-box" v-if="isData">
                         <div class="data-left">
                             <div class="data-content">
                                 <div class="searchbox">
@@ -200,7 +200,7 @@ export default {
             let addr = publicKey2Address(pk);
             let books = await getAddressBooks(addr);
 
-
+            books.length>0?that.isData=true:that.isData=false
             that.addressList = [];
             await Promise.all(books.map(async item => {
                     await  getTransaction(item.hash).then(t => {

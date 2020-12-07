@@ -3,7 +3,7 @@
 
       <div class="page-main ">
            <div class="logo-intro">
-              <div class="logo"></div>
+              <div class="logo"><img src="../../assets/img/logo_assets.png"/></div>
               TDOS资产
            </div>
 

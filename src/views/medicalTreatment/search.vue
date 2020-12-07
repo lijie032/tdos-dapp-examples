@@ -1,7 +1,7 @@
 <template>
   <div class="pageWrap dis-table  pw-pageWrap search_wrap">
      <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_medicalTreatment.png"/></div>
          TDOS医疗查询
       </div>
       <div class="page-main  content-middle">

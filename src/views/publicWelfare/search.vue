@@ -3,7 +3,7 @@
 
     <div class="page-main content-middle">
       <div class="logo-intro">
-        <div class="logo"></div>
+        <div class="logo"><img src="../../assets/img/logo_publicWelfare.png"/></div>
         TDOS公益
       </div>
 

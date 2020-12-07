@@ -2,7 +2,7 @@
   <div class="pageWrap dis-table  search_wrap">
 
       <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_logistics.png"/></div>
          TDOS物流查询页面
       </div>
       <div class="page-main content-middle">

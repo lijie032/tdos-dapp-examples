@@ -2,7 +2,7 @@
   <div class="pageWrap f-wrap-table shopping-wrap">
     <explorer :isHome="isHome" :type="type"></explorer>
       <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_shopping.png"/></div>
          TDOS购物
       </div>
       <div class="page-main content-middle">

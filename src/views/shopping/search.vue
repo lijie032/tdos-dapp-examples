@@ -3,7 +3,7 @@
 
     <div class="page-main content-middle">
       <div class="logo-intro">
-        <div class="logo"></div>
+        <div class="logo"><img src="../../assets/img/logo_shopping.png"/></div>
         TDOS购物
       </div>
 

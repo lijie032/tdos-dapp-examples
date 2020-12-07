@@ -2,7 +2,7 @@
   <div class="pageWrap f-wrap-table welding-pageWrap">
     <explorer :isHome="isHome" :type="type"></explorer>
       <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_welding.png"/></div>
          TDOS焊接
       </div>
       <div class="page-main content-middle">

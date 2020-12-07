@@ -2,7 +2,7 @@
   <div class="pageWrap f-wrap-table pw-pageWrap">
     <explorer :isHome="isHome" :type="type"></explorer>
       <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_insurance.png"/></div>
          TDOS保险
       </div>
       <div class="page-main content-middle">
