@@ -223,7 +223,7 @@
         let that = this
         that.isRasie = false
         let amount = parseInt(that.input_amount)
-        if (that.input_amount >= 1000){
+        if (that.input_amount > 1000){
           return that.$toast('募捐金额不能超过1000', 3000)
         }
         TpScroll.RemoveScroll()
