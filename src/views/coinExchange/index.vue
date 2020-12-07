@@ -23,7 +23,7 @@
                 <span class="s1">{{coin1.name}}</span>
               </div>
               <div class="din-box">
-                <div class="din"><input type="text" :placeholder="coin1.nick" v-limitNum v-model="amount"/></div>
+                <div class="din"><input type="text" :placeholder="coin1.nick" v-limitNum ref="amount" v-model="amount"/></div>
               </div>
             </div>
             <p class="mess">{{coin1.proportion}}</p>
@@ -175,9 +175,9 @@
       async confirmExchange () {
         let that = this
         TpScroll.RemoveScroll()
-
+        let a = that.$refs.amount.value;
         let payload = {
-          from: that.coin1.nick, to: that.coin2.nick, amount: that.amount, rate:that.coin1.proportion
+          from: that.coin1.nick, to: that.coin2.nick, amount: a, rate:that.coin1.proportion
         }
 
         let pk = that.getPK();
@@ -189,6 +189,7 @@
         that.$refs.sendTx.href =
           "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
         that.$refs.sendTx.click();
+        that.$refs.amount.value = ''
         return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
       },
 

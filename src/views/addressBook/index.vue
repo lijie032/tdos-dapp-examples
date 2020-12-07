@@ -18,7 +18,7 @@
                         <div class="data-left">
                             <div class="data-content">
                                 <div class="searchbox">
-                                    <div class="search-in"><input placeholder="请输入姓名查找" v-model="searchKey"/></div>
+                                    <div class="search-in"><input placeholder="请输入姓名查找" v-model="searchKey" v-removeSymbol/></div>
                                     <a class="btnSearch pointer" @click="search">搜索</a>
                                 </div>
                                 <el-scrollbar class="record-scroll" ref="myScrollbar">
@@ -90,17 +90,17 @@
                  </div>
                  <div class="d-in">
                      <div class="lab">姓名：</div>
-                     <input type="text" maxlength="15" v-model="userName" />
+                     <input type="text" maxlength="15" v-model="userName" v-removeSymbol/>
                  </div>
 
                 <div class="d-in">
                      <div class="lab">电话：</div>
-                     <input type="text" maxlength="11"  v-limitNum v-model="number"/>
+                     <input type="text" maxlength="11"  v-limitNum v-model="number" v-removeSymbol/>
                  </div>
 
                 <div class="d-in d-in-textarea">
                     <div class="lab">备注：</div>
-                    <textarea v-model="remark" rows="4"/>
+                    <textarea v-model="remark" rows="4" v-removeSymbol/>
                  </div>
 
                  <div class="btnbox">

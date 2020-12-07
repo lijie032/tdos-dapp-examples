@@ -17,11 +17,11 @@
                     </div>
                     <div class="coin-50">
                         <div class="lab">资产名称</div>
-                        <input class="border-box" axlength="15" v-model="name"/>
+                        <input class="border-box" axlength="15" v-model="name" v-removeSymbol/>
                     </div>
                     <div class="coin-50">
                         <div class="lab">资产所有者</div>
-                        <input class="border-box" axlength="15" v-model="owner"/>
+                        <input class="border-box" axlength="15" v-model="owner" v-removeSymbol/>
                     </div>
                     <div class="coin-50">
                         <div class="lab">初期发行量</div>
@@ -47,6 +47,7 @@
                             v-model="remark"
                             maxlength="200"
                             rows="4"
+                            v-removeSymbol
                             >
                             <!--show-word-limit-->
                         </el-input>
