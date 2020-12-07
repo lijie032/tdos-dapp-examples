@@ -11,7 +11,6 @@
                <div class="din-box">
                   <div class="in-box">
                       <input placeholder="请输入上链哈希查询" ref="hash"/>
-                      <a class="close pointer"></a>
                   </div>
                   <a class="searchbtn pointer" @click="linkResult">搜索</a>
                </div>
