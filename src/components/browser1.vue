@@ -3,7 +3,7 @@
     <div class="back-home" v-if="isHome" :class="{'back-home-white':type==1}">
        <a class="aback-h pointer"></a>
     </div>
-    <div class="back-index" :class="{'back-index-white':type==1}">
+    <div class="back-index" v-if="isIndex" :class="{'back-index-white':type==1}">
       <a class="aback pointer"></a>
     </div>
     <div class=" logo-browser " :class="{'logo-browser-white':type==1}">
@@ -27,6 +27,10 @@ export default {
     isHome:{
       type:null,
       default:false
+    },
+    isIndex:{
+      type:null,
+      default:true
     }
   }
 }

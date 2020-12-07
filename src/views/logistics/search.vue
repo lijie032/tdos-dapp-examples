@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap dis-table  search_wrap">
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
       <div class="logo-intro">
          <div class="logo"><img src="../../assets/img/logo_logistics.png"/></div>
          TDOS物流查询页面
@@ -17,12 +17,14 @@
 
 <script>
   import { getLogistics, getTransaction} from '@/api/dapps'
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
 
   export default{
     data(){
       return{
-
+        type:0,
+        isHome:true,
+        isIndex:false
       }
     },
     components:{

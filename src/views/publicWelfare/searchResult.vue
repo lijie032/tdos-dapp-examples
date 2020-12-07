@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap  f-wrap-table result-wrap">
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
       <div class="page-main ">
 
           <div class="pw-content1520 result-main">
@@ -46,11 +46,13 @@
 </template>
 
 <script>
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
   export default{
     data(){
       return{
-
+         type:0,
+        isHome:true,
+        isIndex:false
       }
     },
     components:{

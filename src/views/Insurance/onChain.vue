@@ -1,5 +1,6 @@
 <template>
   <div class="pageWrap f-chain-wrap">
+     <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
     <div class="left">
     </div>
     <div class="right">
@@ -55,7 +56,7 @@
 </template>
 
 <script>
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
   import {saveInsure, getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
   import {utils} from '@/assets/js/pattern'
@@ -66,7 +67,10 @@
         options1: [{value: true, label: '是'}, {value: false, label: '否'}],
         isClaims: '',//是否索赔
         isDelay: '',//是否延误
-        time:''
+        time:'',
+        type:0,
+       isHome:true,
+       isIndex:false
       }
     },
     components: {

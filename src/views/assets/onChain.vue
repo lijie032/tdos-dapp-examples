@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap f-wrap-table pw-pageWrap a_onChain_wrap">
-
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
 
       <div class="page-main content-middle">
           <div class="a_form_box">
@@ -45,7 +45,7 @@
 
 <script>
   import { saveFund } from '@/api/dapps'
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
   import {getTransaction } from "@/api/dapps"
   import {showLoading, hideLoading} from '@/assets/js/loading'
   import {utils} from '@/assets/js/pattern'
@@ -53,6 +53,9 @@
   export default{
     data(){
       return{
+         type:1,
+       isHome:true,
+       isIndex:false
       }
     },
     components:{

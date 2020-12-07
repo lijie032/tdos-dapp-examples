@@ -1,5 +1,6 @@
 <template>
   <div class="pageWrap f-chain-wrap dis-table search-result-wrap bgf6f6f6">
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
      <div class="content-middle">
       <div class="dis-table result-info">
          <div class="formbox confirmBox">
@@ -55,13 +56,15 @@
 </template>
 
 <script>
-import explorer from '@/components/browser.vue'
+import explorer from '@/components/browser1.vue'
 import {getFinance, getTransaction} from '@/api/dapps'
 
 export default{
   data(){
     return{
-
+       type:0,
+        isHome:true,
+        isIndex:false
     }
   },
   components:{

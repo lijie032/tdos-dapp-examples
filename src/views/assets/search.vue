@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap  search-wrap n-search-wrap ">
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
       <div class="page-main ">
            <div class="logo-intro">
               <div class="logo"><img src="../../assets/img/logo_assets.png"/></div>
@@ -29,12 +29,14 @@
 
 <script>
   import { getFund, getTransaction} from '@/api/dapps'
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
 
   export default{
     data(){
       return{
-
+       type:0,
+       isHome:true,
+       isIndex:false
       }
     },
     components:{

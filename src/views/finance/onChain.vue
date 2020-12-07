@@ -1,5 +1,6 @@
 <template>
   <div class="pageWrap f-chain-wrap">
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
       <div class="left">
       </div>
       <div class="right">
@@ -28,14 +29,17 @@
 </template>
 
 <script>
-import explorer from '@/components/browser.vue'
+import explorer from '@/components/browser1.vue'
 import { saveFinance,getTransaction } from '@/api/dapps'
 import {showLoading, hideLoading} from '@/assets/js/loading'
 import {utils} from '@/assets/js/pattern'
 export default{
   data(){
     return{
-      firstSend: 0
+      firstSend: 0,
+      type:0,
+      isHome:true,
+      isIndex:false
     }
   },
   components:{

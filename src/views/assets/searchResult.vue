@@ -1,7 +1,7 @@
 <template>
   <div class="pageWrap f-wrap-table pw-pageWrap a_onChain_wrap n-search-result-wrap">
 
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
       <div class="page-main content-middle">
           <div class="a_form_box">
               <div class="marginlr60">
@@ -55,11 +55,15 @@
 </style>>
 
 <script>
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
 
   export default {
     data () {
-      return {}
+      return {
+        type:1,
+       isHome:true,
+       isIndex:false
+      }
     },
     components: {
       explorer

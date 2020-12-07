@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap f-wrap-table pw-pageWrap a_onChain_wrap">
-
+   <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
 
     <div class="page-main content-middle">
       <div class="a_form_box">
@@ -37,6 +37,7 @@
 </style>>
 
 <script>
+ import explorer from '@/components/browser1.vue'
   import {saveWeld} from '@/api/dapps'
   import {getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
@@ -46,10 +47,15 @@
       return {
         wpqr:"",
         person:"",
-        equipment:""
+        equipment:"",
+         type:1,
+         isHome:true,
+        isIndex:false
       }
     },
-    components: {},
+    components: {
+      explorer
+    },
     methods: {
       async submit(){
         let that = this

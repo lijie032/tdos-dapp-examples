@@ -1,5 +1,6 @@
 <template>
   <div class="pageWrap dis-table  pw-pageWrap search_wrap">
+     <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
      <div class="logo-intro">
          <div class="logo"><img src="../../assets/img/logo_medicalTreatment.png"/></div>
          TDOS医疗查询
@@ -17,12 +18,14 @@
 
 <script>
   import { getMedical, getTransaction} from '@/api/dapps'
-  import explorer from '@/components/browser.vue'
-
+  import explorer from '@/components/browser1.vue'
+  
   export default{
     data(){
       return{
-
+           type:1,
+           isHome:true,
+           isIndex:false
       }
     },
     components:{

@@ -1,5 +1,6 @@
 <template>
   <div class="pageWrap f-wrap-table">
+     <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
     <div class="page-main content-middle">
       <div class="chain-form">
         <h3 class="formTitle">请认真填写以下数据，确保能准确上链</h3>
@@ -92,7 +93,7 @@
 <script>
   import {saveDonor, getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
-
+    import explorer from '@/components/browser1.vue'
   import {utils} from '@/assets/js/pattern'
   export default {
     data () {
@@ -103,7 +104,13 @@
         beneficiary: '',
         mechanism: '',
         explain: '',
+        type:0,
+        isHome:true,
+        isIndex:false
       }
+    },
+    components: {
+      explorer
     },
     methods: {
       async doConfirm (e) {

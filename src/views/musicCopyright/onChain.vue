@@ -1,5 +1,6 @@
 <template>
   <div class="pageWrap f-chain-wrap">
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
       <div class="left">
       </div>
       <div class="right">
@@ -37,7 +38,7 @@
 </template>
 
 <script>
-import explorer from '@/components/browser.vue'
+import explorer from '@/components/browser1.vue'
 import { saveMusic,getTransaction } from '@/api/dapps'
 import {showLoading, hideLoading} from '@/assets/js/loading'
 import {utils} from '@/assets/js/pattern'
@@ -49,7 +50,10 @@ export default{
       options:[{value:"歌曲版权",label:'歌曲版权'},{value:"改编权",label:'改编权'},{value:"著作权",label:'著作权'}],
 
       isClaims:'',//是否索赔
-      isDelay:''//是否延误
+      isDelay:'',//是否延误
+      type:0,
+        isHome:true,
+        isIndex:false
     }
   },
   components:{

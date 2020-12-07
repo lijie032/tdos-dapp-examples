@@ -12,7 +12,7 @@
             </div>
             <div class="btnbox">
               <!--等级升级到三级的时候按钮置灰不可再升级 添加class  c-btn-disable-->
-              <a class="pointer cb-btn upbtn " @click="submit">升级</a>
+              <a class="pointer cb-btn upbtn " :class="{'c-btn-disable':level==3}" @click="submit">升级</a>
               <a ref="sendTx"></a>
             </div>
           </div>
@@ -108,7 +108,8 @@
         height: 0,
         blockHash: '',
         message: '',
-        message2: ''
+        message2: '',
+        level:0 //当前等级
       }
     },
     components: {
@@ -155,10 +156,13 @@
         document.getElementById('tonnage').innerHTML = bear.tonnage + 'T'
         document.getElementById('bloodvolume').innerHTML = bear.bloodvolume / 100
         document.getElementById('level').innerHTML = bear.level
-
+        that.level = bear.level
       },
       async submit () {
         let that = this
+        if(that.level==3){
+          return;
+        }
         let pk = that.getPK()
         if (pk == '') {
           return that.$toast('获取账户失败，请打开TDOS插件', 3000)

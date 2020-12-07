@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap  search-wrap">
-
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
     <div class="page-main ">
       <div class="logo-intro">
         <div class="logo"><img src="../../assets/img/logo_finance.png"/></div>
@@ -28,11 +28,18 @@
 
 <script>
   import {getFinance, getTransaction} from '@/api/dapps'
-
+import explorer from '@/components/browser1.vue'
   export default {
     data () {
-      return {}
-    }, methods: {
+      return {
+         type:0,
+        isHome:true,
+        isIndex:false
+      }
+    },
+    components:{
+    explorer
+  }, methods: {
       async search () {
         let that = this;
         let hash = this.$refs.hash.value;

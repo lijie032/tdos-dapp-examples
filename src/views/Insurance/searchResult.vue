@@ -1,5 +1,6 @@
 <template>
   <div class="pageWrap search_result_wrap">
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
       <div class="page-main ">
            <div class="result-content">
               <h3 class="r_title">查询信息</h3>
@@ -65,11 +66,15 @@
 </template>
 
 <script>
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
 
   export default {
     data () {
-      return {}
+      return {
+        type:0,
+        isHome:true,
+        isIndex:false
+      }
     },
     components: {
       explorer

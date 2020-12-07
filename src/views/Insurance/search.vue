@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap  f-wrap-table search-wrap">
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
       <div class="page-main content-middle">
            <div class="logo-intro">
               <div class="logo"><img src="../../assets/img/logo_insurance.png"/></div>
@@ -24,12 +24,20 @@
 
 <script>
   import { getInsure, getTransaction} from '@/api/dapps'
+   import explorer from '@/components/browser1.vue'
 export default{
     data(){
         return{
           hash:'',
+          type:0,
+          isHome:true,
+          isIndex:false
         }
-    },methods:{
+    },
+    components: {
+      explorer
+    },
+    methods:{
         async linkResult(){
           let that = this
           let hash = that.hash

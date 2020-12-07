@@ -1,7 +1,7 @@
 <template>
   <div class="pageWrap f-wrap-table pw-pageWrap a_onChain_wrap">
 
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
       <div class="page-main content-middle  mt-page-main">
           <div class="a_form_box">
               <div class="marginlr60">
@@ -53,14 +53,17 @@
 <script>
 
   import { saveMedical } from '@/api/dapps'
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
   import { getTransaction } from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
   import {utils} from '@/assets/js/pattern'
   export default{
     data(){
       return{
-        time:""
+        time:"",
+        type:1,
+        isHome:true,
+        isIndex:false
       }
     },
     components:{

@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap  search-wrap n-search-wrap ">
-
+<explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
     <div class="page-main ">
       <div class="logo-intro">
         <div class="logo"><img src="../../assets/img/logo_welding.png"/></div>
@@ -29,9 +29,17 @@
 
 <script>
   import { getWeld, getTransaction} from '@/api/dapps'
+  import explorer from '@/components/browser1.vue'
   export default {
     data () {
-      return {}
+      return {
+        type:0,
+         isHome:true,
+        isIndex:false
+      }
+    },
+    components: {
+      explorer
     }, methods: {
       async search () {
         let that = this;
