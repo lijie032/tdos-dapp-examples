@@ -1,7 +1,7 @@
 <template>
     <div class="pageWrap bg-wrap dis-table">
         <explorer :type="type"></explorer>
-        
+
         <div class="page-main content-middle">
             <!--图片上传最多四张-->
            <div class="album-list" :class="{'no-data-album-list':imgList.length==0}">
@@ -18,9 +18,9 @@
                   </div>
               </div>
               <div class="album-col " v-if="imgList.length < 4">
-                 
+
                   <div class="album-add" >
-                      
+
                     <div class="content-middle">
                         <div class="add_btn"></div>
                         <p class="mess">点击添加相片上传，相片将会被存证上链。</p>
@@ -32,14 +32,14 @@
               </div>
            </div>
         </div>
-        
+
         <!--相册上传成功弹出框-->
        <div class="trans" v-if="isSuc">
            <div class="confrim-box">
                <div class="confrim-header">
                    相片上传成功
                    <a class="close pointer" @click="hideIsSuc()">
-                       
+
                    </a>
                </div>
                <div class="confirm-body">
@@ -113,7 +113,7 @@ export default {
 
       //上传之后确认
       unploadConfirm(){
-          let that = this; 
+          let that = this;
          that.hideIsSuc();
       },
 
@@ -142,14 +142,14 @@ export default {
             photos.forEach((item)=>{
                 that.imgList.push({url:"data:image/png;base64," + item.photo, hash:item.hash, createdAt:item.createdAt})
             });
-            
-            
+
+
       },
       timer_tx () {
         let that = this;
         let hash = that.getRes().trim()
         if (hash != '') {
-          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
@@ -169,7 +169,7 @@ export default {
             var val1=value1.key;
             var val2=value2.key;
             return val1-val2;
-        } 
+        }
      }
     },
     mounted(){

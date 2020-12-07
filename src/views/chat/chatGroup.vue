@@ -5,7 +5,6 @@
             <div class="chat-container">
                <div class="chat-header">
                   <div class="logo"><img src="../../assets/img/tdos_chat.png"/></div> <span>TDOS交流群（{{num}}）</span>
-                  <a class="abtn-exit pointer"></a>
                </div>
                <div class="record-box">
                   <el-scrollbar class="record-scroll" ref="myScrollbar">
@@ -22,7 +21,7 @@
                   <div class="detail-box" v-show="detailIndex==index">
                     <p>区块高度：{{height}}</p>
                     <p>区块哈希：{{item.hash}}</p>
-                    <p>事务哈希：{{info}}</p>
+                    <p>事务哈希：{{tx_hash}}</p>
                   </div>
                 </div>
               </li>
@@ -60,7 +59,7 @@
         info: '',
         num:'',
         height:'',
-        info:''
+        tx_hash:''
       }
     },
     components: {
@@ -81,7 +80,7 @@
         }
         getTransaction(obj.hash).then(t => {
           that.height = t.blockHeight;
-          that.info = t.blockHash;
+          that.tx_hash = t.blockHash;
         })
       },
       async get () {
@@ -136,7 +135,7 @@
         let that = this
         let hash = that.getRes().trim()
         if (hash != '') {
-          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {

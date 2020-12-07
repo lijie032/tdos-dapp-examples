@@ -230,7 +230,7 @@
         let hash = that.getRes().trim()
         if (hash != '') {
           that.hash = hash;
-          showLoading('事务广播成功，事务哈希为：\n' + hash+'\n' + ',请等待上链...')
+          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {

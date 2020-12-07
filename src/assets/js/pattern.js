@@ -2,9 +2,9 @@
 const utils = {
     isNullOrEmpty: function(value) {
         //是否为空
-    
+        value = value.trim();
         return (value === null || value === '' || value === undefined) ? true : false;
-        
+
     },
     trim: function(value) {
         //去空格
@@ -58,11 +58,11 @@ const utils = {
         var num = 0;
         for(var i = 0; i < len; i++){
             num = num + arr[i] * weight_factor[i];
-        } 
+        }
         // 获取余数
         var resisue = num%11;
         var last_no = check_code[resisue];
-        // 格式的正则 
+        // 格式的正则
         /*
               第一位不可能是0
               第二位到第六位可以是0-9
@@ -80,7 +80,7 @@ const utils = {
        },
 
 
-    
+
 
 
 }
@@ -88,5 +88,5 @@ const utils = {
 //模块导出
 export  {
     utils
-    
+
 }
