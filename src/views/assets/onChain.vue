@@ -12,10 +12,10 @@
                   </div>
                   <div class="d-in">
                       <div class="lab">赠予内容</div>
-                     <input class="border-box" placeholder="请输入登赠予内容" ref="info"/>
+                     <input class="border-box" placeholder="请输入赠予内容" ref="info"/>
                   </div>
                   <div class="d-in">
-                      <div class="lab">赠与对象</div>
+                      <div class="lab">赠予对象</div>
                      <input class="border-box" placeholder="请输入赠予对象" ref="to"/>
                   </div>
                    <div class="d-in">
