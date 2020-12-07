@@ -40,6 +40,7 @@
   import {saveWeld} from '@/api/dapps'
   import {getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
+  import {utils} from '@/assets/js/pattern'
   export default {
     data () {
       return {
@@ -56,6 +57,15 @@
           wpqr: that.wpqr,
           welder: that.person,
           device: that.equipment
+        }
+        if( utils.isNullOrEmpty(that.wpqr)){
+          return that.$toast('请输入WPQR号', 3000)
+        }
+        if( utils.isNullOrEmpty(that.person)){
+          return that.$toast('请输入焊接人员名称', 3000)
+        }
+        if( utils.isNullOrEmpty(that.equipment)){
+          return that.$toast('请输入设备名称', 3000)
         }
         let pk = that.getPK()
         if (pk == '') {

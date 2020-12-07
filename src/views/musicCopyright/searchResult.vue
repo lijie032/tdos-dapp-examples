@@ -74,7 +74,6 @@ export default{
   mounted: function () {
     let t = this.$route.query.transaction;
     let result = this.$route.query.result;
-    console.log(result);
     let tx_hash = this.$route.query.tx_hash;
     document.getElementById("block_hash").innerHTML = t.blockHash;
     document.getElementById("transaction_hash").innerHTML = tx_hash;

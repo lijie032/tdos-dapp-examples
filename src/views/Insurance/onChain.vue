@@ -17,7 +17,7 @@
                 v-model="time"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="选择日期时间">
+                placeholder="选择启保时间">
               </el-date-picker>
             </div>
             <div class="din border-box din-2 din-select">
@@ -58,6 +58,7 @@
   import explorer from '@/components/browser.vue'
   import {saveInsure, getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
+  import {utils} from '@/assets/js/pattern'
   export default {
     data () {
       return {
@@ -81,6 +82,24 @@
         let numb = this.$refs.numb.value
         let bool2 = this.$refs.bool2.value
 
+        if( utils.isNullOrEmpty(name)){
+          return that.$toast('请输入用户姓名', 3000)
+        }
+        if( utils.isNullOrEmpty(info)){
+          return that.$toast('请输入航班信息', 3000)
+        }
+        if( utils.isNullOrEmpty(time)){
+          return that.$toast('请输入启保时间', 3000)
+        }
+        if( utils.isNullOrEmpty(bool)){
+          return that.$toast('请选择是否延误', 3000)
+        }
+        if( utils.isNullOrEmpty(numb)){
+          return that.$toast('请输入保单号码', 3000)
+        }
+        if( utils.isNullOrEmpty(bool2)){
+          return that.$toast('请选择是否理赔', 3000)
+        }
         let payload = {
           name: name, info: info, time: time, delay: bool, num: numb, claim: bool2
         }

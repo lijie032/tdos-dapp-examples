@@ -22,7 +22,7 @@
                       <div class="lab">赠予条件</div>
                       <div class="d-in-right">
                           当前区块高度>
-                          <input class="border-box in-height" ref="height"/>
+                          <input class="border-box in-height" ref="height" v-limitNum/>
                        </div>
 
                   </div>
@@ -48,6 +48,7 @@
   import explorer from '@/components/browser.vue'
   import {getTransaction } from "@/api/dapps"
   import {showLoading, hideLoading} from '@/assets/js/loading'
+  import {utils} from '@/assets/js/pattern'
 
   export default{
     data(){
@@ -67,6 +68,18 @@
         let payload = {
           name:name, content:info, granter:to, condition:height
         };
+        if( utils.isNullOrEmpty(name)){
+          return that.$toast('请输入登记姓名', 3000)
+        }
+        if( utils.isNullOrEmpty(info)){
+          return that.$toast('请输入登赠予内容', 3000)
+        }
+        if( utils.isNullOrEmpty(to)){
+          return that.$toast('请输入赠予对象', 3000)
+        }
+        if( utils.isNullOrEmpty(height)){
+          return that.$toast('请输入高度', 3000)
+        }
         let pk = that.getPK();
         if (pk == "") {
           return that.$toast("获取账户失败，请打开TDOS插件", 3000);

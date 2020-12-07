@@ -4,7 +4,6 @@ var storage = {};
 
 if (env === 'development') {
   storage.set = function (items) {
-  	// console.log(items)
     var key, value;
     for (let k in items) {
       key = k;

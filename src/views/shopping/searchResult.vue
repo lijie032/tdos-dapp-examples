@@ -65,7 +65,7 @@
     },
     methods: {
       back () {
-        this.$router.push({path: '/bookCopyright'})
+        this.$router.push({path: '/shopping'})
       }
     },
     mounted: function () {

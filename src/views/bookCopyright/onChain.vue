@@ -44,6 +44,7 @@
   import {saveBook} from '@/api/dapps'
   import {getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
+  import {utils} from '@/assets/js/pattern'
   export default {
     data () {
       return {
@@ -58,6 +59,18 @@
         let title = this.$refs.title.value
         let code = this.$refs.code.value
         let info = this.$refs.info.value
+        if( utils.isNullOrEmpty(name)){
+          return that.$toast('请输入登记姓名', 3000)
+        }
+        if( utils.isNullOrEmpty(title)){
+          return that.$toast('请输入著作标题', 3000)
+        }
+        if( !utils.checkIDCard(code)){
+          return that.$toast('请输入正确身份证号', 3000)
+        }
+        if( utils.isNullOrEmpty(info)){
+          return that.$toast('请输入创意说明', 3000)
+        }
         let payload = {
           name: name, title: title, cid: code, info: info
         }

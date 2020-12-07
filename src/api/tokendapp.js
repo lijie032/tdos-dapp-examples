@@ -42,7 +42,7 @@ function decodeToken (buf) {
     u.info = rd.string()
     return u
   }
-  
+
   // token保存
   export async function saveToken (payload, publickey) {
     const c = await getContract_token()
@@ -51,14 +51,13 @@ function decodeToken (buf) {
         constants.POA_VERSION,
         privatekey
       )
-      console.log(payload)
       const tx = builder.buildContractCall(c, 'saveToken', payload, 0)
       tx.nonce = await syncNonce(publickey)
       tx.from = publickey
       return tx
     }
   }
-  
+
   // token获取
   export async function getToken (hash) {
     try {

@@ -64,6 +64,7 @@
   import explorer from '@/components/browser.vue'
   import {showLoading, hideLoading} from '@/assets/js/loading'
   import { getTransaction } from "@/api/dapps"
+  import {utils} from '@/assets/js/pattern'
   export default{
     data(){
       return{
@@ -83,6 +84,28 @@
         let send_name = this.$refs.send_name.value;
         let send_numb = this.$refs.send_numb.value;
         let send_phone = this.$refs.send_phone.value;
+        if( utils.isNullOrEmpty(collect_name)){
+          return that.$toast('请输入收件人姓名', 3000)
+        }
+        if( utils.isNullOrEmpty(collect_address)){
+          return that.$toast('请输入收件人地址', 3000)
+        }
+        if(!utils.isMobile(collect_phone)){
+          return that.$toast('请输入正确收件人电话', 3000)
+        }
+        if( utils.isNullOrEmpty(send_type)){
+          return that.$toast('请输入物品类型', 3000)
+        }
+        if( utils.isNullOrEmpty(send_name)){
+          return that.$toast('请输入真实姓名', 3000)
+        }
+        if(!utils.checkIDCard(send_numb)){
+          return that.$toast('请输入身份证号码', 3000)
+        }
+        if(!utils.isMobile(send_phone)){
+          return that.$toast('请输入正确电话号码', 3000)
+        }
+
         let payload = {
           sender:send_name,address:collect_address,senderPhone:send_phone,goods:send_type,receiver:collect_name,cid:send_numb,receiverPhone:collect_phone
         };
