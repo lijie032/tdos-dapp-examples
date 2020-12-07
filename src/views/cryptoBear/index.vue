@@ -80,8 +80,6 @@
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
-                console.log(tx)
-                console.log(tx.confirms)
                 hideLoading()
                 clearInterval(that.timer1)
                 that.$router.push({path: '/cryptoBear/bearInfo'})

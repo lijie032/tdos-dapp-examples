@@ -101,7 +101,6 @@
         // }else {
         //
         // }
-        console.log(chat)
       },
       async submit () {
         let that = this;

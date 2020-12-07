@@ -8,7 +8,7 @@
                   <h3>请认真填写以下数据，确保能准确上链</h3>
                   <div class="din-col din-col2">
                      <div class="din border-box"><input type="text" maxlength="15"  placeholder="歌曲名称" ref="name"/></div>
-                     <div class="din border-box din-2"><input type="number" maxlength="15"  placeholder="歌曲时长(分钟)" ref="time"/></div>
+                     <div class="din border-box din-2"><input type="text" maxlength="15"  placeholder="歌曲时长(分钟)" ref="time" v-limitNum/></div>
                   </div>
                    <div class="din-col din-col2">
                      <div class="din border-box"><input type="text" maxlength="15"   placeholder="歌手信息" ref="info"/></div>
@@ -40,6 +40,8 @@
 import explorer from '@/components/browser.vue'
 import { saveMusic,getTransaction } from '@/api/dapps'
 import {showLoading, hideLoading} from '@/assets/js/loading'
+import {utils} from '@/assets/js/pattern'
+
 
 export default{
   data(){
@@ -64,6 +66,18 @@ export default{
       let payload = {
         name:name, long:time, singer:info, copyright:type, info:other
       };
+      if( utils.isNullOrEmpty(name)){
+        return that.$toast('请输入歌曲名称', 3000)
+      }
+      if( utils.isNullOrEmpty(time)){
+        return that.$toast('请输入歌曲时长', 3000)
+      }
+      if( utils.isNullOrEmpty(info)){
+        return that.$toast('请输入歌手信息', 3000)
+      }
+      if( utils.isNullOrEmpty(type)){
+        return that.$toast('请选择音乐版权类型', 3000)
+      }
       let pk = that.getPK();
       if (pk == "") {
         return that.$toast("获取账户失败，请打开TDOS插件", 3000);

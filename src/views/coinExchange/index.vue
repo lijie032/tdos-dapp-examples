@@ -96,7 +96,7 @@
                 <p><span>{{from}}:{{searchAmount}}</span><img class="arrow" src="../../assets/img/arrow.png"/><span>{{to}}:{{from == 'ETH'? 0.5 *searchAmount: 2 * searchAmount }}</span></p>
                 <p>互换比率：{{rate}}</p>
               </div>
-              
+
             </div>
             <div class="btnbox">
               <a class="cf-btn pointer bot-btn" @click="searchResult=false;addScroll()">我知道了</a>
@@ -184,15 +184,12 @@
         if (pk == "") {
           return that.$toast("获取账户失败，请打开TDOS插件", 3000);
         }
-        console.log(payload)
         let Change = await saveChange(payload, pk)
-        console.log(Change)
         let sendTx = JSON.stringify(Change);
         that.$refs.sendTx.href =
           "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
         that.$refs.sendTx.click();
         return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
-        console.log(that.coin1.nick)
       },
 
       addScroll () {

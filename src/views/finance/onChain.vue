@@ -12,7 +12,7 @@
                   </div>
                    <div class="din-col din-col2">
                      <div class="din border-box"><input type="text"  placeholder="法人证件" ref="cid"/></div>
-                     <div class="din border-box din-2"><input type="text"  placeholder="融资金额" ref="sum"/></div>
+                     <div class="din border-box din-2"><input type="text"  placeholder="融资金额" ref="sum" v-limitNum/></div>
                   </div>
                   <div class="din-col">
                      <div class="din"><input type="text" placeholder="合同编号" ref="contract"/></div>
@@ -31,6 +31,7 @@
 import explorer from '@/components/browser.vue'
 import { saveFinance,getTransaction } from '@/api/dapps'
 import {showLoading, hideLoading} from '@/assets/js/loading'
+import {utils} from '@/assets/js/pattern'
 export default{
   data(){
     return{
@@ -48,6 +49,22 @@ export default{
       let cid = this.$refs.cid.value;
       let sum = this.$refs.sum.value;
       let contract = this.$refs.contract.value;
+
+      if( utils.isNullOrEmpty(title)){
+        return that.$toast('请输入企业名称', 3000)
+      }
+      if( utils.isNullOrEmpty(name)){
+        return that.$toast('请输入法人姓名', 3000)
+      }
+      if( !utils.checkIDCard(cid)){
+        return that.$toast('请输入正确法人证件', 3000)
+      }
+      if(sum == 0){
+        return that.$toast('请输入融资金额', 3000)
+      }
+      if( utils.isNullOrEmpty(contract)){
+        return that.$toast('请输入合同编号', 3000)
+      }
 
       let payload = {
         title:title,name:name,cid:cid,sum:sum,contract:contract
