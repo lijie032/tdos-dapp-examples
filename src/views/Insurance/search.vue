@@ -10,8 +10,8 @@
            <div class="search-box ">
                <div class="din-box">
                   <div class="in-box">
-                      <input placeholder="请输入上链哈希查询" ref="hash"/>
-                      <!--<a class="close pointer"></a>-->
+                      <input placeholder="请输入上链哈希查询" ref="hash" v-model="hash"/>
+                      <a class="close pointer" @click="close"></a>
                   </div>
                   <a class="searchbtn pointer" @click="linkResult">搜索</a>
                </div>
@@ -27,12 +27,12 @@
 export default{
     data(){
         return{
-
+          hash:'',
         }
     },methods:{
         async linkResult(){
           let that = this
-          let hash = this.$refs.hash.value
+          let hash = that.hash
           let pk = await that.getPK()
           if (pk == '') {
             return that.$toast('获取账户失败，请打开TDOS插件', 3000)
@@ -45,6 +45,10 @@ export default{
               that.$router.push({path: '/Insurance/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
             })
           }
+        },
+        close(){
+          let that = this
+          that.hash = ''
         }
     }
 }
