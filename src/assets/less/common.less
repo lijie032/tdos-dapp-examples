@@ -208,11 +208,24 @@ a{
   }
 }
 
+.f-chain-wrap{
+  .el-input__inner{border:0 none;font-size:24px;}
+}
+
+/*下拉显示不完全*/
+.el-select-dropdown .el-scrollbar .el-scrollbar__wrap
+{
+    overflow: scroll!important;
+}
+
 @media screen and (max-width: 1420px){
    .n-select{
      .el-input__inner{font-size:18px;}
      .el-select-dropdown__item{font-size:18px;}
    } 
+   .f-chain-wrap{
+    .el-input__inner{border:0 none;font-size:18px;}
+  }
 }
 @media screen and (max-width:1540px){
     .search-box{width:90%}
