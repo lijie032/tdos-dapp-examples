@@ -1,10 +1,10 @@
 <template>
   <div class="pageWrap bg_wrap dis-table">
     <explorer ></explorer>
-     
+
       <div class="page-main content-middle">
           <div class="page-content">
-          	 
+
               <div class="flash-form">
               	 <div class="f-header">
 					   <div class="f-header-search " :class="{'isSearch':isSearch}">
@@ -14,8 +14,8 @@
 						</div>
 	              	 	<div class="logo"></div>
 	              	 	欢迎来到TDOS闪电贷
-	              	 	
-						
+
+
               	 </div>
 				 <div class="form-content">
 					  <div class="f-amount">当前可借贷金额：<span>{{allMoney}}</span></div>
@@ -35,11 +35,11 @@
 				 </div>
               </div>
           </div>
-         
+
       </div>
-      
- 
-      
+
+
+
       <!--募集成功展示-->
       <div class="trans" v-if="applaySuc">
 		<div class="dis-table">
@@ -64,9 +64,9 @@
 			</div>
 		</div>
       </div>
-      
+
       <!--搜索结果展示-->
-      
+
       <div class="trans" v-if="searchsult">
 		<div class="dis-table">
 			<div class="popup-div dis-table">
@@ -97,7 +97,7 @@
 			</div>
 		</div>
       </div>
-      
+
   </div>
 </template>
 <script>
@@ -111,12 +111,12 @@ import {showLoading, hideLoading} from '@/assets/js/loading'
 export default {
     data(){
         return{
-		
+
             projectList:[{title:'由TDOS平台发布',intro:'众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍...',time:'2020-09-12 16:45:12',
             targetAmount:'300,000',raisedAmount:'250,000',partNumber:'1,200'},
             {title:'由TDOS平台发布',intro:'众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍众筹介绍众筹介绍众 众筹介绍众筹介绍众筹介绍...',time:'2020-09-12 16:45:12',
             targetAmount:'300,000',raisedAmount:'250,000',partNumber:'1,200'}],
-      
+
             applaySuc:false,//募集成功展示
 			searchsult:false,
 			isInput:false, //是否点击输入金额
@@ -160,7 +160,7 @@ export default {
 		inputFocus(){
 			let that = this;
 			that.isInput=true;
-			that.$nextTick(function(){	
+			that.$nextTick(function(){
 			  this.$refs.input.focus()
 			})
 		},
@@ -183,10 +183,9 @@ export default {
 			that.interest = u.interest;
 			that.rate = u.rate;
 			that.height = u.height;
-			//console.log(u)		
 		   if(that.isSearch==false){
-			  
-			 
+
+
 		   }else{
 			   that.searchsult = true
 			   TpScroll.RemoveScroll();
@@ -211,14 +210,13 @@ export default {
             if (pk == "") {
                 return that.$toast("获取账户失败，请打开TDOS插件", 3000);
 			}
-			//console.log(this.dateFormat(new Date().toString()))
             let payload = {
                 amount: that.money,
                 time: this.dateFormat(new Date().toString()),
                 rate: 5,
 				profit: Math.ceil(that.money * 10 / 100),
 			};
-			
+
             let tx = await lend(payload,pk);
             let sendTx = JSON.stringify(tx);
             that.$refs.sendTx.href =
@@ -226,7 +224,7 @@ export default {
             that.$refs.sendTx.click();
             return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
 	   },
-		
+
 
 		addScroll(){
            TpScroll.AddScroll()
@@ -272,7 +270,7 @@ export default {
           }, 1000)
         }
       }
-		
+
     },
 	 mounted(){
 		this.getTotalMoney();

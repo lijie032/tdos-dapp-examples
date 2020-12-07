@@ -56,6 +56,7 @@
   import explorer from '@/components/browser.vue'
   import { getTransaction } from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
+  import {utils} from '@/assets/js/pattern'
   export default{
     data(){
       return{
@@ -73,6 +74,21 @@
         let medical = this.$refs.medical.value;
         let info = this.$refs.info.value;
         let doctor = this.$refs.doctor.value;
+        if( utils.isNullOrEmpty(name)){
+          return that.$toast('请输入病人姓名', 3000)
+        }
+        if( utils.isNullOrEmpty(time)){
+          return that.$toast('请输入就诊时间', 3000)
+        }
+        if( utils.isNullOrEmpty(medical)){
+          return that.$toast('请输入就诊医院', 3000)
+        }
+        if( utils.isNullOrEmpty(info)){
+          return that.$toast('请输入就诊信息', 3000)
+        }
+        if( utils.isNullOrEmpty(doctor)){
+          return that.$toast('请输入就诊医生', 3000)
+        }
         let payload = {
           name:name, time:time, hospital:medical, info:info, doctor:doctor
         };

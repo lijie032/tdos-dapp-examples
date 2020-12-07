@@ -464,7 +464,6 @@ export async function confirmFinance (hash, publickey) {
 export async function getFinance (hash) {
   try {
     let result = await rpc.viewContract(await getContract(), 'getFinance', hex2bin(hash))
-    console.log(result)
     return decodeFinance(result)
   }catch (e) {
     return "";
@@ -590,7 +589,6 @@ function decodeAddressBooks(buf) {
   if (buf != '') {
     buf = hex2bin(buf)
     let  li = rlp.RLPList.fromEncoded(buf);
-    console.log(li)
     const ret = [];
     for (let i = 0; i < li.length(); i++) {
       let ii = li.list(i);
@@ -640,7 +638,6 @@ function decodePhotos(buf) {
   if (buf != '') {
     buf = hex2bin(buf)
     let  li = rlp.RLPList.fromEncoded(buf);
-    console.log(li)
     const ret = [];
     for (let i = 0; i < li.length(); i++) {
       let ii = li.list(i);
@@ -844,7 +841,6 @@ function decodeCrowdSale_one (buf) {
     u.amount = rd.number();
     u.info = rd.string();
     u.hash = bin2hex(rd.bytes());
-    console.log(u)
     return u
   }
   return ''

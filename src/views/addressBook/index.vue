@@ -22,7 +22,7 @@
                                     <a class="btnSearch pointer" @click="search">搜索</a>
                                 </div>
                                 <el-scrollbar class="record-scroll" ref="myScrollbar">
-                                    
+
                                     <ul class="ab-list">
                                       <li v-for="(item,index) in addressList" :key="index" @click="showRight(item)" >
                                           <span class="li-userName">用户名：{{item.username}}</span>
@@ -79,7 +79,7 @@
                   <div class="d-title"></div>
              </div>
         </div>
-        
+
         <!--添加联系人-->
         <div class="trans" v-show="isAdd">
             <div class="addform">
@@ -135,7 +135,7 @@ export default {
             //   {username:'陈慧',phone:'123488699',height:'7859654',hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',
             //   affair_hash:'da54sd54qw5eqw5e4f89sd87g87r4t5ertr5e1gdf251g d2weq6w5eqw6eqw',remark:'此人极度危险，切勿擅自接近，切记！切记！切记！如有 危险请拨打电话报警。'}
           ]
-          
+
         }
     },
     components:{
@@ -177,7 +177,7 @@ export default {
             }
             that.isAdd=false;
             let tx = await addAddressBook(payload,pk);
-            let sendTx = JSON.stringify(tx); 
+            let sendTx = JSON.stringify(tx);
             that.$refs.sendTx.href =
                 "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
             that.$refs.sendTx.click();
@@ -196,15 +196,15 @@ export default {
             }
             let addr = publicKey2Address(pk);
             let books = await getAddressBooks(addr);
-          
-            
+
+
             that.addressList = [];
             await Promise.all(books.map(async item => {
                     await  getTransaction(item.hash).then(t => {
                     item.height = t.blockHeight;
                     item.affair_hash = t.blockHash;
                  });
-            })) 
+            }))
             books.sort(function(a,b){
                 return a.username.localeCompare(b.username);
             });
@@ -212,12 +212,12 @@ export default {
                 books.forEach((item)=>{
                     if (that.searchKey == item.username){
                         that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:item.height, affair_hash:item.affair_hash})
-                    }    
+                    }
                 });
             } else {
                 books.forEach((item)=>{
-                    that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:item.height, affair_hash:item.affair_hash})    
-                });        
+                    that.addressList.push({username:item.username, phone:item.phone, remark:item.memo, hash:item.hash, height:item.height, affair_hash:item.affair_hash})
+                });
             };
 
        },
@@ -228,7 +228,7 @@ export default {
         },
         back(){
             let that = this;
-            that.isShow = false; 
+            that.isShow = false;
         },
         timer_tx () {
         let that = this
@@ -249,7 +249,7 @@ export default {
         }
       }
     },
-    
+
     mounted(){
       let that = this;
       that.search();
