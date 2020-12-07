@@ -166,15 +166,10 @@
         that.coin2 = obj2
       },
       //点击查询
-      async showResult(){
+      showResult(){
         let that =  this;
-        that.searchResult = true;
         TpScroll.RemoveScroll()
-        let u = await getChange(that.hash);
-        that.searchAmount = u.amount;
-        that.from = u.from;
-        that.to = u.to;
-        that.rate = u.rate;
+        that.getCoinChange(that.hash);
       },
       //点击确认转换
       async confirmExchange () {
@@ -211,13 +206,27 @@
         that.coin2.proportion = "1BTC="+Eth+"Eth";
         that.coin1.proportion = "1ETH="+Btc+"Btc";
       },
-      async getChange(){
+      async getCoinChange(hash){
         let that = this
-        let u = await getChange('e7eff4961c65b9366a4e321f2f07ac35803bd1ee308e5bd39360d2df8ec1ad67');
-        that.searchAmount = u.amount;
-        that.from = u.from;
-        that.to = u.to;
-        that.rate = u.rate;
+        let u;
+        try {
+          u = await getChange(hash);
+        }catch(err){
+          return that.$toast("事务hash不存在", 3000);
+        }
+        if (u == ""){
+          return that.$toast("事务hash不存在", 3000);
+        }
+          that.searchResult = true;
+          that.searchAmount = u.amount;
+          that.from = u.from;
+          that.to = u.to;
+          that.rate = u.rate;
+        return u;
+        // that.searchAmount = u.amount;
+        // that.from = u.from;
+        // that.to = u.to;
+        // that.rate = u.rate;
       },
       timer_tx () {
         let that = this
