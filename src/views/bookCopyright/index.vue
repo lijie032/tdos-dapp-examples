@@ -3,7 +3,7 @@
     <explorer :isHome="isHome" :type="type"></explorer>
       <div class="logo-intro">
          <div class="logo"></div>
-         TDOS版权
+         TDOS著作版权
       </div>
       <div class="page-main content-middle">
 
