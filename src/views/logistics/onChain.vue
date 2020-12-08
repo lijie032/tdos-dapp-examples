@@ -92,8 +92,11 @@
         if( utils.isNullOrEmpty(collect_address)){
           return that.$toast('请输入收件人地址', 3000)
         }
+         if( utils.isNullOrEmpty(collect_phone)){
+          return that.$toast('请输入收件人电话', 3000)
+        }
         if(!utils.isMobile(collect_phone)){
-          return that.$toast('请输入正确收件人电话', 3000)
+          return that.$toast('请输入收件人电话格式不正确', 3000)
         }
         if( utils.isNullOrEmpty(send_type)){
           return that.$toast('请输入物品类型', 3000)
@@ -101,11 +104,17 @@
         if( utils.isNullOrEmpty(send_name)){
           return that.$toast('请输入寄件人姓名', 3000)
         }
+        if( utils.isNullOrEmpty(send_numb)){
+          return that.$toast('请输入寄件人身份证号', 3000)
+        }
         if(!utils.checkIDCard(send_numb)){
-          return that.$toast('请输入身份证号码', 3000)
+          return that.$toast('请输入正确的身份证号', 3000)
+        }
+          if( utils.isNullOrEmpty(send_phone)){
+          return that.$toast('请输入寄件人电话号码', 3000)
         }
         if(!utils.isMobile(send_phone)){
-          return that.$toast('请输入正确电话号码', 3000)
+          return that.$toast('请输入寄件人电话格式不正确', 3000)
         }
 
         let payload = {
