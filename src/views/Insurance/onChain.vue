@@ -95,13 +95,13 @@
         if( utils.isNullOrEmpty(time)){
           return that.$toast('请输入起保时间', 3000)
         }
-        if( utils.isNullOrEmpty(bool)){
+        if( bool == ""){
           return that.$toast('请选择是否延误', 3000)
         }
         if( utils.isNullOrEmpty(numb)){
           return that.$toast('请输入保单号码', 3000)
         }
-        if( utils.isNullOrEmpty(bool2)){
+        if( bool2 == ""){
           return that.$toast('请选择是否理赔', 3000)
         }
         let payload = {
