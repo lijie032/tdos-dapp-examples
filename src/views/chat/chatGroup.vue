@@ -139,6 +139,7 @@
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
+                that.info = ""
                 hideLoading()
                 clearInterval(that.timer1)
                 that.get();

@@ -169,6 +169,9 @@ export default {
             if( utils.isNullOrEmpty(that.userName)){
                 return that.$toast('请输入姓名', 3000)
             }
+            if (that.userName.length > 4){
+                return that.$toast('请输入正确的姓名', 3000)
+            }
             if( utils.isNullOrEmpty(that.number)){
                 return that.$toast('请输入电话', 3000)
             }

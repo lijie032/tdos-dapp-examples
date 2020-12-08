@@ -68,7 +68,7 @@
               <p class="chain-title">恭喜您！转换成功！该笔交易已存证上链！以下是您的上链哈希：</p>
               <div class="hash-value">
                 <span>{{hash}}</span>
-                <a class="copy pointer"></a>
+                <a class="copy pointer" v-clipboard:copy="message" v-clipboard:success="onCopy" v-clipboard:error="onError"></a>
               </div>
               <p class="p-mess">（您可复制上方哈希值并点击右上角按钮至“TDS浏览器”查询。）</p>
             </div>
@@ -139,6 +139,7 @@
         to:'',
         searchAmount: 0,
         hash:'',
+        message:''
       }
     },
     components: {
@@ -161,9 +162,10 @@
         that.isExchange = !that.isExchange
         let obj1 = JSON.parse(JSON.stringify(that.coin2))
         let obj2 = JSON.parse(JSON.stringify(that.coin1))
-
+        that.amount = that.amount.replace(/[^\d]/g, "")
         that.coin1 = obj1
         that.coin2 = obj2
+        console.log(that.amount)
       },
       //点击查询
       showResult(){
@@ -235,6 +237,7 @@
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
+                that.message = hash
                 hideLoading()
                 clearInterval(that.timer1)
                 that.exchangeSuc = true;
@@ -243,6 +246,14 @@
 
           }, 1000)
         }
+      },
+      onCopy: function (e) {
+        let that = this
+        return that.$toast('复制成功', 2000)
+      },
+      onError: function (e) {
+        let that = this
+        return that.$toast('复制失败，请稍后重试', 2000)
       }
 
     },
