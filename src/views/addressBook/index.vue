@@ -90,7 +90,7 @@
                  </div>
                  <div class="d-in">
                      <div class="lab">姓名：</div>
-                     <input type="text" maxlength="15" v-model="userName" v-removeSymbol/>
+                     <input type="text" maxlength="8" v-model="userName" v-removeSymbol/>
                  </div>
 
                 <div class="d-in">
