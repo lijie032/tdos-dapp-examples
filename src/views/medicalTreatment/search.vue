@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap dis-table  pw-pageWrap search_wrap">
-     <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+     <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
      <div class="logo-intro">
          <div class="logo"><img src="../../assets/img/logo_medicalTreatment.png"/></div>
          TDOS医疗查询
@@ -25,7 +25,8 @@
       return{
            type:1,
            isHome:true,
-           isIndex:false
+           isIndex:false,
+           backPath:'/medicalTreatment'
       }
     },
     components:{

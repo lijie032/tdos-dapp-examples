@@ -34,6 +34,10 @@ export default {
     isIndex:{
       type:null,
       default:true
+    },
+    backPath:{
+      type:null,
+      default:''
     }
   },
   methods:{
@@ -42,12 +46,17 @@ export default {
       that.$router.push({path:'/'}).catch(err => { console.log(err) })
     },
     goBack() {
+         let that = this
+         if(that.backPath!=''){
+             this.$router.push({ path: that.backPath });
+         }else{
 
-         if (window.history.length <= 1) {
-             this.$router.push({ path: "/" });
-             return false;
-         } else {
-             this.$router.go(-1);
+            if (window.history.length <= 1) {
+                this.$router.push({ path: "/" });
+                return false;
+            } else {
+                this.$router.go(-1);
+            }
          }
      },
   }
