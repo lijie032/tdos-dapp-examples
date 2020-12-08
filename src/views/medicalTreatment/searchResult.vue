@@ -89,10 +89,11 @@
         }
     }, mounted: function () {
      
-      let t = this.$route.query.transaction;
-      let result = this.$route.query.result;
+      let t = eval('(' + this.$route.query.transaction + ')');
+      let result = eval('(' + this.$route.query.result + ')');
       let tx_hash = this.$route.query.tx_hash;
-
+      
+      console.log( )
       //console.log(t);
       document.getElementById("block_hash").innerHTML = t.blockHash;
       document.getElementById("transaction_hash").innerHTML = tx_hash;

@@ -45,7 +45,7 @@
           this.$toast('暂无内容', 2000)
         } else {
           getTransaction(hash).then(t => {
-            that.$router.push({path: '/medicalTreatment/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
+            that.$router.push({path: '/medicalTreatment/searchResult', query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}})
           })
         }
       }
