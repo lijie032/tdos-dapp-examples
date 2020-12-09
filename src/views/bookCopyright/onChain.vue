@@ -1,7 +1,7 @@
 <template>
   <div class="pageWrap f-wrap-table  a_onChain_wrap">
 
-   <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+   <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
     <div class="page-main content-middle">
       <div class="a_form_box">
         <div class="marginlr60">
@@ -52,7 +52,8 @@
         firstSend: 0,
         type:1,
         isHome:true,
-        isIndex:false
+        isIndex:false,
+        backPath:'/bookCopyright'
       }
     },
      components: {

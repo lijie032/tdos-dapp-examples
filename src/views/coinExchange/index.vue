@@ -10,7 +10,7 @@
 
       <div class="page-content">
         <div class="searchInBox border-box">
-           <input type="text" placeholder="您可在此输入复制的哈希值以此查询" v-model = "hash"/>
+           <input type="text" placeholder="您可在此输入复制的哈希值以此查询" v-model = "search_hash"/>
            <a class="btn-search pointer" @click="showResult">
 
            </a>
@@ -139,7 +139,8 @@
         to:'',
         searchAmount: 0,
         hash:'',
-        message:''
+        message:'',
+        search_hash:''
       }
     },
     components: {
@@ -171,11 +172,17 @@
       showResult(){
         let that =  this;
         TpScroll.RemoveScroll()
-        that.getCoinChange(that.hash);
+        that.getCoinChange(that.search_hash);
       },
       //点击确认转换
       async confirmExchange () {
         let that = this
+        if (that.amount == ""){
+          return that.$toast("请输入数量", 3000);
+        }
+        if (that.amount > 10000000){
+          return that.$toast("数量需要小于10,000,000", 3000);
+        }
         TpScroll.RemoveScroll()
         let a = that.$refs.amount.value;
         let payload = {

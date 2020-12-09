@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap f-wrap-table">
-     <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+     <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
     <div class="page-main content-middle">
       <div class="chain-form">
         <h3 class="formTitle">请认真填写以下数据，确保能准确上链</h3>
@@ -106,7 +106,8 @@
         explain: '',
         type:0,
         isHome:true,
-        isIndex:false
+        isIndex:false,
+        backPath:'/publicWelfare'
       }
     },
     components: {

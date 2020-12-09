@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap f-wrap-table pw-pageWrap a_onChain_wrap">
-   <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
 
     <div class="page-main content-middle">
       <div class="a_form_box">
@@ -37,40 +37,42 @@
 </style>>
 
 <script>
- import explorer from '@/components/browser1.vue'
+  import explorer from '@/components/browser1.vue'
   import {saveWeld} from '@/api/dapps'
   import {getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
   import {utils} from '@/assets/js/pattern'
+
   export default {
     data () {
       return {
-        wpqr:"",
-        person:"",
-        equipment:"",
-         type:1,
-         isHome:true,
-        isIndex:false
+        wpqr: '',
+        person: '',
+        equipment: '',
+        type: 1,
+        isHome: true,
+        isIndex: false,
+        backPath: '/welding'
       }
     },
     components: {
       explorer
     },
     methods: {
-      async submit(){
+      async submit () {
         let that = this
         let payload = {
           wpqr: that.wpqr,
           welder: that.person,
           device: that.equipment
         }
-        if( utils.isNullOrEmpty(that.wpqr)){
+        if (utils.isNullOrEmpty(that.wpqr)) {
           return that.$toast('请输入WPQR号', 3000)
         }
-        if( utils.isNullOrEmpty(that.person)){
+        if (utils.isNullOrEmpty(that.person)) {
           return that.$toast('请输入焊接人员名称', 3000)
         }
-        if( utils.isNullOrEmpty(that.equipment)){
+        if (utils.isNullOrEmpty(that.equipment)) {
           return that.$toast('请输入设备名称', 3000)
         }
         let pk = that.getPK()
@@ -89,13 +91,13 @@
         let that = this
         let hash = that.getRes().trim()
         if (hash != '') {
-          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
+          showLoading('事务广播成功，事务哈希为：\n' + hash + ',' + '\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
                 hideLoading()
                 clearInterval(that.timer1)
-                that.$router.push({path:'/welding/search'})
+                that.$router.push({path: '/welding/search'})
               }
 
             })
@@ -104,11 +106,11 @@
         }
       }
     },
-    mounted() {
+    mounted () {
       this.timer = setInterval(this.timer_tx, 1000)
     },
-    beforeDestroy() {
-      clearInterval(this.timer);
+    beforeDestroy () {
+      clearInterval(this.timer)
       if (this.timer1) {
         clearInterval(this.timer1)
       }

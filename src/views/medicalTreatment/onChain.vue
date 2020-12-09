@@ -1,7 +1,7 @@
 <template>
   <div class="pageWrap f-wrap-table pw-pageWrap a_onChain_wrap">
 
-      <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="page-main content-middle  mt-page-main">
           <div class="a_form_box">
               <div class="marginlr60">
@@ -63,7 +63,8 @@
         time:"",
         type:1,
         isHome:true,
-        isIndex:false
+        isIndex:false,
+        backPath:'/medicalTreatment'
       }
     },
     components:{

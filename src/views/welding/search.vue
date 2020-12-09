@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap  search-wrap n-search-wrap ">
-<explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
     <div class="page-main ">
       <div class="logo-intro">
         <div class="logo"><img src="../../assets/img/logo_welding.png"/></div>
@@ -28,23 +28,25 @@
 </template>
 
 <script>
-  import { getWeld, getTransaction} from '@/api/dapps'
+  import {getWeld, getTransaction} from '@/api/dapps'
   import explorer from '@/components/browser1.vue'
+
   export default {
     data () {
       return {
-        type:0,
-         isHome:true,
-        isIndex:false
+        type: 0,
+        isHome: true,
+        isIndex: false,
+        backPath: '/welding'
       }
     },
     components: {
       explorer
     }, methods: {
       async search () {
-        let that = this;
-        let hash = this.$refs.hash.value;
-        let pk = await that.getPK();
+        let that = this
+        let hash = this.$refs.hash.value
+        let pk = await that.getPK()
         if (pk == '') {
           return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
@@ -53,7 +55,7 @@
           this.$toast('暂无内容', 2000)
         } else {
           getTransaction(hash).then(t => {
-            that.$router.push({path: '/welding/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
+            that.$router.push({path: '/welding/searchResult', query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}})
           })
         }
       }

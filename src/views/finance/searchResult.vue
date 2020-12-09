@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap f-chain-wrap dis-table search-result-wrap bgf6f6f6">
-    <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
      <div class="content-middle">
       <div class="dis-table result-info">
          <div class="formbox confirmBox">
@@ -64,7 +64,8 @@ export default{
     return{
        type:0,
         isHome:true,
-        isIndex:false
+        isIndex:false,
+        backPath:'/finance'
     }
   },
   components:{
@@ -77,8 +78,8 @@ export default{
     }
   },mounted: function() {
 
-    let t = this.$route.query.transaction;
-    let result = this.$route.query.result;
+    let t = eval('(' + this.$route.query.transaction + ')');
+    let result = eval('(' + this.$route.query.result + ')');;
     let tx_hash = this.$route.query.tx_hash;
     document.getElementById("height").innerHTML = t.blockHeight;
     document.getElementById("block_hash").innerHTML = t.blockHash;

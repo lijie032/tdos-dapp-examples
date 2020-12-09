@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap  search-wrap">
-      <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="page-main ">
            <div class="logo-intro">
               <div class="logo"><img src="../../assets/img/logo_finance.png"/></div>
@@ -35,7 +35,8 @@ import explorer from '@/components/browser1.vue'
         return{
           type:0,
           isHome:true,
-          isIndex:false
+          isIndex:false,
+          backPath:'/finance'
         }
     },
      components:{
@@ -56,7 +57,7 @@ import explorer from '@/components/browser1.vue'
           let transaction = await getTransaction(hash);
           getTransaction(hash).then(t => {
             let that = this
-            that.$router.push({path: '/finance/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
+            that.$router.push({path: '/finance/searchResult', query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}})
           })
         }
       }

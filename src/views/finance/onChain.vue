@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap f-chain-wrap">
-    <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="left">
       </div>
       <div class="right">
@@ -39,7 +39,8 @@ export default{
       firstSend: 0,
       type:0,
       isHome:true,
-      isIndex:false
+      isIndex:false,
+      backPath:'/finance'
     }
   },
   components:{

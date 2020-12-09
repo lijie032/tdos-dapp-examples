@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap  f-wrap-table search-wrap">
-      <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="page-main content-middle">
            <div class="logo-intro">
               <div class="logo"><img src="../../assets/img/logo_insurance.png"/></div>
@@ -31,7 +31,8 @@ export default{
           hash:'',
           type:0,
           isHome:true,
-          isIndex:false
+          isIndex:false,
+          backPath:'/Insurance'
         }
     },
     components: {
@@ -50,7 +51,7 @@ export default{
             this.$toast('暂无内容', 2000)
           } else {
             getTransaction(hash).then(t => {
-              that.$router.push({path: '/Insurance/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
+              that.$router.push({path: '/Insurance/searchResult', query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}})
             })
           }
         },

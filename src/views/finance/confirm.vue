@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap f-chain-wrap">
-    <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
     <div class="left">
     </div>
     <div class="right">
@@ -61,7 +61,8 @@
         isOnchain:true,
          type:0,
         isHome:true,
-        isIndex:false
+        isIndex:false,
+        backPath:'/finance'
       }
     },
     components: {
@@ -103,8 +104,8 @@
     },
     mounted: function () {
       let that = this;
-      let t = this.$route.query.transaction
-      let result = this.$route.query.result
+      let t = eval('(' + this.$route.query.transaction + ')')
+      let result = eval('(' + this.$route.query.result + ')');
       let tx_hash = this.$route.query.tx_hash
       document.getElementById('height').innerHTML = t.blockHeight
       document.getElementById('block_hash').innerHTML = t.blockHash

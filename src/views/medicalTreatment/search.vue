@@ -19,7 +19,7 @@
 <script>
   import { getMedical, getTransaction} from '@/api/dapps'
   import explorer from '@/components/browser1.vue'
-  
+
   export default{
     data(){
       return{
@@ -41,6 +41,7 @@
           return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
         let result = await getMedical(hash, pk)
+        console.log(result)
         if (result == '') {
           this.$toast('暂无内容', 2000)
         } else {
