@@ -8,7 +8,7 @@
         <div class="p-container">
           <div class="vote-number">
             <div class="numberbox">总计票数
-              <span class="number-1">{{amountA + amountB}}<em class="line"></em></span>
+              <span class="number-1">{{amountA + amountB}}</span>
 
               <!--
                           <span><em class="line"></em></span>
@@ -22,7 +22,8 @@
           <div class="v-Proposition">
             <div class="result-pic result-pic-suc">
               <div class="dis-table">
-                <div class="content-middle">票数：{{amountA}} {{(amountA * 100.0 / (amountA + amountB)).toFixed(2)}}%</div>
+                <div class="content-middle">票数：{{amountA}} <p>{{(amountA * 100.0 / (amountA + amountB)).toFixed(2)}}%</p></div>
+
               </div>
             </div>
             <div class="result-text">
@@ -35,7 +36,7 @@
           <div class="v-Proposition">
             <div class="result-pic result-pic-fail">
               <div class="dis-table">
-                <div class="content-middle">票数：{{amountB}} {{(amountB * 100.0 / (amountA + amountB)).toFixed(2)}}%</div>
+                <div class="content-middle">票数：{{amountB}} <p>{{(amountB * 100.0 / (amountA + amountB)).toFixed(2)}}%</p></div>
               </div>
             </div>
             <div class="result-text">
