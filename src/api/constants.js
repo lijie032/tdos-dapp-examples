@@ -56,17 +56,17 @@ export function persistVM(){
 }
 
 export const rpc = new RPC('192.168.1.89', '6011')
-export const CONTRACT_ADDRESS = '30f1acbde6a9111a3cde642bfbc30310e293cd67' // 十个存证合约地址
-export const CONTRACT_SECRET_BEAR_ADDRESS = '73969ed1bdf86e84cff51ba1b7e6b5941926a590' // 加密熊合约地址
-export const CONTRACT_CHAT_ADDRESS = 'c0eea01c0250b57ff4af5c550a745ec937d6e1a0' // 聊天室合约地址
-export const CONTRACT_BOOKS_ADDRESS = 'b237c1b692036bacb3a859aa0c3e11b74166dc8f' // 通讯录合约地址
-export const CONTRACT_PHOTO_ADDRESS = 'c65c67747bbd812d79fa26a0929856100b9880fb' // 相册合约地址
-export const CONTRACT_TOKEN_ADDRESS = '0cf65e367967f6cd88bbd9561283ae71eb260ef9' // 发行代币合约地址
-export const CONTRACT_CHANGE_ADDRESS = '3542e1e2d0ee4954f7d654ae92d1a18742f590f6' // 交易合约地址
-export const CONTRACT_LIMIT_ADDRESS = 'dd3dae9d8fcbe39a9b9b799cb2cad073de3a1f1c' // 权限合约地址
-export const CONTRACT_CROWDSALE_ADDRESS = 'a76fbc7fbb136336cbad6f32519b7150b53156bc' // 众筹合约地址
-export const CONTRACT_VOTE_ADDRESS = '88d59ef8bcca85ec032a734a28eea43ba6145623' // 投票合约地址
-export const CONTRACT_LEND_ADDRESS = 'f91e459cac7a3ab43d1cfa30be0e3a84afd37c33' // 闪电贷合约地址
+export const CONTRACT_ADDRESS = 'da1681b9a25293010a822ee9759e2199217e3aa5' // 十个存证合约地址
+export const CONTRACT_SECRET_BEAR_ADDRESS = '2f0119a808c74be8c5e0929e0ab94be211e6f01a' // 加密熊合约地址
+export const CONTRACT_CHAT_ADDRESS = 'a265f76986b17386360068c809a680b556c07d0f' // 聊天室合约地址
+export const CONTRACT_BOOKS_ADDRESS = 'bfe0d3202e79af304b28e917df7ca3875d243d18' // 通讯录合约地址
+export const CONTRACT_PHOTO_ADDRESS = '949bf29959946d01d8aab427debba8bbc643d987' // 相册合约地址
+export const CONTRACT_TOKEN_ADDRESS = '585d8e961be91ec2a440a713139c2d368fd88c24' // 发行代币合约地址
+export const CONTRACT_CHANGE_ADDRESS = '4ad4902b9b83d0683dff7589f634e66b6dad75b4' // 交易合约地址
+export const CONTRACT_LIMIT_ADDRESS = '8421f1aeae5fd8b7bb6fc7e26d0dfb8d45ac558f' // 权限合约地址
+export const CONTRACT_CROWDSALE_ADDRESS = 'f21be07cb70237e251465de0624f1f5716520829' // 众筹合约地址
+export const CONTRACT_VOTE_ADDRESS = '9bacf8cc5cdbfc6211f00a7726f7687c88e20ca1' // 投票合约地址
+export const CONTRACT_LEND_ADDRESS = 'af0d5077e903ba5a336caf3779365c9780212cb7' // 闪电贷合约地址
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, abi)
