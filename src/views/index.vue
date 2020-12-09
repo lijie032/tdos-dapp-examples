@@ -6,7 +6,7 @@
                    <img src="../assets/img/tdos_chat.png"/>
                    <div class="h-logo-intro">
                        <p class="pt">可信数据操作系统</p>
-                       <p class="pt-intro">Tursted Data Operation System</p>
+                       <p class="pt-intro">Trusted Data Operation System</p>
                    </div>
                </div>
                
