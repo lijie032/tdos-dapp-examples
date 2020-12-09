@@ -9,7 +9,7 @@
                        <p class="pt-intro">Trusted Data Operation System</p>
                    </div>
                </div>
-               
+
                <div class="home-title">
                    <div class="line line1"></div>
                    <span>DAPP广场</span>
@@ -40,7 +40,7 @@
               </div>
            </div>
        </div>
-      
+
        <!--
        <router-link target="_blank" to='/publicWelfare'>公益</router-link>
        <router-link target="_blank" to='/finance'>金融</router-link>
@@ -63,7 +63,7 @@
         <router-link target="_blank" to='/flashLoan'>闪电贷</router-link>
         <router-link target="_blank" to='/coinExchange'>资产互换</router-link>
         -->
-         
+
     </div>
 </template>
 <script>
@@ -93,7 +93,7 @@ export default {
                {title:'通讯录',icon:require('../assets/img/logo_addressBook.png'),link:'/addressBook'},
                {title:'相册',icon:require('../assets/img/logo_album.png'),link:'/album'},
                {title:'TDOS权限',icon:require('../assets/img/logo_authority.png'),link:'/authority'},
-      
+
            ],
            KeyWords:''//搜索关键词
         }
@@ -105,13 +105,14 @@ export default {
         },
         search(){
             let that = this;
-            if(!that.isSearch){
-               that.isSearch = true
-            }else{
-               if( utils.isNullOrEmpty(that.KeyWords)){
-                    return that.$toast('请输入搜索关键词', 3000)
-                }
-            }
+          return that.$toast('暂未开放，敬请期待！', 3000)
+            // if(!that.isSearch){
+            //    that.isSearch = true
+            // }else{
+            //    if( utils.isNullOrEmpty(that.KeyWords)){
+            //         return that.$toast('请输入搜索关键词', 3000)
+            //     }
+            // }
         }
     }
 }

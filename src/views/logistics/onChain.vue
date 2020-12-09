@@ -96,7 +96,7 @@
           return that.$toast('请输入收件人电话', 3000)
         }
         if(!utils.isMobile(collect_phone)){
-          return that.$toast('请输入收件人电话格式不正确', 3000)
+          return that.$toast('收件人电话格式不正确', 3000)
         }
         if( utils.isNullOrEmpty(send_type)){
           return that.$toast('请输入物品类型', 3000)
@@ -114,7 +114,7 @@
           return that.$toast('请输入寄件人电话号码', 3000)
         }
         if(!utils.isMobile(send_phone)){
-          return that.$toast('请输入寄件人电话格式不正确', 3000)
+          return that.$toast('寄件人电话格式不正确', 3000)
         }
 
         let payload = {
