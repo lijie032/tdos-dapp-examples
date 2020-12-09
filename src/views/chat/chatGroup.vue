@@ -67,7 +67,7 @@
     },
     methods: {
       showDetail (num,obj) {
-        this.$refs['myScrollbar'].wrap.scrollTop = this.$refs['myScrollbar'].wrap.scrollHeight;//这个是聊天记录滚动到底部写法
+        
         let that = this;
         if(that.detailIndex!=null){
             if(that.detailIndex==num){
@@ -100,6 +100,10 @@
         // }else {
         //
         // }
+        that.$nextTick(() => {
+ this.$refs['myScrollbar'].wrap.scrollTop = this.$refs['myScrollbar'].wrap.scrollHeight;//这个是聊天记录滚动到底部写法
+        })
+        
       },
       async submit () {
         let that = this;
