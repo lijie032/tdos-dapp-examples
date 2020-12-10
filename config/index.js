@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/rpc': {
-        target: 'http://192.168.1.89:6011',//代理到的地址
+        target: 'http://120.76.101.153:7010',//代理到的地址
         changeOrigin: true
       }
     },
