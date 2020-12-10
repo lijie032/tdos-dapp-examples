@@ -177,16 +177,16 @@
       //点击确认转换
       async confirmExchange () {
         let that = this
-        if (that.amount == ""){
+        let amount = this.$refs.amount.value
+        if (amount == ""){
           return that.$toast("请输入数量", 3000);
         }
-        if (that.amount > 10000000){
+        if (amount > 10000000){
           return that.$toast("数量需要小于10,000,000", 3000);
         }
         TpScroll.RemoveScroll()
-        let a = that.$refs.amount.value;
         let payload = {
-          from: that.coin1.nick, to: that.coin2.nick, amount: a, rate:that.coin1.proportion
+          from: that.coin1.nick, to: that.coin2.nick, amount: amount, rate:that.coin1.proportion
         }
 
         let pk = that.getPK();

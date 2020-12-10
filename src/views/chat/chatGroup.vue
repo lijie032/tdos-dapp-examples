@@ -46,6 +46,7 @@
   import explorer from '@/components/browser1.vue'
   import {getUserId, saveChat, getChat, getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
+  import {utils} from '@/assets/js/pattern'
   export default {
     data () {
       return {
@@ -112,6 +113,9 @@
           return that.$toast("获取账户失败，请打开TDOS插件", 3000);
         }
         let info = that.info;
+        if (utils.isNullOrEmpty(info)){
+          return that.$toast('请输入要发送的消息', 3000)
+        }
         let time = this.timefilters();
         let payload = {
           context:info,
