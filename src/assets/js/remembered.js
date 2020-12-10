@@ -3,7 +3,7 @@ import Vue from 'vue'
 export default function (el) {
     var input = el;
     input.onkeyup = function (e) {
-         console.log(input.value)
+        // console.log(input.value)
         input.value = input.value.replace(/"/g, '').replace(/'/g, '')
       
     };
