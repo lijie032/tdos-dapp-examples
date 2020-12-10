@@ -9,7 +9,7 @@
       <a class="aback pointer" @click="backIndex"></a>
     </div>
     <!--跳转浏览器-->
-    <div class=" logo-browser " :class="{'logo-browser-white':type==1}">
+    <div class=" logo-browser " :class="{'logo-browser-white':type==1}" @click="goBrowser">
         <a class=" pointer"></a>
     </div>
  </div>
@@ -59,6 +59,9 @@ export default {
             }
          }
      },
+     goBrowser(){
+       window.open('http://120.76.101.153:8181',"_blank");
+     }
   }
 }
 </script>
