@@ -11,5 +11,11 @@ export default function (el) {
        
       
     };
+    input.onblur =function(e){
+        input.value = input.value.replace(/"/g, '').replace(/'/g, '')
+        el.dispatchEvent(new Event("input"));
+       
+    }
+
     
 }
