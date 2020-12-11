@@ -86,7 +86,7 @@ export default {
                 {title:'资产互换',icon:require('../assets/img/logo_coinExchange.png'),link:'/coinExchange'},
                {title:'发行代币',icon:require('../assets/img/logo_issueCoins.png'),link:'/issueCoins'},
                {title:'投票',icon:require('../assets/img/logo_vote.png'),link:'/vote'},
-               {title:'公益众筹',icon:require('../assets/img/logo_crowdFunding.png'),link:'/crowdFunding'},
+               {title:'众筹',icon:require('../assets/img/logo_crowdFunding.png'),link:'/crowdFunding'},
                {title:'聊天Talk',icon:require('../assets/img/logo_chat.png'),link:'/chat'},
                 {title:'闪电贷',icon:require('../assets/img/logo_flashLoan.png'),link:'/flashLoan'},
                {title:'加密熊',icon:require('../assets/img/logo_cryptoBear.png'),link:'/cryptoBear'},

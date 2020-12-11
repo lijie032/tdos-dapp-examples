@@ -12,15 +12,15 @@
                         <span class="lab">收件人信息</span>
                         <div class="r-userInfo">
                             <span class="s-lab">收件人姓名</span>
-                            <div class="r-in"><input class="border-box" placeholder="请输入收件人姓名" ref="collect_name" v-removeSymbol/></div>
+                            <div class="r-in"><input class="border-box" placeholder="请输入收件人姓名" ref="collect_name" v-removeSymbol  v-remembered/></div>
                         </div>
                         <div class="r-userInfo">
                             <span class="s-lab">收件人地址</span>
-                            <div class="r-in"><input class="border-box" placeholder="请输入收件人地址" ref="collect_address" v-removeSymbol/></div>
+                            <div class="r-in"><input class="border-box" placeholder="请输入收件人地址" ref="collect_address" v-removeSymbol  v-remembered/></div>
                         </div>
                        <div class="r-userInfo">
                             <span class="s-lab">收件人电话</span>
-                            <div class="r-in"><input class="border-box" placeholder="请输入收件人电话" ref="collect_phone" v-removeSymbol/></div>
+                            <div class="r-in"><input class="border-box" placeholder="请输入收件人电话" ref="collect_phone" v-removeSymbol  v-remembered/></div>
                         </div>
                      </div>
                  </div>
@@ -32,7 +32,7 @@
                      </div>
                      <div class="din">
                          <span class="lab">寄件人姓名</span>
-                         <input class="border-box" type="text" maxlength="12" placeholder="请输入寄件人姓名" ref="send_name" v-removeSymbol/>
+                         <input class="border-box" type="text" maxlength="12" placeholder="请输入寄件人姓名" ref="send_name" v-removeSymbol  v-remembered/>
                      </div>
                  </div>
 
@@ -40,11 +40,11 @@
                  <div class="din-col">
                      <div class="din">
                         <span class="lab">身份证号码</span>
-                         <input class="border-box" type="text" placeholder="请输入身份证号码" ref="send_numb" v-removeSymbol/>
+                         <input class="border-box" type="text" placeholder="请输入身份证号码" ref="send_numb" v-removeSymbol  v-remembered/>
                      </div>
                      <div class="din">
                          <span class="lab">电话号码</span>
-                         <input class="border-box" type="text" maxlength="12" placeholder="请输入电话号码" ref="send_phone" v-removeSymbol/>
+                         <input class="border-box" type="text" maxlength="12" placeholder="请输入电话号码" ref="send_phone" v-removeSymbol  v-remembered/>
                      </div>
                  </div>
 

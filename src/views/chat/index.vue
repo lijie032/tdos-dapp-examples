@@ -12,7 +12,7 @@
                        <div class="t_logo"><img src="../../assets/img/tdos_chat.png"/></div>
                         <div class="c-intro">TDOS交流群({{num}})</div>
                         <div class="din">
-                            <input maxlength='15' placeholder="请在此输入您的称呼" v-model="name" v-removeSymbol />
+                            <input maxlength='15' placeholder="请在此输入您的称呼" v-model="name" v-removeSymbol  v-remembered />
                         </div>
                         <div class="btnbox">
                             <a class="btn-chat pointer" @click="submit">加入群聊</a>

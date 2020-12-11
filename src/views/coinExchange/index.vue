@@ -23,7 +23,7 @@
                 <span class="s1">{{coin1.name}}</span>
               </div>
               <div class="din-box">
-                <div class="din"><input type="text" :placeholder="coin1.nick" v-limitNum ref="amount" v-model="amount"/></div>
+                <div class="din"><input type="text" :placeholder="coin1.nick" v-limitNum ref="amount" /></div>
               </div>
             </div>
             <p class="mess">{{coin1.proportion}}</p>
@@ -131,7 +131,7 @@
         },
 
         isExchange: false,//货币顺序是否转换
-        amount:'',
+        // amount:'',
         searchResult:false,//查询结果
         hash:'',
         rate:'',
@@ -163,10 +163,10 @@
         that.isExchange = !that.isExchange
         let obj1 = JSON.parse(JSON.stringify(that.coin2))
         let obj2 = JSON.parse(JSON.stringify(that.coin1))
-        that.amount = that.amount.replace(/[^\d]/g, "")
+        // that.amount = that.amount.replace(/[^\d]/g, "")
         that.coin1 = obj1
         that.coin2 = obj2
-        console.log(that.amount)
+        // console.log(that.amount)
       },
       //点击查询
       showResult(){

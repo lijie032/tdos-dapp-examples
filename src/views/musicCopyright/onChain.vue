@@ -8,13 +8,13 @@
         <div class="f-form-box">
           <h3>请认真填写以下数据，确保能准确上链</h3>
           <div class="din-col din-col2">
-            <div class="din border-box"><input type="text" maxlength="15" placeholder="歌曲名称" ref="name" v-removeSymbol/>
+            <div class="din border-box"><input type="text" maxlength="15" placeholder="歌曲名称" ref="name" v-removeSymbol  v-remembered/>
             </div>
             <div class="din border-box din-2"><input type="text" maxlength="15" placeholder="歌曲时长(分钟)" ref="time"
                                                      v-limitNum/></div>
           </div>
           <div class="din-col din-col2">
-            <div class="din border-box"><input type="text" maxlength="15" placeholder="歌手信息" ref="info" v-removeSymbol/>
+            <div class="din border-box"><input type="text" maxlength="15" placeholder="歌手信息" ref="info" v-removeSymbol  v-remembered/>
             </div>
             <div class="din border-box din-2 din-select">
               <el-select class="n-select" popper-class="n-select music-select" v-model="isDelay" placeholder="音乐版权类型"
@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="din-col">
-            <div class="din"><input type="text" placeholder="其他信息" ref="other" v-removeSymbol/></div>
+            <div class="din"><input type="text" placeholder="其他信息" ref="other" v-removeSymbol  v-remembered/></div>
           </div>
           <div class="btnbox">
             <a class="pointer chain-btn" @click="submit">存证上链</a>

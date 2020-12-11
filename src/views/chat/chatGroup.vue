@@ -30,7 +30,7 @@
           <div class="r-chat-box">
 
             <div class="r-chat-in-box">
-              <div class="r-chat-in"><input type="text" v-model="info" v-removeSymbol /></div>
+              <div class="r-chat-in"><input type="text" v-model="info" v-removeSymbol  v-remembered /></div>
               <button type="button" class="pointer btn-send" @click="submit">发送</button>
               <a ref="sendTx"></a>
             </div>

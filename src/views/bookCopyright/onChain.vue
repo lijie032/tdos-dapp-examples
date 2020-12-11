@@ -8,19 +8,19 @@
           <h3 class="from_title">登记信息</h3>
           <div class="d-in">
             <div class="lab">登记姓名</div>
-            <input class="border-box" placeholder="请输入登记姓名" ref="name" v-removeSymbol/>
+            <input class="border-box" placeholder="请输入登记姓名" ref="name" v-removeSymbol  v-remembered/>
           </div>
           <div class="d-in">
             <div class="lab">著作标题</div>
-            <input class="border-box" placeholder="请输入著作标题" ref="title" v-removeSymbol/>
+            <input class="border-box" placeholder="请输入著作标题" ref="title" v-removeSymbol  v-remembered/>
           </div>
           <div class="d-in">
             <div class="lab">身份证号</div>
-            <input class="border-box" placeholder="请输入身份证号" ref="code" v-removeSymbol/>
+            <input class="border-box" placeholder="请输入身份证号" ref="code" v-removeSymbol  v-remembered/>
           </div>
           <div class="d-in">
             <div class="lab">创意说明</div>
-            <input class="border-box" placeholder="请输入创意说明" ref="info" v-removeSymbol/>
+            <input class="border-box" placeholder="请输入创意说明" ref="info" v-removeSymbol  v-remembered/>
           </div>
 
           <div class="btnbox">

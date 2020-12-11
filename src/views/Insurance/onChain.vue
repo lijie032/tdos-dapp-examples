@@ -9,10 +9,10 @@
       <div class="f-form-box">
         <h3>请认真填写以下数据，确保能准确上链</h3>
         <div class="din-col din-col2">
-          <div class="din border-box"><input type="text" maxlength="15" placeholder="用户姓名" ref="name" v-removeSymbol/>
+          <div class="din border-box"><input type="text" maxlength="15" placeholder="用户姓名" ref="name" v-removeSymbol  v-remembered/>
           </div>
           <div class="din border-box din-2"><input type="text" maxlength="15" placeholder="航班信息" ref="info"
-                                                   v-removeSymbol/></div>
+                                                   v-removeSymbol  v-remembered/></div>
         </div>
         <div class="din-col din-col2">
           <div class="din border-box">
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="din-col din-col2">
-          <div class="din border-box"><input type="text" maxlength="15" placeholder="保单号码" ref="numb" v-removeSymbol/>
+          <div class="din border-box"><input type="text" maxlength="15" placeholder="保单号码" ref="numb" v-removeSymbol  v-remembered/>
           </div>
           <div class="din border-box din-2 din-select">
             <el-select class="n-select" popper-class="n-select" v-model="isClaims" placeholder="是否理赔" ref="bool2">

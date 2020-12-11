@@ -8,15 +8,15 @@
           <h3 class="from_title">上链信息</h3>
           <div class="d-in">
             <div class="lab">WPQR号:</div>
-            <input class="border-box" placeholder="" v-model="wpqr" v-removeSymbol/>
+            <input class="border-box" placeholder="" v-model="wpqr" v-removeSymbol  v-remembered/>
           </div>
           <div class="d-in">
             <div class="lab">焊接人员名称:</div>
-            <input class="border-box" placeholder="" v-model="person" v-removeSymbol/>
+            <input class="border-box" placeholder="" v-model="person" v-removeSymbol  v-remembered/>
           </div>
           <div class="d-in">
             <div class="lab">设备名称:</div>
-            <input class="border-box" placeholder="" v-model="equipment" v-removeSymbol/>
+            <input class="border-box" placeholder="" v-model="equipment" v-removeSymbol  v-remembered/>
           </div>
 
           <div class="btnbox">
