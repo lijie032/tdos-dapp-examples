@@ -64,7 +64,8 @@
                  </div>
                  <div class="con-text">
                      <p>恭喜您！登记成功！以下是您的事务哈希：</p>
-                     <p class="p-hash"><span>{{hash}}</span><a class="copy pointer"></a></p>
+                     <p class="p-hash"><span>{{hash}}</span><a class="copy pointer" v-clipboard:copy="hash" v-clipboard:success="onCopy"
+                   v-clipboard:error="onError"></a></p>
                      <p class="p-mess">
                          （您可复制上方哈希值并点击右上角按钮至“TDS浏览器”查询。）
 
@@ -237,6 +238,15 @@ export default {
         explorer
     },
     methods:{
+       onCopy: function (e) {
+        let that = this
+        return that.$toast('复制成功', 2000)
+      },
+      onError: function (e) {
+        let that = this
+        return that.$toast('复制失败，请稍后重试', 2000)
+      },
+
       addScroll () {
         TpScroll.AddScroll()
       },
