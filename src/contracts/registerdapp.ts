@@ -88,7 +88,7 @@ export function getRegisters(): ArrayBuffer {
 export function getRegister(hash: ArrayBuffer): ArrayBuffer {
     if(registerInfoList.has(hash))
     {
-        registerInfoList.get(hash);
+        return registerInfoList.get(hash);
     }
     return new ArrayBuffer(0);
 }
