@@ -88,7 +88,7 @@ export function getRegisters(): ArrayBuffer {
 export function getRegister(hash: ArrayBuffer): ArrayBuffer {
     if(registerInfoList.has(hash))
     {
-        registerInfoList.get(hash);
+        return registerInfoList.get(hash);
     }
     return new ArrayBuffer(0);
 }
@@ -103,5 +103,5 @@ export function saveRegister(username: string, sex: string, phone: string, desig
     registerList.set(phone, register.getEncoded());
     registerInfoList.set(tx.hash, register.getEncoded());
     Globals.set<u64>('registerId', registerId + 1);
-    Globals.set<ArrayBuffer>('contexts', encodeRegisters(cregistersArray));
+    Globals.set<ArrayBuffer>('registers', encodeRegisters(cregistersArray));
 }
