@@ -1,6 +1,6 @@
 // 部署公益合约
 
-import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getLendContract,getContract_crowdsaledapp, getContract_chatdapp, getContract_changedapp, PUBLIC_KEY } from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getLendContract,getContract_crowdsaledapp, getContract_chatdapp, getContract_changedapp, PUBLIC_KEY, getRegisterContract, PRIVATE_KEY } from './constants'
 
 import {
   bin2hex,
@@ -28,6 +28,11 @@ async function syncNonce (
 // 获取事务
 export function getTransaction (hash) {
   return httpRPC.getTransaction(hash)
+}
+
+// 获取事务
+export function sendTransaction (transaction) {
+  return rpc.sendTransaction(transaction)
 }
 
 // 解析公益
@@ -996,17 +1001,21 @@ export async function saveRegister (payload) {
     const tx = builder.buildContractCall(c, 'saveRegister', payload, 0)
     tx.nonce = await syncNonce(PUBLIC_KEY)
     tx.from = PUBLIC_KEY
+    tx.sign(PRIVATE_KEY);
     return tx
   }
 }
 
  // 得到注册者
 export async function getRegister (hash) {
+  console.log('-----------------------------------------------------------'+hash)
   let u  = await rpc.viewContract(await getRegisterContract(), 'getRegister', [hash])
+  console.log('--------------------------getRegister---------------------------------')
+  console.log(u)
   return fromEncoded_Register(u)
 }
 
-function fromEncoded_Register (buf) {
+function fromEncoded_Register(buf) {
   if (buf == ""){
     return "";
   }
@@ -1017,7 +1026,7 @@ function fromEncoded_Register (buf) {
   u.sex = rd.string()
   u.phone = rd.number()
   u.designation = rd.string()
-  u.hash = bin2hex(li.bytes())
+  u.hash = bin2hex(rd.bytes())
   return u
 }
 
@@ -1029,7 +1038,9 @@ export async function getRegisterId () {
 
 // 得到所有注册者
 export async function getRegisters () {
+  console.log('--------------------------getRegisters---------------------------------')
   let u  = await rpc.viewContract(await getRegisterContract(), 'getRegisters', [])
+  console.log('-------------getRegisters return-------'+u)
   return decodeRegisters(u);
 }
 

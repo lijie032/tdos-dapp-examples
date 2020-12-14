@@ -11,6 +11,7 @@ import abi_crowdsaledapp from '@/contracts/crowdsaledapp.abi.json'
 import abi_chatdapp from '@/contracts/chatdapp.abi.json'
 import tokenAbi from '@/contracts/tokendapp.abi.json'
 import abi_changedapp from '@/contracts/changedapp.abi.json'
+import registerdapp from '@/contracts/registerdapp.abi.json'
 
 // import wasm from '@/contracts/dapps.wasm'
 
@@ -55,7 +56,9 @@ export function persistVM(){
   localStorage.setItem('vm', bin2hex(vm.dump()))
 }
 
-export const rpc = new RPC('120.76.101.153', '7010')
+export const rpc = new RPC('192.168.1.89', '6011')
+// export const rpc = new RPC(location.hostname, location.port || '80')
+
 export const CONTRACT_ADDRESS = '2f0119a808c74be8c5e0929e0ab94be211e6f01a' // 十个存证合约地址
 export const CONTRACT_SECRET_BEAR_ADDRESS = 'a265f76986b17386360068c809a680b556c07d0f' // 加密熊合约地址
 export const CONTRACT_CHAT_ADDRESS = 'bfe0d3202e79af304b28e917df7ca3875d243d18' // 聊天室合约地址
@@ -67,7 +70,8 @@ export const CONTRACT_LIMIT_ADDRESS = 'f21be07cb70237e251465de0624f1f5716520829'
 export const CONTRACT_CROWDSALE_ADDRESS = 'da1681b9a25293010a822ee9759e2199217e3aa5' // 众筹合约地址
 export const CONTRACT_VOTE_ADDRESS = 'af0d5077e903ba5a336caf3779365c9780212cb7' // 投票合约地址
 export const CONTRACT_LEND_ADDRESS = '024d850e372bc1e325351d40a4f817cf28d8f7ca' // 闪电贷合约地址
-export const CONTRACT_REGISTER_ADDRESS = '80a9c71438705f2f6b0522ebf1b5c7c593bb38bc' // 登记合约地址
+// export const CONTRACT_REGISTER_ADDRESS = '80a9c71438705f2f6b0522ebf1b5c7c593bb38bc' // 登记合约地址
+export const CONTRACT_REGISTER_ADDRESS = '3fd5c091892f90d60e366709579d94f76fe3fe53' // 登记合约地址
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, abi)
@@ -114,7 +118,7 @@ export async function  getContract_changedapp() {
 }
 
 export async function  getRegisterContract() {
-  return new Contract(CONTRACT_REGISTER_ADDRESS, abi_changedapp)
+  return new Contract(CONTRACT_REGISTER_ADDRESS, registerdapp)
 }
 
 

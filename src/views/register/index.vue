@@ -7,9 +7,9 @@
                
                 <div class="coin-attribute">
                     <div class="coin-header">
-                        <a class="icon_list pointer " @click="listResult=true"></a>
+                        <a class="icon_list pointer " @click="showList"></a>
                         <div class="searchIn" :class="{'noSearch': !isSearch}">
-                            <input type="text" maxlength="150" placeholder="您可在此输入复制的哈希值以此查询" v-model="searchText"/>
+                            <input type="text" maxlength="250" placeholder="您可在此输入复制的哈希值以此查询" v-model="searchText"/>
                             <a class="asearch pointer "  @click="search"></a>
                         </div>
 
@@ -64,7 +64,7 @@
                  </div>
                  <div class="con-text">
                      <p>恭喜您！登记成功！以下是您的事务哈希：</p>
-                     <p class="p-hash"><span>da6d56qw9eqwe26qw26f5d96g59fd7ghd4f1h5dfgfd2sf</span><a class="copy pointer"></a></p>
+                     <p class="p-hash"><span>{{hash}}</span><a class="copy pointer"></a></p>
                      <p class="p-mess">
                          （您可复制上方哈希值并点击右上角按钮至“TDS浏览器”查询。）
 
@@ -93,17 +93,17 @@
             <div class="popup-content result-content">
               <div class="result-col">
                 <span class="lab">存证信息</span>
-                <p>区块高度：78955415</p>
-                <p>区块哈希：dasd3qw6eq5w6efds6f4dsg4f9g6re89t9ret9d weqwe5e6qw5e6wqe</p>
-                <p>事务哈希：dasd3qw6eq5w6efds6f4dsg4f9g6re89t9ret9d weqwe5e6qw5e6wqe</p>
+                <p>区块高度：{{height}}</p>
+                <p>区块哈希：{{blockHash}}</p>
+                <p>事务哈希：{{txHash}}</p>
               </div>
               <div class="result-col">
                 <span class="lab">登记信息</span>
-                <p>姓名：</p>
-                <p>性别：</p>
-                <p>手机号：</p>
+                <p>姓名：{{searchName}}</p>
+                <p>性别：{{searchSex}}</p>
+                <p>手机号：{{searchPhone}}</p>
                 <!--公司名称有值显示，没有值不显示-->
-                <p>公司名称</p>
+                <p>公司名称:{{searchCompany}}</p>
               </div>
             </div>
             <div class="btnbox">
@@ -171,10 +171,10 @@
     </div>
 </template>
 <script>
-import explorer from '@/components/browser1.vue'
+import explorer from '@/components/browser1.vue' 
 import TpScroll from '@/assets/js/tp-scroll.js'
-import { saveToken, getToken } from "@/api/tokendapp";
-import { getTransaction } from '@/api/dapps'
+import { saveRegister, getRegister, getRegisterId, getRegisters} from "@/api/dapps.js";
+import { getTransaction, sendTransaction } from '@/api/dapps'
 import {showLoading, hideLoading} from '@/assets/js/loading'
 import {utils} from '@/assets/js/pattern'
 export default {
@@ -194,16 +194,16 @@ export default {
             gender:'',//性别
            
            tableData:[
-               {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
-               {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
-               {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
-               {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
-               {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
-               {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
-               {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
-               {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
-               {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
-               {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
+              //  {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
+              //  {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
+              //  {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
+              //  {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
+              //  {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
+              //  {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
+              //  {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
+              //  {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
+              //  {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
+              //  {name:'李三思' ,gender:'男',phone:'18018209875',companyName:'常州市XXXXXXXXX'},
                
                ],
 
@@ -222,6 +222,15 @@ export default {
             info:'',
 
             listResult:false,//列表显示
+
+            searchName:'',
+            searchPhone:'',
+            searchSex:'',
+            searchCompany:'',
+            height: 0,
+            blockHash:'',
+            txHash:'',
+            hash:'',
         }
     },
     components:{
@@ -237,7 +246,28 @@ export default {
       },
        async publicCoin(){
             let that = this;
-           
+            if (utils.isNullOrEmpty(that.name)) {
+              return that.$toast('请输入姓名', 3000)
+            }
+            if (utils.isNullOrEmpty(that.gender)) {
+              return that.$toast('请输入性别', 3000)
+            }
+            if (utils.isNullOrEmpty(that.phone)) {
+              return that.$toast('请输入手机号', 3000)
+            }
+            if (utils.isNullOrEmpty(that.companyName)) {
+              return that.$toast('请输入单位名称', 3000)
+            }
+            let payload = {
+              username: that.name,
+              sex: that.gender == 1?'男':'女',
+              phone: that.phone,
+              designation: that.companyName,
+            }
+            let tx = await saveRegister(payload)
+            console.log(tx)
+            await sendTransaction(tx);
+            that.hash = tx.getHash();
             that.publicSuc=true;
             TpScroll.RemoveScroll();
        },
@@ -250,18 +280,47 @@ export default {
 
        //结果
        hideList(){
-           
          let that = this;
          that.listResult=false;
          TpScroll.AddScroll();
+       },
+        //结果
+       async showList(){
+         let that = this;
+         that.listResult=true; 
+         let registers = await getRegisters();
+         if (registers.length == 0){
+              return;
+         }
+         if (registers == ''){
+           return this.$toast('暂无内容', 3000)
+         }
+        registers.sort(function(a,b){
+                return a.username.localeCompare(b.username);
+            });
+        registers.forEach((item)=>{
+            that.tableData.push({name:item.username, gender:item.sex, phone:item.phone, companyName:item.designation})
+        });
        },
 
        //点击搜索调用事件
        async search(){
             let that = this;
-    
-            that.searchResult = true;
-         
+            let user = await getRegister(that.searchText);
+            if (user == '') {
+              return this.$toast('暂无内容', 3000)
+            } 
+            console.log(user)
+            getTransaction(that.searchText).then(t =>{
+               that.txHash = that.searchText;
+               that.blockHash = t.blockHash;
+               that.height = t.blockHeight;
+               that.searchName = user.username;
+               that.searchSex = user.sex; 
+               that.searchPhone = user.phone; 
+               that.searchCompany = user.designation; 
+               that.searchResult = true; 
+            })
        },
        hideSearch(){
            let that = this;
