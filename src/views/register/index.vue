@@ -265,7 +265,6 @@ export default {
               designation: that.companyName,
             }
             let tx = await saveRegister(payload)
-            console.log(tx)
             await sendTransaction(tx);
             that.hash = tx.getHash();
             that.publicSuc=true;
@@ -309,8 +308,7 @@ export default {
             let user = await getRegister(that.searchText);
             if (user == '') {
               return this.$toast('暂无内容', 3000)
-            } 
-            console.log(user)
+            }
             getTransaction(that.searchText).then(t =>{
                that.txHash = that.searchText;
                that.blockHash = t.blockHash;

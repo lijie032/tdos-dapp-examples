@@ -1008,10 +1008,7 @@ export async function saveRegister (payload) {
 
  // 得到注册者
 export async function getRegister (hash) {
-  console.log('-----------------------------------------------------------'+hash)
   let u  = await rpc.viewContract(await getRegisterContract(), 'getRegister', [hash])
-  console.log('--------------------------getRegister---------------------------------')
-  console.log(u)
   return fromEncoded_Register(u)
 }
 
@@ -1038,9 +1035,7 @@ export async function getRegisterId () {
 
 // 得到所有注册者
 export async function getRegisters () {
-  console.log('--------------------------getRegisters---------------------------------')
   let u  = await rpc.viewContract(await getRegisterContract(), 'getRegisters', [])
-  console.log('-------------getRegisters return-------'+u)
   return decodeRegisters(u);
 }
 
@@ -1061,10 +1056,10 @@ function decodeRegisters(buf) {
 function fromEncodedRegisters(buf) {
   const li = new rlp.RLPListReader(buf);
   const u = {}
-  u.username = rd.string()
-  u.sex = rd.string()
-  u.phone = rd.number()
-  u.designation = rd.string()
+  u.username = li.string()
+  u.sex = li.string()
+  u.phone = li.number()
+  u.designation = li.string()
   u.hash = bin2hex(li.bytes())
   return u;
 }
