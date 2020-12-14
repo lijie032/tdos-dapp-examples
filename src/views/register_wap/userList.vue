@@ -30,6 +30,8 @@
 </template>
 
 <script >
+import { saveRegister, getRegister, getRegisterId, getRegisters, hasPhone} from "@/api/dapps.js";
+import { getTransaction, sendTransaction } from '@/api/dapps'
 export default{
 
 
@@ -39,23 +41,23 @@ export default{
         loading: false,
         noMore:false,
         userList:[
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
-            {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
+            // {name:'李三思',sex:'男',phone:'18018609087',address:'江苏省常州市新北区绿都万和城'},
         ]
 
        }
@@ -80,7 +82,27 @@ export default{
         let temp =this.userList
         //this.userList.concat(temp)
         console.log(1)
-      }
+      },
+      async showList(){
+         let that = this;
+         let registers = await getRegisters();
+         if (registers.length == 0){
+              return;
+         }
+         if (registers == ''){
+           return this.$toast('暂无内容', 3000)
+         }
+        registers.sort(function(a,b){
+                return a.username.localeCompare(b.username);
+            });
+        registers.forEach((item)=>{
+            that.userList.push({name:item.username, sex:item.sex, phone:item.phone, address:item.designation})
+        });
+       },
+   },
+   mounted(){
+     let that = this;
+     that.showList();
    }
 }
 </script>
