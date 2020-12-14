@@ -1,0 +1,162 @@
+img{vertical-align: top;}
+.box-flex{
+    display:-webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex
+}
+
+.flex1{
+-webkit-box-flex: 1;
+-webkit-flex: 1;
+-ms-flex: 1;
+flex: 1;
+}
+
+
+
+.flex-between{
+-webkit-justify-content:space-between;
+justify-content:space-between;
+-moz-box-pack:space-between;
+-webkit--moz-box-pack:space-between;
+box-pack:space-between;
+}
+.flex-around{
+-webkit-justify-content:space-around;
+justify-content:space-around;
+-moz-box-pack:space-around;
+-webkit--moz-box-pack:space-around;
+box-pack:space-around;
+}
+.flex-center{
+    -webkit-justify-content:center;
+justify-content:center;
+-moz-box-pack:center;
+-webkit--moz-box-pack:center;
+box-pack:center;
+}
+
+.flex-middle{align-items:center;
+-webkit-align-items:center;
+box-align:center;
+-moz-box-align:center;
+-webkit-box-align:center;}
+.line-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+white-space: nowrap;
+}
+.line-clamp2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+
+.clearfix:after{content:"";height:0;line-height:0;display:block;visibility:hidden;clear:both;}
+.clearfix{zoom:1;}
+
+
+
+.wrapheader{
+    position: fixed; width:100%;height:.8rem; left:0px;top:0px;z-index: 999; background:#3B4CA3;
+    .pageTitle{font-size:.36rem;color:#fff;position:absolute;right:1.5rem;left:1.5rem;text-align: center;
+    top:.15rem;line-height: .5rem;
+    }
+
+    .close{
+        width:.5rem;height:.5rem; display:block; background: url(../img/coin_close.png) center no-repeat;
+        background-size: .34rem;-webkit-background-size: .34rem;;
+        position:absolute;left:.2rem;top:50%;margin-top: -.25rem;
+    }
+    .back{
+        background: url(../img/back.png) center no-repeat;
+        background-size: .34rem;-webkit-background-size: .34rem;;  
+    }
+
+    .list-icon{
+        width:.5rem;height:.5rem; display:block; background: url(../img/register_iconList.png) center no-repeat;
+        background-size: .35rem .32rem;-webkit-background-size: .35rem .32rem;;
+        position:absolute;right:.2rem;top:50%;margin-top: -.25rem; cursor: pointer;
+    }
+}
+.wap-wrap{width:100%;min-height:100%; background:#ededed; padding-top: 1rem; box-sizing:border-box; -webkit-box-sizing:border-box;}
+
+.nav-function{width:4.8rem; margin:  0 auto;  padding: .2rem 0;
+  > div{.borderRadius(.05rem,.05rem,.05rem,.05rem); overflow:hidden;}
+.s-nav{font-size:.32rem; height:.7rem; line-height: .7rem; text-align: center; background:#3B4CA3;color:#fff;}
+.active{background:#fff;color:#3B4CA3;}
+}
+.logo{width:1.3rem;height:1.3rem; margin:.2rem auto; margin-bottom: .6rem;
+ background: url(../img/tdos_logo.png) center no-repeat; background-size: cover; -webkit-background-size: cover;
+}
+
+input{outline: none;}
+.frombox{
+    .din-box{ margin: 0 .48rem; margin-bottom: .3rem; }
+    .lab{width:1.4rem; font-size:.28rem;color:#333;}
+    input{height:.7rem;line-height: .5rem;color:#333;  border:0 none; padding: .1rem .2rem;
+    width:100%; box-sizing: border-box; -webkit-box-sizing: border-box; font-size:.28rem; border:0 none}
+    .labin{border:1px solid #cdcdcd;background:#fff;.borderRadius(.08rem,.08rem,.08rem,.08rem);}
+    .btnbox{padding: .15rem 0;}
+    .btn-register{width:2.2rem;height: .8rem; background:#3B4CA3; line-height: .8rem; text-align: center;
+    display: block; font-size:.36rem;color: #fff;.borderRadius(.08rem,.08rem,.08rem,.08rem);
+    }
+
+   label{font-size:.28rem; color:#333; padding-left: .15rem;}
+   .d-rad{margin-right: .3rem;}
+    .radio{width:.4rem;height:.4rem;display: block; background: url(../img/radio_n.png) center no-repeat; background-size: .38rem;-webkit-background-size: .38rem;}
+    .radio_h{ background: url(../img/radio_h.png) center no-repeat; background-size: cover;-webkit-background-size: cover;}
+}
+
+
+.div-search{
+    .search-result{
+      margin: 0 .3rem; background: #fff; padding: .2rem;.borderRadius(.08rem,.08rem,.08rem,.08rem);
+      p{font-size:.28rem; color:#333; padding: .03rem 0;word-break: break-all;}
+      
+    }
+    .mess{font-size: 14px;color:#cdcdcd; font-size: 14px; text-align: center; padding-bottom: .3rem;
+      a{color:#3B4CA3;}
+    }
+
+    .searchBox{margin: 0 .3rem; padding: .3rem 0;}
+    .d-searchIn{background:#fff;
+     padding-right: .8rem; position: relative; padding-left: .2rem;
+        .search_btn{width:.6rem;height:.6rem; display: block; position: absolute; right:0px;top:50%;margin-top: -.3rem;
+        background: url(../img/coin_searchh.png) center no-repeat; background-size: .3rem; -webkit-background-size: .3rem; 
+        }
+        input{font-size:.28rem; height: .5rem; line-height: .5rem; padding: .1rem 0; width: 100%;}
+
+    }
+}
+
+
+.succ_box{
+    padding: .96rem 0; text-align: center;
+    .icon{width:1.35rem;height:1.35rem;margin:0 auto;background: url(../img/register_suc.png) center no-repeat;
+    background-size: cover; -webkit-background-size: cover;}
+    .mess{font-size: .36rem;color:#555; font-weight:bold; padding: .04rem;}
+    .hashBox{margin:.05rem .3rem; word-break: break-all;}
+    .notice{font-size:12px;color:#bdbdbd;}
+    .copy{width:.4rem;height: .4rem; display: inline-block; background: url(../img/icon_copy.png) center no-repeat;
+    background-size: .3rem; -webkit-background-size: .3rem; vertical-align: middle;
+    }
+    
+}
+
+
+.list-wrap{height:100%; overflow: hidden;
+    .list_mess{font-size:.36rem; color:#666; text-align: center;    background: #ededed; }
+}
+.userList{margin: 0 .24rem; height: 100%;  box-sizing: border-box; -webkit-box-sizing: border-box;
+
+  li{font-size:.28rem; background:#fff; padding:.15rem .15rem;margin-bottom: .2rem;}
+  .user_name{min-width:3rem; max-width: 5rem;}
+
+  
+}
