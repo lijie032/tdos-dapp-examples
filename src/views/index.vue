@@ -73,13 +73,14 @@ export default {
         return{
             isSearch:false,//搜索是否展开
             iconList:[
+               {title:'登记',icon:require('../assets/img/logo_bookCopyright.png'),link:'/register'},
                {title:'病历共享',icon:require('../assets/img/logo_medicalTreatment.png'),link:'/medicalTreatment'},
                {title:'物流',icon:require('../assets/img/logo_logistics.png'),link:'/logistics'},
                {title:'金融',icon:require('../assets/img/logo_finance.png'),link:'/finance'},
                {title:'公益慈善',icon:require('../assets/img/logo_publicWelfare.png'),link:'/publicWelfare'},
                {title:'音乐版权',icon:require('../assets/img/logo_musicCopyright.png'),link:'/musicCopyright'},
                {title:'保险理赔',icon:require('../assets/img/logo_insurance.png'),link:'/Insurance'},
-               {title:'著作版权',icon:require('../assets/img/logo_bookCopyright.png'),link:'/bookCopyright'},
+               //{title:'著作版权',icon:require('../assets/img/logo_bookCopyright.png'),link:'/bookCopyright'},
                {title:'购物溯源',icon:require('../assets/img/logo_shopping.png'),link:'/shopping'},
                {title:'焊接查证',icon:require('../assets/img/logo_welding.png'),link:'/welding'},
                {title:'资产继承',icon:require('../assets/img/logo_assets.png'),link:'/assets'},

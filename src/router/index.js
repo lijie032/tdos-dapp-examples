@@ -302,6 +302,12 @@ export default new Router({
       name: 'coinExchange',
       component: resolve=>(require(["@/views/coinExchange/index"],resolve))
     },
+
+    {
+      path: '/register',//资产呼唤
+      name: 'register',
+      component: resolve=>(require(["@/views/register/index"],resolve))
+    },
     
   ]
 })
