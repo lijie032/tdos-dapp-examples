@@ -67,7 +67,7 @@ export const CONTRACT_LIMIT_ADDRESS = 'f21be07cb70237e251465de0624f1f5716520829'
 export const CONTRACT_CROWDSALE_ADDRESS = 'da1681b9a25293010a822ee9759e2199217e3aa5' // 众筹合约地址
 export const CONTRACT_VOTE_ADDRESS = 'af0d5077e903ba5a336caf3779365c9780212cb7' // 投票合约地址
 export const CONTRACT_LEND_ADDRESS = '024d850e372bc1e325351d40a4f817cf28d8f7ca' // 闪电贷合约地址
-export const CONTRACT_LEND_ADDRESS = '80a9c71438705f2f6b0522ebf1b5c7c593bb38bc' // 登记合约地址
+export const CONTRACT_REGISTER_ADDRESS = '80a9c71438705f2f6b0522ebf1b5c7c593bb38bc' // 登记合约地址
 
 export async function getContract() {
   return new Contract(CONTRACT_ADDRESS, abi)
@@ -113,14 +113,23 @@ export async function  getContract_changedapp() {
   return new Contract(CONTRACT_CHANGE_ADDRESS, abi_changedapp)
 }
 
-// 捐赠人的私钥
+export async function  getRegisterContract() {
+  return new Contract(CONTRACT_REGISTER_ADDRESS, abi_changedapp)
+}
+
+
+
+// 捐赠人/注册的私钥
 export const PRIVATE_KEY =
   'f00df601a78147ffe0b84de1dffbebed2a6ea965becd5d0bd7faf54f1f29c6b5'
 
-// 捐赠人的地址
+// 捐赠人/注册的地址
 export const ADDRESS = publicKey2Address(
   privateKey2PublicKey(PRIVATE_KEY)
 )
+
+// 注册的公钥
+export const PUBLIC_KEY = privateKey2PublicKey(PRIVATE_KEY)
 
 // 红十字会的私钥
 export const CROSS_PRIAVTE_KEY =

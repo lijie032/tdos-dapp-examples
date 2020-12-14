@@ -12,7 +12,7 @@ function resolve(src){
 
 //let src = process.env['ENTRY'] || resolve('secretbeardapp.ts')
 
-let src = process.env['ENTRY'] || resolve('chatdapp.ts')
+let src = process.env['ENTRY'] || resolve('registerdapp.ts')
 
 
 const { compileABI } = require('@salaku/js-sdk')
@@ -24,7 +24,7 @@ abort = resolve(abort)
 const abiDist = src.replace(/^(.*)\.ts$/, '$1.abi.json')
 
 
-const cmd = `D:\\project\\template\\tdos-dapp-examples\\node_modules\\.bin\\asc ${src} -b ${dst} --runtime none --use abort=${abort.replace(/\\/g, '/')} --sourceMap --debug`
+const cmd = `D:\\tdos-dapp-examples\\node_modules\\.bin\\asc ${src} -b ${dst} --runtime none --use abort=${abort.replace(/\\/g, '/')} --sourceMap --debug`
 
 const abi = compileABI(fs.readFileSync(src))
 fs.writeFileSync(abiDist, JSON.stringify(abi, null, 2))
