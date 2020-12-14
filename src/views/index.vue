@@ -29,7 +29,7 @@
               <div class="content-middle">
                   <ul class="navIconList">
                      <li v-for="(item,index) in iconList" :key="index" >
-                        <a class="pointer" @click="routeLink(item.link)">
+                        <a class="pointer" @click="routeLink(item.title,item.link)">
                          <div class="p-logo">
                              <img :src="item.icon"/>
                          </div>
@@ -89,7 +89,7 @@ export default {
                {title:'投票',icon:require('../assets/img/logo_vote.png'),link:'/vote'},
                {title:'众筹',icon:require('../assets/img/logo_crowdFunding.png'),link:'/crowdFunding'},
                {title:'聊天Talk',icon:require('../assets/img/logo_chat.png'),link:'/chat'},
-                {title:'闪电贷',icon:require('../assets/img/logo_flashLoan.png'),link:'/flashLoan'},
+               {title:'闪电贷',icon:require('../assets/img/logo_flashLoan.png'),link:'/flashLoan'},
                {title:'加密熊',icon:require('../assets/img/logo_cryptoBear.png'),link:'/cryptoBear'},
                {title:'通讯录',icon:require('../assets/img/logo_addressBook.png'),link:'/addressBook'},
                {title:'相册',icon:require('../assets/img/logo_album.png'),link:'/album'},
@@ -100,9 +100,19 @@ export default {
         }
     },
     methods:{
-        routeLink(path){
+        routeLink(title,path){
             let that = this;
-            that.$router.push({path:path}).catch(err => { console.log(err) })
+            if(title=='登记'){
+                if(that._isMobile()){
+                   that.$router.push({path:'/register_wap'}).catch(err => { console.log(err) })
+                }else{
+                    that.$router.push({path:path}).catch(err => { console.log(err) })
+                }
+            }
+            else{
+               that.$router.push({path:path}).catch(err => { console.log(err) })
+            }
+            
         },
         search(){
             let that = this;
@@ -114,6 +124,10 @@ export default {
             //         return that.$toast('请输入搜索关键词', 3000)
             //     }
             // }
+        },
+        _isMobile() {
+        let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+           return flag;
         }
     }
 }

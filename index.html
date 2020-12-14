@@ -2,9 +2,36 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <meta content="yes" name="apple-mobile-web-app-capable">     
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">     
+		<meta content="telephone=no" name="format-detection">
     <title>dapp</title>
     <script src="https://unpkg.com/@salaku/js-sdk@1.2.13/dist/bundle.js"></script>
+
+
+
+    <script>	
+    	!function(e, t) {
+	    var n = t.documentElement,
+	        d = e.devicePixelRatio || 1;
+	
+	    function i() {
+	        var cw = n.clientWidth > 750 ? 750 : n.clientWidth < 320 ? 320 : n.clientWidth;
+	        var e = cw / 7.5;
+	        n.style.fontSize = e + 'px';
+	    }
+	    if (function e() { t.body ? t.body.style.fontSize = '16px' : t.addEventListener('DOMContentLoaded', e) }(), i(), e.addEventListener('resize', i), e.addEventListener('pageshow', function(e) { e.persisted && i() }), d >= 2) {
+	        var o = t.createElement('body'),
+	            a = t.createElement('div');
+	        a.style.border = '.5px solid transparent', o.appendChild(a), n.appendChild(o), 1 === a.offsetHeight && n.classList.add('hairlines'), n.removeChild(o);
+	    }
+	}(window, document);
+
+     
+
+     
+    </script>
   </head>
   <body>
     <div id="app"></div>
