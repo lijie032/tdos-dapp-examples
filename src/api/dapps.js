@@ -1033,6 +1033,11 @@ export async function getRegisterId () {
   return u;
 }
 
+export async function hasPhone (phone) {
+  let u  = await rpc.viewContract(await getRegisterContract(), 'hasPhone', [phone])
+  return u;
+}
+
 // 得到所有注册者
 export async function getRegisters () {
   let u  = await rpc.viewContract(await getRegisterContract(), 'getRegisters', [])

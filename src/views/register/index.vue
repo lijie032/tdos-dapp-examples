@@ -173,7 +173,7 @@
 <script>
 import explorer from '@/components/browser1.vue' 
 import TpScroll from '@/assets/js/tp-scroll.js'
-import { saveRegister, getRegister, getRegisterId, getRegisters} from "@/api/dapps.js";
+import { saveRegister, getRegister, getRegisterId, getRegisters, hasPhone} from "@/api/dapps.js";
 import { getTransaction, sendTransaction } from '@/api/dapps'
 import {showLoading, hideLoading} from '@/assets/js/loading'
 import {utils} from '@/assets/js/pattern'
@@ -257,6 +257,10 @@ export default {
             }
             if (utils.isNullOrEmpty(that.companyName)) {
               return that.$toast('请输入单位名称', 3000)
+            }
+            let bool = await hasPhone(that.phone);
+            if (bool){
+              return that.$toast('手机号已经存在', 3000);
             }
             let payload = {
               username: that.name,
