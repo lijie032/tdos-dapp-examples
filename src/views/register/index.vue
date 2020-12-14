@@ -157,7 +157,7 @@
                      
                      <el-pagination
                         layout="prev, pager, next"
-                        :total="100"
+                        :total="total"
                         :page-size="page_size"   
                          @current-change="handleCurrentChange"
                          :current-page.sync="currentPage" 
@@ -232,6 +232,10 @@ export default {
             blockHash:'',
             txHash:'',
             hash:'',
+
+            total:0,//条数
+
+            totalData:[],
         }
     },
     components:{
@@ -252,7 +256,16 @@ export default {
       },
        //分页点击
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        let that = this;
+    
+        let currentPage = val;
+        let PageSize = that.page_size;
+        that.tableData=[];
+        for(var i=(currentPage-1)*PageSize;i<PageSize*currentPage;i++){ 
+            if(that.totalData[i]){
+               that.tableData.push(that.totalData[i]);
+             } 
+        }
       },
        async publicCoin(){
             let that = this;
@@ -312,8 +325,22 @@ export default {
                 return a.username.localeCompare(b.username);
             });
         registers.forEach((item)=>{
-            that.tableData.push({name:item.username, gender:item.sex, phone:item.phone, companyName:item.designation})
+            that.totalData.push({name:item.username, gender:item.sex, phone:item.phone, companyName:item.designation})
+            that.total = that.totalData.length;
+
+
+           
+          
+
         });
+           let currentPage = that.currentPage;
+           let PageSize = that.page_size;
+           that.tableData=[];
+           for(var i=(currentPage-1)*PageSize;i<PageSize*currentPage;i++){ 
+             if(that.totalData[i]){
+               that.tableData.push(that.totalData[i]);
+             } 
+            }
        },
 
        //点击搜索调用事件
