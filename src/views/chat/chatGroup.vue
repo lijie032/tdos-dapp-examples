@@ -30,7 +30,7 @@
           <div class="r-chat-box">
 
             <div class="r-chat-in-box">
-              <div class="r-chat-in"><input type="text" v-model="info"/></div>
+              <div class="r-chat-in"><input type="text" v-model="info" v-removeSymbol  v-remembered /></div>
               <button type="button" class="pointer btn-send" @click="submit">发送</button>
               <a ref="sendTx"></a>
             </div>
@@ -46,6 +46,7 @@
   import explorer from '@/components/browser1.vue'
   import {getUserId, saveChat, getChat, getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
+  import {utils} from '@/assets/js/pattern'
   export default {
     data () {
       return {
@@ -67,7 +68,7 @@
     },
     methods: {
       showDetail (num,obj) {
-        this.$refs['myScrollbar'].wrap.scrollTop = this.$refs['myScrollbar'].wrap.scrollHeight;//这个是聊天记录滚动到底部写法
+        
         let that = this;
         if(that.detailIndex!=null){
             if(that.detailIndex==num){
@@ -100,6 +101,10 @@
         // }else {
         //
         // }
+        that.$nextTick(() => {
+ this.$refs['myScrollbar'].wrap.scrollTop = this.$refs['myScrollbar'].wrap.scrollHeight;//这个是聊天记录滚动到底部写法
+        })
+        
       },
       async submit () {
         let that = this;
@@ -108,6 +113,9 @@
           return that.$toast("获取账户失败，请打开TDOS插件", 3000);
         }
         let info = that.info;
+        if (utils.isNullOrEmpty(info)){
+          return that.$toast('请输入要发送的消息', 3000)
+        }
         let time = this.timefilters();
         let payload = {
           context:info,
@@ -139,6 +147,7 @@
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
+                that.info = ""
                 hideLoading()
                 clearInterval(that.timer1)
                 that.get();

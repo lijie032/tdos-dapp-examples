@@ -2,7 +2,7 @@
   <div class="pageWrap f-pageWrap f-wrap-table">
       <explorer :type="type" :isHome="isHome"></explorer>
       <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_finance.png"/></div>
          TDOS金融
       </div>
       <div class="page-main content-middle">

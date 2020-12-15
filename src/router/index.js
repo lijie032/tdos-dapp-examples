@@ -302,6 +302,30 @@ export default new Router({
       name: 'coinExchange',
       component: resolve=>(require(["@/views/coinExchange/index"],resolve))
     },
+
+    {
+      path: '/register',//登记
+      name: 'register',
+      component: resolve=>(require(["@/views/register/index"],resolve))
+    },
+
+    {
+      path: '/register_wap',//手机端-登记
+      name: 'register_wap',
+      component: resolve=>(require(["@/views/register_wap/index"],resolve))
+    },
+    {
+      path: '/register_wap/success',//手机端-用户登记成功
+      name: 'register_wap_success',
+      component: resolve=>(require(["@/views/register_wap/success"],resolve))
+    },
+    {
+      path: '/register_wap/userList',//手机端-用户登记列表
+      name: 'register_wap_userList',
+      component: resolve=>(require(["@/views/register_wap/userList"],resolve))
+    },
+
+    
     
   ]
 })

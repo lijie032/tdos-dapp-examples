@@ -1,9 +1,9 @@
 <template>
   <div class="pageWrap  f-wrap-table search-wrap">
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="page-main content-middle">
            <div class="logo-intro">
-              <div class="logo"></div>
+              <div class="logo"><img src="../../assets/img/logo_insurance.png"/></div>
               TDOS保险
            </div>
 
@@ -24,12 +24,21 @@
 
 <script>
   import { getInsure, getTransaction} from '@/api/dapps'
+   import explorer from '@/components/browser1.vue'
 export default{
     data(){
         return{
           hash:'',
+          type:0,
+          isHome:true,
+          isIndex:false,
+          backPath:'/Insurance'
         }
-    },methods:{
+    },
+    components: {
+      explorer
+    },
+    methods:{
         async linkResult(){
           let that = this
           let hash = that.hash
@@ -42,7 +51,7 @@ export default{
             this.$toast('暂无内容', 2000)
           } else {
             getTransaction(hash).then(t => {
-              that.$router.push({path: '/Insurance/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
+              that.$router.push({path: '/Insurance/searchResult', query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}})
             })
           }
         },

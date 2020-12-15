@@ -1,14 +1,14 @@
 <template>
   <div class="pageWrap f-wrap-table pw-pageWrap a_onChain_wrap">
 
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="page-main content-middle  mt-page-main">
           <div class="a_form_box">
               <div class="marginlr60">
                   <h3 class="from_title">登记信息</h3>
                   <div class="d-in">
                       <div class="lab">病人姓名</div>
-                     <input class="border-box" type="text" maxlength="15" placeholder="请输入病人姓名" ref="name"/>
+                     <input class="border-box" type="text" maxlength="15" placeholder="请输入病人姓名" ref="name" v-removeSymbol  v-remembered />
                   </div>
                   <div class="d-in">
                       <div class="lab">就诊时间</div>
@@ -22,15 +22,15 @@
                   </div>
                   <div class="d-in">
                       <div class="lab">就诊医院</div>
-                     <input class="border-box" type="text" maxlength="20" placeholder="请输入就诊医院" ref="medical"/>
+                     <input class="border-box" type="text" maxlength="20" placeholder="请输入就诊医院" ref="medical" v-removeSymbol  v-remembered />
                   </div>
                    <div class="d-in">
                       <div class="lab">就诊信息</div>
-                     <input class="border-box" type="text" maxlength="50" placeholder="请输入就诊信息" ref="info"/>
+                     <input class="border-box" type="text" maxlength="50" placeholder="请输入就诊信息" ref="info" v-removeSymbol  v-remembered />
                   </div>
                   <div class="d-in">
                       <div class="lab">就诊医生</div>
-                     <input class="border-box" type="text" maxlength="15" placeholder="请输入就诊医生" ref="doctor"/>
+                     <input class="border-box" type="text" maxlength="15" placeholder="请输入就诊医生" ref="doctor" v-removeSymbol  v-remembered />
                   </div>
                   <div class="btnbox">
                        <a class="btn pointer" @click="submit">存证上链</a>
@@ -53,14 +53,18 @@
 <script>
 
   import { saveMedical } from '@/api/dapps'
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
   import { getTransaction } from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
   import {utils} from '@/assets/js/pattern'
   export default{
     data(){
       return{
-        time:""
+        time:"",
+        type:1,
+        isHome:true,
+        isIndex:false,
+        backPath:'/medicalTreatment'
       }
     },
     components:{
@@ -98,11 +102,16 @@
           return that.$toast("获取账户失败，请打开TDOS插件", 3000);
         }
         let Medical = await saveMedical(payload, pk);
-        let sendTx = JSON.stringify(Medical);
+         //console.log(JSON.stringify(Medical))
+        let sendTx =JSON.stringify(Medical)
+     
+
         that.$refs.sendTx.href =
           "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
         that.$refs.sendTx.click();
+        
         return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
+       
       },
       timer_tx () {
         let that = this

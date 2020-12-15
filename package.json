@@ -5,7 +5,7 @@
   "author": "liuqing <1229674380@qq.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js ",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js"
@@ -21,7 +21,7 @@
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "@salaku/js-sdk": "^1.2.12",
+    "@salaku/js-sdk": "^1.2.13",
     "autoprefixer": "^7.1.2",
     "axios": "^0.21.0",
     "babel-core": "^6.22.1",

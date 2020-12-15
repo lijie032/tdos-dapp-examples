@@ -79,8 +79,9 @@ h1,h2,h3,h4,h5{font-weight: normal;}
 
 
 .logo-intro{position: absolute; top:80px;text-align: center; width: 100%; line-height: 82px;
-  .logo{width:80px;height:80px;display: inline-block; vertical-align:top;border:1px solid @h-btn-white}
+  .logo{width:80px;height:80px;display: inline-block; vertical-align:top;/*border:1px solid @h-btn-white*/}
   font-size:@f-fise48; color:@h-btn-white; 
+  .logo img{width:100%;height:100%;vertical-align: top;}
 }
 
 .search-wrap{
@@ -184,7 +185,7 @@ a{
 
 .el-loading-spinner i{font-size:50px;color:#fff !important;}
 .el-loading-spinner .el-loading-text{color:#fff !important;width:540px;
-  margin: 0 auto; text-align: center;white-space: pre-line;}
+  margin: 0 auto !important; text-align: center;white-space: pre-line;}
 
 
 .chrome-plugin-tdos-panel{position: fixed; left:0px;top:0px;z-index: 11;}
@@ -192,7 +193,7 @@ a{
 
 /*头部返回首页*/
 .right-header{
-  position:fixed;right:20px;top:20px; z-index: 999;
+  position:fixed;right:20px;top:20px; z-index: 99;
   .back-index{width:40px;height:40px;display: inline-block; vertical-align: top; margin-right: 15px;
      a{width:100%;height:100%; display: block;background: url(~@/assets/img/back_inex.png) center no-repeat;}
   }
@@ -215,9 +216,21 @@ a{
 /*下拉显示不完全*/
 .el-select-dropdown .el-scrollbar .el-scrollbar__wrap
 {
-    overflow: scroll!important;
+    overflow-y: scroll!important;
 }
 
+.register-select{
+  .el-select{width:66.66%}
+}
+
+.regi-tab-box{
+  .el-table .cell{font-size: 16px;}
+  .el-table  th .cell{font-size: 16px; color: #333;}
+}
+
+.wap-wrap{
+ .infinite-list{height: 100%;}
+}
 @media screen and (max-width: 1420px){
    .n-select{
      .el-input__inner{font-size:18px;}

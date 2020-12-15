@@ -1,26 +1,26 @@
 <template>
   <div class="pageWrap f-wrap-table  a_onChain_wrap">
 
-
+   <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
     <div class="page-main content-middle">
       <div class="a_form_box">
         <div class="marginlr60">
           <h3 class="from_title">登记信息</h3>
           <div class="d-in">
             <div class="lab">登记姓名</div>
-            <input class="border-box" placeholder="请输入登记姓名" ref="name"/>
+            <input class="border-box" placeholder="请输入登记姓名" ref="name" v-removeSymbol  v-remembered/>
           </div>
           <div class="d-in">
             <div class="lab">著作标题</div>
-            <input class="border-box" placeholder="请输入著作标题" ref="title"/>
+            <input class="border-box" placeholder="请输入著作标题" ref="title" v-removeSymbol  v-remembered/>
           </div>
           <div class="d-in">
             <div class="lab">身份证号</div>
-            <input class="border-box" placeholder="请输入身份证号" ref="code"/>
+            <input class="border-box" placeholder="请输入身份证号" ref="code" v-removeSymbol  v-remembered/>
           </div>
           <div class="d-in">
             <div class="lab">创意说明</div>
-            <input class="border-box" placeholder="请输入创意说明" ref="info"/>
+            <input class="border-box" placeholder="请输入创意说明" ref="info" v-removeSymbol  v-remembered/>
           </div>
 
           <div class="btnbox">
@@ -45,13 +45,20 @@
   import {getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
   import {utils} from '@/assets/js/pattern'
+  import explorer from '@/components/browser1.vue'
   export default {
     data () {
       return {
-        firstSend: 0
+        firstSend: 0,
+        type:1,
+        isHome:true,
+        isIndex:false,
+        backPath:'/bookCopyright'
       }
     },
-    components: {},
+     components: {
+      explorer
+    },
     methods: {
       async submit () {
         let that = this

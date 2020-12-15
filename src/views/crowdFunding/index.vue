@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap bg_wrap dis-table">
-    <explorer :type="type"></explorer>
+    <explorer :type="headertype"></explorer>
 
     <div class="page-main content-middle">
       <div class="page-content">
@@ -150,7 +150,7 @@
   export default {
     data () {
       return {
-        type: 1,//头部右上角浏览器
+        headertype: 1,//头部右上角浏览器
         projectList: [{
           title: '',
           intro: '',
@@ -223,7 +223,7 @@
         let that = this
         that.isRasie = false
         let amount = parseInt(that.input_amount)
-        if (that.input_amount >= 1000){
+        if (that.input_amount > 1000){
           return that.$toast('募捐金额不能超过1000', 3000)
         }
         TpScroll.RemoveScroll()

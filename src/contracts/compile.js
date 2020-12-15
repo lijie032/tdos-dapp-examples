@@ -12,7 +12,7 @@ function resolve(src){
 
 //let src = process.env['ENTRY'] || resolve('secretbeardapp.ts')
 
-let src = process.env['ENTRY'] || resolve('chatdapp.ts')
+let src = process.env['ENTRY'] || resolve('registerdapp.ts')
 
 
 const { compileABI } = require('@salaku/js-sdk')

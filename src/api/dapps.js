@@ -1,6 +1,6 @@
 // 部署公益合约
 
-import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getLendContract,getContract_crowdsaledapp, getContract_chatdapp, getContract_changedapp } from './constants'
+import {ENV, rpc, getABI, getContract, httpRPC,getBookContract, getContract_secretbeardapp, getAlbumContract, getVoteContract, getLendContract,getContract_crowdsaledapp, getContract_chatdapp, getContract_changedapp, PUBLIC_KEY, getRegisterContract, PRIVATE_KEY } from './constants'
 
 import {
   bin2hex,
@@ -28,6 +28,11 @@ async function syncNonce (
 // 获取事务
 export function getTransaction (hash) {
   return httpRPC.getTransaction(hash)
+}
+
+// 获取事务
+export function sendTransaction (transaction) {
+  return rpc.sendTransaction(transaction)
 }
 
 // 解析公益
@@ -982,4 +987,84 @@ function fromEncoded_Change (buf) {
 export async function getChange (hash) {
   let u  = await rpc.viewContract(await getContract_changedapp(), 'getChange', [hash])
   return fromEncoded_Change(u)
+}
+
+
+ // 保存注册
+export async function saveRegister (payload) {
+  const c = await getRegisterContract()
+  if (ENV === 'prod') {
+    let builder = new TransactionBuilder(
+      constants.POA_VERSION,
+      privatekey
+    )
+    const tx = builder.buildContractCall(c, 'saveRegister', payload, 0)
+    tx.nonce = await syncNonce(PUBLIC_KEY)
+    tx.from = PUBLIC_KEY
+    tx.sign(PRIVATE_KEY);
+    return tx
+  }
+}
+
+ // 得到注册者
+export async function getRegister (hash) {
+  let u  = await rpc.viewContract(await getRegisterContract(), 'getRegister', [hash])
+  return fromEncoded_Register(u)
+}
+
+function fromEncoded_Register(buf) {
+  if (buf == ""){
+    return "";
+  }
+  buf = hex2bin(buf)
+  const u = {}
+  const rd = new rlp.RLPListReader(rlp.RLPList.fromEncoded(buf))
+  u.username = rd.string()
+  u.sex = rd.string()
+  u.phone = rd.number()
+  u.designation = rd.string()
+  u.hash = bin2hex(rd.bytes())
+  return u
+}
+
+// 得到注册者人数
+export async function getRegisterId () {
+  let u  = await rpc.viewContract(await getRegisterContract(), 'getRegisterId', [])
+  return u;
+}
+
+export async function hasPhone (phone) {
+  let u  = await rpc.viewContract(await getRegisterContract(), 'hasPhone', [phone])
+  return u;
+}
+
+// 得到所有注册者
+export async function getRegisters () {
+  let u  = await rpc.viewContract(await getRegisterContract(), 'getRegisters', [])
+  return decodeRegisters(u);
+}
+
+function decodeRegisters(buf) {
+  if (buf != '') {
+    buf = hex2bin(buf)
+    let  li = rlp.RLPList.fromEncoded(buf);
+    const ret = [];
+    for (let i = 0; i < li.length(); i++) {
+      let ii = li.list(i);
+      ret.push(fromEncodedRegisters(ii));
+    }
+    return ret
+  }
+  return ''
+}
+
+function fromEncodedRegisters(buf) {
+  const li = new rlp.RLPListReader(buf);
+  const u = {}
+  u.username = li.string()
+  u.sex = li.string()
+  u.phone = li.number()
+  u.designation = li.string()
+  u.hash = bin2hex(li.bytes())
+  return u;
 }

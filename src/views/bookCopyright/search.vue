@@ -1,50 +1,63 @@
 <template>
   <div class="pageWrap dis-table  pw-pageWrap search_wrap">
-     <div class="logo-intro">
-         <div class="logo"></div>
-         TDOS著作版权
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
+    <div class="logo-intro">
+      <div class="logo"><img src="../../assets/img/logo_bookCopyright.png"/></div>
+      TDOS著作版权
+    </div>
+    <div class="page-main  content-middle">
+      <div class="search_box">
+        <div class="search-d-in"><input placeholder="请输入事务哈希" ref="hash"/></div>
+        <a class="searchbtn pointer" @click="search"></a>
       </div>
-      <div class="page-main  content-middle">
-         <div class="search_box">
-               <div class="search-d-in"><input placeholder="请输入事务哈希" ref="hash"/></div>
-               <a class="searchbtn pointer" @click="search"></a>
-         </div>
 
-      </div>
+    </div>
 
   </div>
 </template>
 
 <script>
-  import { getBook, getTransaction} from '@/api/dapps'
-  export default{
-    data(){
-        return{
+  import {getBook, getTransaction} from '@/api/dapps'
+  import explorer from '@/components/browser1.vue'
 
+  export default {
+    data () {
+      return {
+        type: 1,
+        isHome: true,
+        isIndex: false,
+        backPath: '/bookCopyright'
+      }
+    },
+    components: {
+      explorer
+    },
+    methods: {
+      async search () {
+        let that = this
+        let hash = this.$refs.hash.value
+        let pk = await that.getPK()
+        if (pk == '') {
+          return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
-    },methods:{
-       async search(){
-         let that = this;
-         let hash = this.$refs.hash.value;
-         let pk = await that.getPK();
-         if (pk == '') {
-           return that.$toast('获取账户失败，请打开TDOS插件', 3000)
-         }
-         let result = await getBook(hash, pk)
-         if (result == '') {
-           this.$toast('暂无内容', 2000)
-         } else {
-           getTransaction(hash).then(t => {
-             that.$router.push({path: '/bookCopyright/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
-           })
-         }
-       }
+        let result = await getBook(hash, pk)
+        if (result == '') {
+          this.$toast('暂无内容', 2000)
+        } else {
+          getTransaction(hash).then(t => {
+            that.$router.push({
+              path: '/bookCopyright/searchResult',
+              query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}
+            })
+          })
+        }
+      }
     }
-}
+  }
 </script>
 
 <style scoped lang="less">
 
-@import url(../../assets/less/medicalTreatment.less);
-@import url(../../assets/less/bookCopyRight.less);
+  @import url(../../assets/less/medicalTreatment.less);
+  @import url(../../assets/less/bookCopyRight.less);
 </style>>

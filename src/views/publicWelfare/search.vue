@@ -1,9 +1,9 @@
 <template>
   <div class="pageWrap  f-wrap-table search-wrap">
-
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
     <div class="page-main content-middle">
       <div class="logo-intro">
-        <div class="logo"></div>
+        <div class="logo"><img src="../../assets/img/logo_publicWelfare.png"/></div>
         TDOS公益
       </div>
 
@@ -24,10 +24,19 @@
 
 <script>
   import {getDonor, getTransaction} from '@/api/dapps'
-
+import explorer from '@/components/browser1.vue'
   export default {
     data () {
-      return {}
+      return {
+        type:0,
+        isHome:true,
+        isIndex:false,
+        backPath:'/publicWelfare'
+      }
+
+    },
+     components: {
+      explorer
     }, methods: {
       async linkResult () {
         let that = this
@@ -42,7 +51,7 @@
         } else {
           getTransaction(hash).then(t => {
             let that = this
-            that.$router.push({path: '/publicWelfare/result', query: {transaction: t, result: result, tx_hash: hash}})
+            that.$router.push({path: '/publicWelfare/result', query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}})
           })
         }
         // let that = this;

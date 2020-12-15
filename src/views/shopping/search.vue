@@ -1,16 +1,16 @@
 <template>
   <div class="pageWrap  f-wrap-table search-wrap">
-
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
     <div class="page-main content-middle">
       <div class="logo-intro">
-        <div class="logo"></div>
+        <div class="logo"><img src="../../assets/img/logo_shopping.png"/></div>
         TDOS购物
       </div>
 
       <div class="search-box ">
         <div class="din-box">
           <div class="in-box">
-            <input placeholder="请输入上链哈希查询" ref="hash" v-model="hash" />
+            <input placeholder="请输入上链哈希查询" ref="hash" v-model="hash"/>
             <!--<a class="close pointer" @click ="close()"></a>-->
           </div>
           <a class="searchbtn pointer" @click="linkResult">搜索</a>
@@ -24,11 +24,20 @@
 
 <script>
   import {getProduct, getTransaction} from '@/api/dapps'
+  import explorer from '@/components/browser1.vue'
+
   export default {
     data () {
       return {
-        hash:'',
+        hash: '',
+        type: 0,
+        isHome: true,
+        isIndex: false,
+        backPath: '/shopping'
       }
+    },
+    components: {
+      explorer
     }, methods: {
       async linkResult () {
         let that = this
@@ -43,13 +52,13 @@
         } else {
           getTransaction(hash).then(t => {
             let that = this
-            that.$router.push({path: '/shopping/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
+            that.$router.push({path: '/shopping/searchResult', query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}})
           })
         }
       },
-      close(){
-        let that = this;
-        that.hash = '';
+      close () {
+        let that = this
+        that.hash = ''
       }
     }
   }

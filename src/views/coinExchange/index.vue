@@ -4,13 +4,13 @@
 
     <div class="page-main content-middle">
       <div class="p-title">
-          <div class="logo"></div>
+          <div class="logo"><img src="../../assets/img/logo_coinExchange.png"/></div>
           <span>欢迎来到TDOS资产互换</span>
       </div>
 
       <div class="page-content">
         <div class="searchInBox border-box">
-           <input type="text" placeholder="您可在此输入复制的哈希值以此查询" v-model = "hash"/>
+           <input type="text" placeholder="您可在此输入复制的哈希值以此查询" v-model = "search_hash"/>
            <a class="btn-search pointer" @click="showResult">
 
            </a>
@@ -23,7 +23,7 @@
                 <span class="s1">{{coin1.name}}</span>
               </div>
               <div class="din-box">
-                <div class="din"><input type="text" :placeholder="coin1.nick" v-limitNum v-model="amount"/></div>
+                <div class="din"><input type="text" :placeholder="coin1.nick" v-limitNum ref="amount" /></div>
               </div>
             </div>
             <p class="mess">{{coin1.proportion}}</p>
@@ -68,7 +68,7 @@
               <p class="chain-title">恭喜您！转换成功！该笔交易已存证上链！以下是您的上链哈希：</p>
               <div class="hash-value">
                 <span>{{hash}}</span>
-                <a class="copy pointer"></a>
+                <a class="copy pointer" v-clipboard:copy="message" v-clipboard:success="onCopy" v-clipboard:error="onError"></a>
               </div>
               <p class="p-mess">（您可复制上方哈希值并点击右上角按钮至“TDS浏览器”查询。）</p>
             </div>
@@ -131,7 +131,7 @@
         },
 
         isExchange: false,//货币顺序是否转换
-        amount:'',
+        // amount:'',
         searchResult:false,//查询结果
         hash:'',
         rate:'',
@@ -139,6 +139,8 @@
         to:'',
         searchAmount: 0,
         hash:'',
+        message:'',
+        search_hash:''
       }
     },
     components: {
@@ -161,23 +163,30 @@
         that.isExchange = !that.isExchange
         let obj1 = JSON.parse(JSON.stringify(that.coin2))
         let obj2 = JSON.parse(JSON.stringify(that.coin1))
-
+        // that.amount = that.amount.replace(/[^\d]/g, "")
         that.coin1 = obj1
         that.coin2 = obj2
+        // console.log(that.amount)
       },
       //点击查询
       showResult(){
         let that =  this;
         TpScroll.RemoveScroll()
-        that.getCoinChange(that.hash);
+        that.getCoinChange(that.search_hash);
       },
       //点击确认转换
       async confirmExchange () {
         let that = this
+        let amount = this.$refs.amount.value
+        if (amount == ""){
+          return that.$toast("请输入数量", 3000);
+        }
+        if (amount > 10000000){
+          return that.$toast("数量需要小于10,000,000", 3000);
+        }
         TpScroll.RemoveScroll()
-
         let payload = {
-          from: that.coin1.nick, to: that.coin2.nick, amount: that.amount, rate:that.coin1.proportion
+          from: that.coin1.nick, to: that.coin2.nick, amount: amount, rate:that.coin1.proportion
         }
 
         let pk = that.getPK();
@@ -189,6 +198,7 @@
         that.$refs.sendTx.href =
           "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
         that.$refs.sendTx.click();
+        that.$refs.amount.value = ''
         return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
       },
 
@@ -234,6 +244,7 @@
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
+                that.message = hash
                 hideLoading()
                 clearInterval(that.timer1)
                 that.exchangeSuc = true;
@@ -242,6 +253,14 @@
 
           }, 1000)
         }
+      },
+      onCopy: function (e) {
+        let that = this
+        return that.$toast('复制成功', 2000)
+      },
+      onError: function (e) {
+        let that = this
+        return that.$toast('复制失败，请稍后重试', 2000)
       }
 
     },

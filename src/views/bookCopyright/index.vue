@@ -2,7 +2,7 @@
   <div class="pageWrap f-wrap-table bookCopyright-pagewrap">
     <explorer :isHome="isHome" :type="type"></explorer>
       <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_bookCopyright.png"/></div>
          TDOS著作版权
       </div>
       <div class="page-main content-middle">

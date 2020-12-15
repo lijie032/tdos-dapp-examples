@@ -1,5 +1,6 @@
 <template>
   <div class="pageWrap f-wrap-table">
+     <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
     <div class="page-main content-middle">
       <div class="chain-form">
         <h3 class="formTitle">请认真填写以下数据，确保能准确上链</h3>
@@ -13,6 +14,7 @@
                 maxlength="12"
                 placeholder="请输入捐赠人姓名"
                 v-model="donationName"
+                v-removeSymbol  v-remembered
               />
             </div>
             <div class="din">
@@ -23,6 +25,7 @@
                 maxlength="12"
                 placeholder="请输入捐赠内容"
                 v-model="donationContent"
+                v-removeSymbol  v-remembered
               />
             </div>
           </div>
@@ -36,6 +39,7 @@
                 placeholder="请输入受益人地址"
                 maxlength="50"
                 v-model="donationAddress"
+                v-removeSymbol  v-remembered
               />
             </div>
             <div class="din">
@@ -46,6 +50,7 @@
                 maxlength="12"
                 placeholder="请输入受益人"
                 v-model="beneficiary"
+                v-removeSymbol  v-remembered
               />
             </div>
           </div>
@@ -59,6 +64,7 @@
                 maxlength="12"
                 placeholder="请输入捐赠机构"
                 v-model="mechanism"
+                v-removeSymbol  v-remembered
               />
             </div>
             <div class="din">
@@ -69,6 +75,7 @@
                 placeholder="请输入捐赠说明"
                 v-model="explain"
                 maxlength="30"
+                v-removeSymbol  v-remembered
               />
             </div>
           </div>
@@ -86,7 +93,7 @@
 <script>
   import {saveDonor, getTransaction} from '@/api/dapps'
   import {showLoading, hideLoading} from '@/assets/js/loading'
-
+    import explorer from '@/components/browser1.vue'
   import {utils} from '@/assets/js/pattern'
   export default {
     data () {
@@ -97,7 +104,14 @@
         beneficiary: '',
         mechanism: '',
         explain: '',
+        type:0,
+        isHome:true,
+        isIndex:false,
+        backPath:'/publicWelfare'
       }
+    },
+    components: {
+      explorer
     },
     methods: {
       async doConfirm (e) {

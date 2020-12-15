@@ -13,13 +13,15 @@ import storage from "@/storage";
 
 Vue.config.productionTip = false
 import limitNum from './assets/js/onlyNum'
-
+import removeSymbol from './assets/js/removeSymbol'
+import remembered from './assets/js/remembered'
 import VueClipboard from 'vue-clipboard2'
 
 Vue.use(VueClipboard);
 
 Vue.directive('limitNum', limitNum);
-
+Vue.directive('removeSymbol', removeSymbol);
+Vue.directive('remembered', remembered);
 Vue.use(ElementUI);
 
 

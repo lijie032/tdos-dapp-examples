@@ -1,7 +1,8 @@
 <template>
   <div class="pageWrap dis-table  pw-pageWrap search_wrap">
+     <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
      <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_medicalTreatment.png"/></div>
          TDOS医疗查询
       </div>
       <div class="page-main  content-middle">
@@ -17,12 +18,15 @@
 
 <script>
   import { getMedical, getTransaction} from '@/api/dapps'
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
 
   export default{
     data(){
       return{
-
+           type:1,
+           isHome:true,
+           isIndex:false,
+           backPath:'/medicalTreatment'
       }
     },
     components:{
@@ -37,11 +41,12 @@
           return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
         let result = await getMedical(hash, pk)
+        console.log(result)
         if (result == '') {
           this.$toast('暂无内容', 2000)
         } else {
           getTransaction(hash).then(t => {
-            that.$router.push({path: '/medicalTreatment/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
+            that.$router.push({path: '/medicalTreatment/searchResult', query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}})
           })
         }
       }

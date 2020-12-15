@@ -1,5 +1,6 @@
 <template>
   <div class="pageWrap search_result_wrap bgf6f6f6">
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="page-main ">
            <div class="result-content">
               <h3 class="r_title">病人信息</h3>
@@ -61,11 +62,16 @@
 </template>
 
 <script>
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
 
   export default {
     data () {
-      return {}
+      return {
+         type:0,
+        isHome:true,
+        isIndex:false,
+        backPath:'/medicalTreatment'
+      }
     },
     components: {
       explorer
@@ -73,11 +79,22 @@
     methods: {
       back () {
         this.$router.push({path: '/medicalTreatment'})
-      }
+      },
+       isObject(bar)
+        {
+            if((typeof bar==='object')&&(bar!==null))
+                return true;
+            else
+                return false;
+        }
     }, mounted: function () {
-      let t = this.$route.query.transaction;
-      let result = this.$route.query.result;
+
+      let t =  eval('(' + this.$route.query.transaction + ')');
+      let result = eval('(' + this.$route.query.result + ')');
       let tx_hash = this.$route.query.tx_hash;
+
+      console.log( )
+      //console.log(t);
       document.getElementById("block_hash").innerHTML = t.blockHash;
       document.getElementById("transaction_hash").innerHTML = tx_hash;
       document.getElementById("block_height").innerHTML = t.blockHeight;

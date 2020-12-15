@@ -1,10 +1,10 @@
 <template>
   <div class="pageWrap  f-wrap-table result-wrap">
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="page-main ">
 
           <div class="pw-content1520 result-main">
-              <h3 class="r-title">xxxx红十字会机构</h3>
+              <h3 class="r-title">红十字会机构</h3>
               <p class="p-text">区块高度：<a id="height"></a></p>
               <p class="p-text">区块哈希：<a id="hash"></a></p>
               <p class="p-text">事务哈希：<a id="tx_hash"></a></p >
@@ -46,11 +46,14 @@
 </template>
 
 <script>
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
   export default{
     data(){
       return{
-
+         type:0,
+        isHome:true,
+        isIndex:false,
+        backPath:'/publicWelfare'
       }
     },
     components:{
@@ -62,8 +65,8 @@
       }
     },
     mounted: function () {
-      let transaction = this.$route.query.transaction;
-      let result = this.$route.query.result;
+      let transaction = eval('(' + this.$route.query.transaction + ')');
+      let result = eval('(' + this.$route.query.result + ')');;
       let tx_hash = this.$route.query.tx_hash;
       document.getElementById("from").innerHTML = result.name;
       document.getElementById("goods").innerHTML = result.content;

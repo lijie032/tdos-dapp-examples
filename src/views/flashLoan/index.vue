@@ -12,7 +12,7 @@
 							<div class="line" v-if="isSearch"></div>
 							<a class="btn-search pointer" @click="search">查询</a>
 						</div>
-	              	 	<div class="logo"></div>
+	              	 	<div class="logo"><img src="../../assets/img/logo_flashLoan.png"/></div>
 	              	 	欢迎来到TDOS闪电贷
 
 

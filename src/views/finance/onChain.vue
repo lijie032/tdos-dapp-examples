@@ -1,5 +1,6 @@
 <template>
   <div class="pageWrap f-chain-wrap">
+    <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="left">
       </div>
       <div class="right">
@@ -7,15 +8,15 @@
               <div class="f-form-box">
                   <h3>请认真填写以下数据，确保能准确上链</h3>
                   <div class="din-col din-col2">
-                     <div class="din border-box"><input type="text"  placeholder="企业名称" ref="title"/></div>
-                     <div class="din border-box din-2"><input type="text"  placeholder="法人姓名" ref="name"/></div>
+                     <div class="din border-box"><input type="text"  placeholder="企业名称" ref="title" v-removeSymbol  v-remembered/></div>
+                     <div class="din border-box din-2"><input type="text"  placeholder="法人姓名" ref="name" v-removeSymbol  v-remembered/></div>
                   </div>
                    <div class="din-col din-col2">
-                     <div class="din border-box"><input type="text"  placeholder="法人证件" ref="cid"/></div>
+                     <div class="din border-box"><input type="text"  placeholder="法人证件" ref="cid" v-removeSymbol  v-remembered/></div>
                      <div class="din border-box din-2"><input type="text"  placeholder="融资金额" ref="sum" v-limitNum/></div>
                   </div>
                   <div class="din-col">
-                     <div class="din"><input type="text" placeholder="合同编号" ref="contract"/></div>
+                     <div class="din"><input type="text" placeholder="合同编号" ref="contract" v-removeSymbol  v-remembered/></div>
                   </div>
                   <div class="btnbox">
                       <a class="pointer chain-btn" @click="save">存证上链</a>
@@ -28,14 +29,18 @@
 </template>
 
 <script>
-import explorer from '@/components/browser.vue'
+import explorer from '@/components/browser1.vue'
 import { saveFinance,getTransaction } from '@/api/dapps'
 import {showLoading, hideLoading} from '@/assets/js/loading'
 import {utils} from '@/assets/js/pattern'
 export default{
   data(){
     return{
-      firstSend: 0
+      firstSend: 0,
+      type:0,
+      isHome:true,
+      isIndex:false,
+      backPath:'/finance'
     }
   },
   components:{

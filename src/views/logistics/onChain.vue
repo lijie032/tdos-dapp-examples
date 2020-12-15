@@ -1,6 +1,6 @@
 <template>
   <div class="pageWrap onChain-wrap">
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex"></explorer>
       <div class="page-main">
 
          <div class="chain-form">
@@ -12,15 +12,15 @@
                         <span class="lab">收件人信息</span>
                         <div class="r-userInfo">
                             <span class="s-lab">收件人姓名</span>
-                            <div class="r-in"><input class="border-box" placeholder="请输入收件人姓名" ref="collect_name"/></div>
+                            <div class="r-in"><input class="border-box" placeholder="请输入收件人姓名" ref="collect_name" v-removeSymbol  v-remembered/></div>
                         </div>
                         <div class="r-userInfo">
                             <span class="s-lab">收件人地址</span>
-                            <div class="r-in"><input class="border-box" placeholder="请输入收件人地址" ref="collect_address"/></div>
+                            <div class="r-in"><input class="border-box" placeholder="请输入收件人地址" ref="collect_address" v-removeSymbol  v-remembered/></div>
                         </div>
                        <div class="r-userInfo">
                             <span class="s-lab">收件人电话</span>
-                            <div class="r-in"><input class="border-box" placeholder="请输入收件人电话" ref="collect_phone"/></div>
+                            <div class="r-in"><input class="border-box" placeholder="请输入收件人电话" ref="collect_phone" v-removeSymbol  v-remembered/></div>
                         </div>
                      </div>
                  </div>
@@ -32,7 +32,7 @@
                      </div>
                      <div class="din">
                          <span class="lab">寄件人姓名</span>
-                         <input class="border-box" type="text" maxlength="12" placeholder="请输入寄件人姓名" ref="send_name"/>
+                         <input class="border-box" type="text" maxlength="12" placeholder="请输入寄件人姓名" ref="send_name" v-removeSymbol  v-remembered/>
                      </div>
                  </div>
 
@@ -40,11 +40,11 @@
                  <div class="din-col">
                      <div class="din">
                         <span class="lab">身份证号码</span>
-                         <input class="border-box" type="text" placeholder="请输入身份证号码" ref="send_numb"/>
+                         <input class="border-box" type="text" placeholder="请输入身份证号码" ref="send_numb" v-removeSymbol  v-remembered/>
                      </div>
                      <div class="din">
                          <span class="lab">电话号码</span>
-                         <input class="border-box" type="text" maxlength="12" placeholder="请输入电话号码" ref="send_phone"/>
+                         <input class="border-box" type="text" maxlength="12" placeholder="请输入电话号码" ref="send_phone" v-removeSymbol  v-remembered/>
                      </div>
                  </div>
 
@@ -61,14 +61,16 @@
 
 <script>
   import { saveLogistics } from '@/api/dapps'
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
   import {showLoading, hideLoading} from '@/assets/js/loading'
   import { getTransaction } from "@/api/dapps"
   import {utils} from '@/assets/js/pattern'
   export default{
     data(){
       return{
-
+         type:0,
+        isHome:true,
+        isIndex:false
       }
     },
     components:{
@@ -90,8 +92,11 @@
         if( utils.isNullOrEmpty(collect_address)){
           return that.$toast('请输入收件人地址', 3000)
         }
+         if( utils.isNullOrEmpty(collect_phone)){
+          return that.$toast('请输入收件人电话', 3000)
+        }
         if(!utils.isMobile(collect_phone)){
-          return that.$toast('请输入正确收件人电话', 3000)
+          return that.$toast('收件人电话格式不正确', 3000)
         }
         if( utils.isNullOrEmpty(send_type)){
           return that.$toast('请输入物品类型', 3000)
@@ -99,11 +104,17 @@
         if( utils.isNullOrEmpty(send_name)){
           return that.$toast('请输入寄件人姓名', 3000)
         }
+        if( utils.isNullOrEmpty(send_numb)){
+          return that.$toast('请输入寄件人身份证号', 3000)
+        }
         if(!utils.checkIDCard(send_numb)){
-          return that.$toast('请输入身份证号码', 3000)
+          return that.$toast('请输入正确的身份证号', 3000)
+        }
+          if( utils.isNullOrEmpty(send_phone)){
+          return that.$toast('请输入寄件人电话号码', 3000)
         }
         if(!utils.isMobile(send_phone)){
-          return that.$toast('请输入正确电话号码', 3000)
+          return that.$toast('寄件人电话格式不正确', 3000)
         }
 
         let payload = {

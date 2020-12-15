@@ -12,12 +12,12 @@
             </div>
             <div class="btnbox">
               <!--等级升级到三级的时候按钮置灰不可再升级 添加class  c-btn-disable-->
-              <a class="pointer cb-btn upbtn " @click="submit">升级</a>
+              <a class="pointer cb-btn upbtn " :class="{'c-btn-disable':level==3}" @click="submit">升级</a>
               <a ref="sendTx"></a>
             </div>
           </div>
           <div class="bc-right">
-            <a class="pointer mark" @click.stop="showInfo" ></a>
+            <a class="pointer mark" @click.stop="showInfo"></a>
             <div class="detailInfo">
               <h3 class="h-level">
                 当前等级<span class="s-level"><a id="level"></a></span>
@@ -78,11 +78,13 @@
               <div>区块高度：{{height}}</div>
               <div class="p-line1">
                 区块哈希：{{blockHash}}
-                <a class="pointer a-copy" v-clipboard:copy="message" v-clipboard:success="onCopy" v-clipboard:error="onError"></a>
+                <a class="pointer a-copy" v-clipboard:copy="message2" v-clipboard:success="onCopy"
+                   v-clipboard:error="onError"></a>
               </div>
               <div class="p-line1">
                 事务哈希：{{hash}}
-                <a class="pointer a-copy" v-clipboard:copy="message" v-clipboard:success="onCopy" v-clipboard:error="onError"></a>
+                <a class="pointer a-copy" v-clipboard:copy="message" v-clipboard:success="onCopy"
+                   v-clipboard:error="onError"></a>
               </div>
             </div>
           </div>
@@ -102,10 +104,12 @@
     data () {
       return {
         isOnchain: false,
-        hash:'',
-        height:0,
-        blockHash:'',
-        message:'dfdldfkld;flsfksl;df;lfd'
+        hash: '',
+        height: 0,
+        blockHash: '',
+        message: '',
+        message2: '',
+        level:0 //当前等级
       }
     },
     components: {
@@ -114,8 +118,8 @@
 
     methods: {
 
-     onCopy: function (e) {
-       let that = this
+      onCopy: function (e) {
+        let that = this
         return that.$toast('复制成功', 2000)
       },
       onError: function (e) {
@@ -124,8 +128,8 @@
       },
 
       async showInfo () {
-         let that = this;
-         that.isOnchain = !that.isOnchain
+        let that = this
+        that.isOnchain = !that.isOnchain
 
       },
       async get () {
@@ -139,37 +143,43 @@
           that.$router.push({path: '/cryptoBear'})
         }
         let bear = await getBear(pk)
-        that.hash = bear.hash;
-        await  getTransaction(that.hash).then(t => {
-                    that.height = t.blockHeight;
-                    that.blockHash = t.blockHash;
-        });
+        that.hash = bear.hash
+        that.message = bear.hash
+        await getTransaction(that.hash).then(t => {
+          that.height = t.blockHeight
+          that.blockHash = t.blockHash
+          that.message2 = t.blockHash
+        })
         document.getElementById('aggressivity').innerHTML = bear.aggressivity
         document.getElementById('defense').innerHTML = bear.defense
         document.getElementById('stature').innerHTML = (bear.stature / 100) + 'M'
         document.getElementById('tonnage').innerHTML = bear.tonnage + 'T'
-        document.getElementById('bloodvolume').innerHTML = bear.bloodvolume/100
+        document.getElementById('bloodvolume').innerHTML = bear.bloodvolume / 100
         document.getElementById('level').innerHTML = bear.level
+        that.level = bear.level
       },
       async submit () {
         let that = this
+        if(that.level==3){
+          return;
+        }
         let pk = that.getPK()
         if (pk == '') {
           return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
-        let Level = await buyLevel(pk);
-        let sendTx = JSON.stringify(Level);
+        let Level = await buyLevel(pk)
+        let sendTx = JSON.stringify(Level)
         that.$refs.sendTx.href =
-          "javascript:sendMessageToContentScriptByPostMessage('" + sendTx + "')";
-        that.$refs.sendTx.click();
-        return that.$toast("事务已生成，请打开TDOS插件进行广播", 3000);
+          'javascript:sendMessageToContentScriptByPostMessage(\'' + sendTx + '\')'
+        that.$refs.sendTx.click()
+        return that.$toast('事务已生成，请打开TDOS插件进行广播', 3000)
       },
       async timer_tx () {
         let that = this
         let hash = that.getRes().trim()
 
         if (hash != '') {
-          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
+          showLoading('事务广播成功，事务哈希为：\n' + hash + ',' + '\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {

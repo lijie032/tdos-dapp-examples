@@ -14,11 +14,11 @@
                          <p class="functMess">当前暂无联系人，请点击右上方的按钮进行添加~</p>
                      </div>
 
-                     <div class="data-box">
+                     <div class="data-box" v-if="isData">
                         <div class="data-left">
                             <div class="data-content">
                                 <div class="searchbox">
-                                    <div class="search-in"><input placeholder="请输入姓名查找" v-model="searchKey"/></div>
+                                    <div class="search-in"><input placeholder="请输入姓名查找" v-model="searchKey" v-removeSymbol  v-remembered/></div>
                                     <a class="btnSearch pointer" @click="search">搜索</a>
                                 </div>
                                 <el-scrollbar class="record-scroll" ref="myScrollbar">
@@ -90,17 +90,17 @@
                  </div>
                  <div class="d-in">
                      <div class="lab">姓名：</div>
-                     <input type="text" maxlength="15" v-model="userName" />
+                     <input type="text" maxlength="8" v-model="userName" v-removeSymbol  v-remembered/>
                  </div>
 
                 <div class="d-in">
                      <div class="lab">电话：</div>
-                     <input type="text" maxlength="11"  v-limitNum v-model="number"/>
+                     <input type="text" maxlength="11"  v-limitNum v-model="number" v-removeSymbol  v-remembered/>
                  </div>
 
                 <div class="d-in d-in-textarea">
                     <div class="lab">备注：</div>
-                    <textarea v-model="remark" rows="4"/>
+                    <textarea v-model="remark" rows="4" v-removeSymbol  v-remembered/>
                  </div>
 
                  <div class="btnbox">
@@ -169,6 +169,9 @@ export default {
             if( utils.isNullOrEmpty(that.userName)){
                 return that.$toast('请输入姓名', 3000)
             }
+            if (that.userName.length > 4){
+                return that.$toast('请输入正确的姓名', 3000)
+            }
             if( utils.isNullOrEmpty(that.number)){
                 return that.$toast('请输入电话', 3000)
             }
@@ -200,7 +203,7 @@ export default {
             let addr = publicKey2Address(pk);
             let books = await getAddressBooks(addr);
 
-
+            books.length>0?that.isData=true:that.isData=false
             that.addressList = [];
             await Promise.all(books.map(async item => {
                     await  getTransaction(item.hash).then(t => {

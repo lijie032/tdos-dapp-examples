@@ -1,8 +1,8 @@
 <template>
   <div class="pageWrap dis-table  search_wrap">
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="logo-intro">
-         <div class="logo"></div>
+         <div class="logo"><img src="../../assets/img/logo_logistics.png"/></div>
          TDOS物流查询页面
       </div>
       <div class="page-main content-middle">
@@ -17,12 +17,15 @@
 
 <script>
   import { getLogistics, getTransaction} from '@/api/dapps'
-  import explorer from '@/components/browser.vue'
+  import explorer from '@/components/browser1.vue'
 
   export default{
     data(){
       return{
-
+        type:0,
+        isHome:true,
+        isIndex:false,
+        backPath:'/logistics'
       }
     },
     components:{
@@ -42,7 +45,7 @@
         } else {
           getTransaction(hash).then(t => {
             let that = this
-            that.$router.push({path: '/logistics/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
+            that.$router.push({path: '/logistics/searchResult', query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}})
           })
         }
       }

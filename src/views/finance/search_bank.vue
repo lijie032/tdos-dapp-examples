@@ -1,9 +1,9 @@
 <template>
   <div class="pageWrap  search-wrap">
-
+      <explorer :isHome="isHome" :type="type" :isIndex="isIndex" :backPath="backPath"></explorer>
       <div class="page-main ">
            <div class="logo-intro">
-              <div class="logo"></div>
+              <div class="logo"><img src="../../assets/img/logo_finance.png"/></div>
               TDOS金融
            </div>
 
@@ -29,13 +29,20 @@
 
 <script>
   import {getFinance, getTransaction} from '@/api/dapps'
-
+import explorer from '@/components/browser1.vue'
   export default{
     data(){
         return{
-
+          type:0,
+          isHome:true,
+          isIndex:false,
+          backPath:'/finance'
         }
-    },methods:{
+    },
+     components:{
+    explorer
+  },
+  methods:{
       async search () {
         let that = this;
         let hash = this.$refs.hash.value;
@@ -50,7 +57,7 @@
           let transaction = await getTransaction(hash);
           getTransaction(hash).then(t => {
             let that = this
-            that.$router.push({path: '/finance/searchResult', query: {transaction: t, result: result, tx_hash: hash}})
+            that.$router.push({path: '/finance/searchResult', query: {transaction:JSON.stringify(t), result: JSON.stringify(result), tx_hash: hash}})
           })
         }
       }
