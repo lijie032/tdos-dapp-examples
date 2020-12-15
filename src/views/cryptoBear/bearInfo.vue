@@ -167,6 +167,12 @@
         if (pk == '') {
           return that.$toast('获取账户失败，请打开TDOS插件', 3000)
         }
+        let has = await hasBear(pk)
+        if (!has) {
+          that.$toast('您还没有购买加密熊', 3000)
+          return that.$router.push({path: '/cryptoBear/index.vue'})
+        }
+     
         let Level = await buyLevel(pk)
         let sendTx = JSON.stringify(Level)
         that.$refs.sendTx.href =

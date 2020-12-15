@@ -20,8 +20,8 @@
                   </div>
                   <div class="detail-box" v-show="detailIndex==index">
                     <p>区块高度：{{height}}</p>
-                    <p>区块哈希：{{item.hash}}</p>
-                    <p>事务哈希：{{tx_hash}}</p>
+                    <p>区块哈希：{{tx_hash}}</p>
+                    <p>事务哈希：{{item.hash}}</p>
                   </div>
                 </div>
               </li>
