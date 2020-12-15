@@ -244,6 +244,8 @@ export default {
         if (hash != '') {
           showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
+                              clearInterval(that.timer1)
+
             getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
                 hideLoading()
