@@ -240,7 +240,8 @@ export default {
 
             delayTimer:null,//延迟展示
 
-            isRegister:false
+            isRegister:false,
+            timer1:null
         }
     },
     components:{
@@ -303,13 +304,20 @@ export default {
             await sendTransaction(tx);
             that.hash = tx.getHash();
             that.waitingHash  = tx.getHash();
-        
+            that.timer_tx();
        },
        //发布结果页隐藏
        hidepublicSuc(){
          let that = this;
          that.publicSuc=false;
-         that.isRegister=true
+         that.isRegister =false
+
+         that.name = '';
+         that.gender = '';
+         that.phone = '';
+        
+        that.companyName = '';
+
          TpScroll.AddScroll();
        },
 
@@ -380,16 +388,21 @@ export default {
           this.timer1 = setInterval(function () {
            
             getTransaction(hash).then(tx => {
+              
               if (tx.confirms != -1) {
                 hideLoading()
-                clearInterval(that.timer1)
-                that.waitingHash = '';
                 
-                if(!that.isRegister){
+                that.waitingHash = '';
+                that.isRegister=true
+                if(that.isRegister){
                  that.delayTimer = setTimeout(function(){
                   that.publicSuc=true;
                   TpScroll.RemoveScroll();
-                },1000)
+                },500)
+
+                window.clearInterval(that.timer1)
+
+            
                 }
                
 
@@ -406,7 +419,8 @@ export default {
     mounted(){
         let that = this;
         that.isSearch=true;
-        this.timer = setInterval(this.timer_tx, 1000)
+        //this.timer = setInterval(this.timer_tx, 1000)
+      
     },
     beforeDestroy() {
       clearInterval(this.timer)
