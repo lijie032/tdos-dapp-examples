@@ -108,7 +108,7 @@
               </div>
             </div>
             <div class="btnbox">
-              <a class="cf-btn pointer bot-btn" @click="searchResult=false;addScroll()">我知道了</a>
+              <a class="cf-btn pointer bot-btn" @click="searchResult=false;addScroll();">我知道了</a>
             </div>
           </div>
         </div>
@@ -237,6 +237,10 @@ export default {
 
             totalData:[],
             waitingHash:'',
+
+            delayTimer:null,//延迟展示
+
+            isRegister:false
         }
     },
     components:{
@@ -296,13 +300,13 @@ export default {
             await sendTransaction(tx);
             that.hash = tx.getHash();
             that.waitingHash  = tx.getHash();
-            that.publicSuc=true;
-            TpScroll.RemoveScroll();
+        
        },
        //发布结果页隐藏
        hidepublicSuc(){
          let that = this;
          that.publicSuc=false;
+         that.isRegister=true
          TpScroll.AddScroll();
        },
 
@@ -329,10 +333,6 @@ export default {
         registers.forEach((item)=>{
             that.totalData.push({name:item.username, gender:item.sex, phone:item.phone, companyName:item.designation})
             that.total = that.totalData.length;
-
-
-           
-          
 
         });
            let currentPage = that.currentPage;
@@ -372,16 +372,30 @@ export default {
         let that = this
         if (that.waitingHash != '') {
           showLoading('事务广播成功，事务哈希为：\n' + that.waitingHash+","+'\n' + '请等待上链...')
+           let hash = that.waitingHash.trim()
+          
           this.timer1 = setInterval(function () {
-            getTransaction(that.waitingHash).then(tx => {
+           
+            getTransaction(hash).then(tx => {
               if (tx.confirms != -1) {
                 hideLoading()
                 clearInterval(that.timer1)
                 that.waitingHash = '';
+                
+                if(!that.isRegister){
+                 that.delayTimer = setTimeout(function(){
+                  that.publicSuc=true;
+                  TpScroll.RemoveScroll();
+                },1000)
+                }
+               
+
               }
             })
 
-          }, 3000)
+          }, 1000)
+
+          
         }
       }
 
@@ -395,6 +409,9 @@ export default {
       clearInterval(this.timer)
       if (this.timer1) {
         clearInterval(this.timer1)
+      }
+      if(this.delayTimer){
+        clearTimeout(this.delayTimer)
       }
     }
 }
