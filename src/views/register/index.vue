@@ -287,6 +287,9 @@ export default {
             if (utils.isNullOrEmpty(that.companyName)) {
               return that.$toast('请输入单位名称', 3000)
             }
+            if(!utils.isMobile(that.phone)){
+              return that.$toast('手机号格式不正确', 3000)
+            }
             let bool = await hasPhone(that.phone);
             if (bool){
               return that.$toast('手机号已经存在', 3000);
