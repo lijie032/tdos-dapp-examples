@@ -236,6 +236,7 @@ export default {
             total:0,//条数
 
             totalData:[],
+            waitingHash:'',
         }
     },
     components:{
@@ -294,6 +295,7 @@ export default {
             let tx = await saveRegister(payload)
             await sendTransaction(tx);
             that.hash = tx.getHash();
+            that.waitingHash  = tx.getHash();
             that.publicSuc=true;
             TpScroll.RemoveScroll();
        },
@@ -366,21 +368,20 @@ export default {
            that.searchResult = false;
            TpScroll.AddScroll();
        },
-        timer_tx () {
+      async timer_tx () {
         let that = this
-        let hash = that.getRes().trim()
-        if (hash != '') {
-          showLoading('事务广播成功，事务哈希为：\n' + hash+","+'\n' + '请等待上链...')
+        if (that.waitingHash != '') {
+          showLoading('事务广播成功，事务哈希为：\n' + that.waitingHash+","+'\n' + '请等待上链...')
           this.timer1 = setInterval(function () {
-            getTransaction(hash).then(tx => {
+            getTransaction(that.waitingHash).then(tx => {
               if (tx.confirms != -1) {
                 hideLoading()
                 clearInterval(that.timer1)
+                that.waitingHash = '';
               }
-
             })
 
-          }, 1000)
+          }, 3000)
         }
       }
 
