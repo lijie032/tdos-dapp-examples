@@ -17,8 +17,8 @@
             <p class="mess"> 恭喜您！登记成功</p>
             <p class="mess">以下为您此次登记的事务哈希：</p>
             <div class="hashBox">
-                dajsdqweqw65656dasf5a1sf53d4sg86df4gdf54gdf  
-                <span class="copy"></span> 
+                {{hash}}  
+                <span class="copy" v-clipboard:copy="hash" v-clipboard:success="onCopy" v-clipboard:error="onError"></span> 
             </div>
             <p class="notice">（您可复制此哈希至浏览器查询，或在首页查询。）</p>
             <div class="box-flex flex-middle flex-center btnbox">
@@ -34,7 +34,8 @@ export default{
 
    data(){
        return{
-        gender:1
+        gender:1,
+        hash:'',
        }
    },
    methods:{
@@ -46,7 +47,19 @@ export default{
             } else {
                 this.$router.go(-1);
             }
-       }
+       },
+        onCopy: function (e) {
+        let that = this
+        return that.$toast('复制成功', 2000)
+      },
+      onError: function (e) {
+        let that = this
+        return that.$toast('复制失败，请稍后重试', 2000)
+      },
+   },
+   mounted(){
+       let that = this;
+       that.hash = that.$route.query.hash;
    }
 }
 </script>
